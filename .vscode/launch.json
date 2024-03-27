@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "stocket",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "stocket (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "stocket (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "common",
+            "cwd": "module/common",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "common (profile mode)",
+            "cwd": "module/common",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "common (release mode)",
+            "cwd": "module/common",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "gen",
+            "cwd": "module/gen",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "gen (profile mode)",
+            "cwd": "module/gen",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "gen (release mode)",
+            "cwd": "module/gen",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
