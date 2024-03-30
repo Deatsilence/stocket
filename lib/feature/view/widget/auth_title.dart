@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 /// [AuthTitle] is a [StatelessWidget] that displays the title of the authentication view.
@@ -19,7 +20,7 @@ final class AuthTitle extends StatelessWidget {
       child: Text(
         titleText,
         style: Theme.of(context).textTheme.headlineLarge,
-      ),
+      ).tr(),
     );
   }
 }

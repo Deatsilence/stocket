@@ -1,8 +1,10 @@
 import 'package:common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/mixin/signup_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_title.dart';
+import 'package:stocket/product/init/language/locale_keys.g.dart';
 
 /// [SignUpView] is a [StatefulWidget] that displays the sign up view.
 final class SignUpView extends StatefulWidget {
@@ -25,64 +27,64 @@ class _SignUpViewState extends State<SignUpView>
           delegate: SliverChildListDelegate(
             [
               const AuthTitle(
-                titleText: 'Sign Up',
+                titleText: LocaleKeys.authentication_sign_up,
               ),
               CustomTextFormField(
                 controller: nameController,
                 prefixIcon: const Icon(Icons.person_outlined),
-                labelText: 'Name',
-                hintText: 'Enter your name',
-                keyboardType: TextInputType.emailAddress,
+                labelText: LocaleKeys.authentication_name.tr(),
+                hintText: LocaleKeys.authentication_name_placeholder.tr(),
+                keyboardType: TextInputType.name,
               ),
               CustomTextFormField(
                 controller: surnameController,
                 prefixIcon: const Icon(Icons.person_outlined),
-                labelText: 'Surname',
-                hintText: 'Enter your surname',
-                keyboardType: TextInputType.emailAddress,
+                labelText: LocaleKeys.authentication_surname.tr(),
+                hintText: LocaleKeys.authentication_surname_placeholder.tr(),
+                keyboardType: TextInputType.name,
               ),
               CustomTextFormField(
                 controller: emailController,
                 prefixIcon: const Icon(Icons.email_outlined),
-                labelText: 'Email',
-                hintText: 'Enter your email',
+                labelText: LocaleKeys.authentication_email.tr(),
+                hintText: LocaleKeys.authentication_email_placeholder.tr(),
                 keyboardType: TextInputType.emailAddress,
               ),
               CustomTextFormField(
                 controller: passwordController,
                 prefixIcon: const Icon(Icons.password_outlined),
-                labelText: 'Password',
-                hintText: 'Enter your password',
+                labelText: LocaleKeys.authentication_password.tr(),
+                hintText: LocaleKeys.authentication_password_placeholder.tr(),
                 obscureText: true,
               ),
               CustomTextFormField(
                 controller: confirmPasswordController,
                 prefixIcon: const Icon(Icons.lock_outlined),
-                labelText: 'Confirm Password',
-                hintText: 'Enter your confirm password',
+                labelText: LocaleKeys.authentication_confirm_password.tr(),
+                hintText: LocaleKeys.authentication_confirm_password_placeholder.tr(),
                 obscureText: true,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {},
-                  child: const Text('Forgot Password?'),
+                  child: const Text(LocaleKeys.authentication_forgot_password).tr(),
                 ),
               ),
               Padding(
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                 child: CustomElevatedButton(
                   onPressed: () {},
-                  child: const Text('Sign In'),
+                  child: const Text(LocaleKeys.authentication_sign_up).tr(),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account?"),
+                  const Text(LocaleKeys.authentication_dont_have_account).tr(),
                   TextButton(
                     onPressed: () {},
-                    child: const Text('Sign Up'),
+                    child: const Text(LocaleKeys.authentication_sign_up).tr(),
                   ),
                 ],
               ),
