@@ -1,45 +1,28 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
-import 'package:stocket/feature/mixin/signup_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_title.dart';
 
-/// [SignUpView] is a [StatefulWidget] that displays the sign up view.
-final class SignUpView extends StatefulWidget {
+/// [LoginView] is a [StatefulWidget] that displays the sign up view.
+final class LoginView extends StatefulWidget {
   /// Constructor
-  const SignUpView({super.key});
+  const LoginView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _SignUpViewState extends State<SignUpView>
-    with AuthCommonViewMixin, SignUpViewMixin {
+class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
   @override
   Widget build(BuildContext context) {
     return Form(
       key: loginFormKey,
       child: BaseView(
-        isAppBarActive: false,
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
             [
               const AuthTitle(
-                titleText: 'Sign Up',
-              ),
-              CustomTextFormField(
-                controller: nameController,
-                prefixIcon: const Icon(Icons.person_outlined),
-                labelText: 'Name',
-                hintText: 'Enter your name',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              CustomTextFormField(
-                controller: surnameController,
-                prefixIcon: const Icon(Icons.person_outlined),
-                labelText: 'Surname',
-                hintText: 'Enter your surname',
-                keyboardType: TextInputType.emailAddress,
+                titleText: 'Login',
               ),
               CustomTextFormField(
                 controller: emailController,
@@ -50,16 +33,9 @@ class _SignUpViewState extends State<SignUpView>
               ),
               CustomTextFormField(
                 controller: passwordController,
-                prefixIcon: const Icon(Icons.password_outlined),
+                prefixIcon: const Icon(Icons.lock_outline),
                 labelText: 'Password',
                 hintText: 'Enter your password',
-                obscureText: true,
-              ),
-              CustomTextFormField(
-                controller: confirmPasswordController,
-                prefixIcon: const Icon(Icons.lock_outlined),
-                labelText: 'Confirm Password',
-                hintText: 'Enter your confirm password',
                 obscureText: true,
               ),
               Align(
