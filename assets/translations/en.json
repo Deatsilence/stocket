@@ -1,0 +1,42 @@
+{
+  "authentication": {
+    "login": "Login",
+    "email": "E-mail",
+    "password": "Password",
+    "sign_up": "Sign Up",
+    "forgot_password": "Forgot Password",
+    "reset_password": "Reset Password",
+    "send_reset_link": "Send Reset Link",
+    "confirm_password": "Confirm Password",
+    "name": "Name",
+    "surname": "Surname",
+    "logout": "Logout",
+    "email_placeholder": "Enter your e-mail address",
+    "password_placeholder": "Enter your password",
+    "confirm_password_placeholder": "Confirm your password",
+    "name_placeholder": "Enter your name",
+    "surname_placeholder": "Enter your surname",
+    "remember_me": "Remember Me",
+    "forgot_password_message": "Enter your e-mail address to reset your password",
+    "reset_password_message": "Enter your new password",
+    "reset_password_success": "Password reset successful",
+    "reset_password_fail": "Password reset failed",
+    "login_fail": "Login failed",
+    "register_fail": "Registration failed",
+    "register_success": "Registration successful",
+    "logout_success": "Logout successful",
+    "logout_fail": "Logout failed",
+    "login_required": "You must be logged in to access this page",
+    "email_required": "E-mail is required",
+    "email_email": "E-mail must be a valid e-mail address",
+    "password_required": "Password is required",
+    "password_min": "Password must be at least 6 characters",
+    "password_confirmed": "Passwords do not match",
+    "name_required": "Name is required",
+    "password_reset_link_sent": "Password reset link sent to your e-mail address",
+    "dont_have_account": "Don't have an account?"
+  },
+  "home": {
+    "title": "Home"
+  }
+}

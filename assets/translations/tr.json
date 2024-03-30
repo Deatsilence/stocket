@@ -1,0 +1,42 @@
+{
+  "authentication": {
+    "login": "Giriş Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "sign_up": "Kayıt Ol",
+    "forgot_password": "Şifremi Unuttum",
+    "reset_password": "Şifremi Sıfırla",
+    "send_reset_link": "Sıfırlama Linki Gönder",
+    "confirm_password": "Şifreyi Onayla",
+    "name": "Ad",
+    "surname": "Soyad",
+    "logout": "Çıkış Yap",
+    "email_placeholder": "E-posta adresinizi girin",
+    "password_placeholder": "Şifrenizi girin",
+    "confirm_password_placeholder": "Şifrenizi tekrar girin",
+    "name_placeholder": "Adınızı girin",
+    "surname_placeholder": "Soyadınızı girin",
+    "remember_me": "Beni Hatırla",
+    "forgot_password_message": "Şifrenizi sıfırlamak için e-posta adresinizi girin",
+    "reset_password_message": "Yeni şifrenizi girin",
+    "reset_password_success": "Şifreniz başarıyla sıfırlandı",
+    "reset_password_fail": "Şifre sıfırlama işlemi başarısız oldu",
+    "login_fail": "Giriş işlemi başarısız oldu",
+    "register_fail": "Kayıt işlemi başarısız oldu",
+    "register_success": "Kayıt işlemi başarılı oldu",
+    "logout_success": "Çıkış işlemi başarılı oldu",
+    "logout_fail": "Çıkış işlemi başarısız oldu",
+    "login_required": "Giriş yapmalısınız",
+    "email_required": "E-posta adresi gereklidir",
+    "email_email": "Geçerli bir e-posta adresi girin",
+    "password_required": "Şifre gereklidir",
+    "password_min": "Şifre en az 6 karakter olmalıdır",
+    "password_confirmed": "Şifreler eşleşmiyor",
+    "name_required": "Ad gereklidir",
+    "password_reset_link_sent": "Şifre sıfırlama linki e-posta adresinize gönderildi",
+    "dont_have_account": "Hesabınız yok mu?"
+  },
+  "home": {
+    "title": "Ana Sayfa"
+  }
+}

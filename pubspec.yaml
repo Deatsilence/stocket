@@ -15,6 +15,12 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
+  # Config
+  easy_localization: ^3.0.5
+
+  # Utility
+  easy_logger: ^0.0.2
+
   gen:
     path: module/gen
 
@@ -39,5 +45,5 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
 
-  # assets:
-  #   - assets/translations/
+  assets:
+    - assets/translations/
