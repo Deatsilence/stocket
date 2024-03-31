@@ -20,6 +20,7 @@ dependencies:
 
   # Utility
   easy_logger: ^0.0.2
+  logger: ^2.2.0
 
   gen:
     path: module/gen

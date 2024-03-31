@@ -1,13 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_logger/easy_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
+import 'package:stocket/product/init/application_initialize.dart';
 import 'package:stocket/product/init/language/product_localization.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  EasyLocalization.logger.enableLevels = [LevelMessages.error];
+  await ApplicationInitialize().make();
 
   runApp(ProductLocalization(child: const MyApp()));
 }
