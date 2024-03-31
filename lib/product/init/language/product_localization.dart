@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stocket/product/utility/constants/enums/locales.dart';
@@ -10,10 +12,10 @@ final class ProductLocalization extends EasyLocalization {
     required super.child,
     super.key,
   }) : super(
-          supportedLocales: _supportedLocales,
-          path: _translationPath,
-          useOnlyLangCode: true,
-        );
+            supportedLocales: _supportedLocales,
+            path: _translationPath,
+            useOnlyLangCode: true,
+            startLocale: _determineStartLocale());
 
   static final List<Locale> _supportedLocales = [
     const Locale('en', 'US'),
@@ -28,4 +30,18 @@ final class ProductLocalization extends EasyLocalization {
     required Locales value,
   }) async =>
       context.setLocale(value.locale);
+
+  /// [_determineStartLocale] is a method that determines the start locale of the application.
+  static Locale _determineStartLocale() {
+    String deviceLanguageCode = _getDeviceLanguageCode();
+    return _supportedLocales.firstWhere(
+      (locale) => locale.languageCode == deviceLanguageCode,
+      orElse: () => _supportedLocales.first,
+    );
+  }
+
+  /// [_getDeviceLanguageCode] is a method that gets the device language code.
+  static String _getDeviceLanguageCode() {
+    return Platform.localeName.split('_').first;
+  }
 }

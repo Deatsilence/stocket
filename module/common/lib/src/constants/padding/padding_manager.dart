@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// This is padding manager
 @immutable
 final class PaddingManager {
-  // TODO: All Paddings
+  /// All Paddings will be here
 
   /// [paddingManagerLessPaddingAll] is padding for normal as `10`
   static const EdgeInsets paddingManagerLessPaddingAll = EdgeInsets.all(8);
@@ -14,7 +14,7 @@ final class PaddingManager {
   /// [paddingManagerMorePaddingAll] is padding for more as `20`
   static const EdgeInsets paddingManagerMorePaddingAll = EdgeInsets.all(20);
 
-  // TODO: Symmetrical Paddings
+  /// Symmetrical Paddings will be here
 
   /// [paddingManagerNormalPaddingSymmetricHorizontal] is padding for normal
   /// as `10`
