@@ -47,12 +47,15 @@ class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
                 labelText: LocaleKeys.authentication_email.tr(),
                 hintText: LocaleKeys.authentication_email_placeholder.tr(),
                 keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextFormField(
                 controller: passwordController,
                 prefixIcon: const Icon(Icons.lock_outline),
                 labelText: LocaleKeys.authentication_password.tr(),
                 hintText: LocaleKeys.authentication_password_placeholder.tr(),
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.done,
                 obscureText: true,
               ),
               Align(

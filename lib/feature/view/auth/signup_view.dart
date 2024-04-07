@@ -34,6 +34,7 @@ class _SignUpViewState extends State<SignUpView>
                 labelText: LocaleKeys.authentication_name.tr(),
                 hintText: LocaleKeys.authentication_name_placeholder.tr(),
                 keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextFormField(
                 controller: surnameController,
@@ -41,6 +42,7 @@ class _SignUpViewState extends State<SignUpView>
                 labelText: LocaleKeys.authentication_surname.tr(),
                 hintText: LocaleKeys.authentication_surname_placeholder.tr(),
                 keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextFormField(
                 controller: emailController,
@@ -48,12 +50,15 @@ class _SignUpViewState extends State<SignUpView>
                 labelText: LocaleKeys.authentication_email.tr(),
                 hintText: LocaleKeys.authentication_email_placeholder.tr(),
                 keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextFormField(
                 controller: passwordController,
                 prefixIcon: const Icon(Icons.password_outlined),
                 labelText: LocaleKeys.authentication_password.tr(),
                 hintText: LocaleKeys.authentication_password_placeholder.tr(),
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.next,
                 obscureText: true,
               ),
               CustomTextFormField(
@@ -61,6 +66,8 @@ class _SignUpViewState extends State<SignUpView>
                 prefixIcon: const Icon(Icons.lock_outlined),
                 labelText: LocaleKeys.authentication_confirm_password.tr(),
                 hintText: LocaleKeys.authentication_confirm_password_placeholder.tr(),
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.done,
                 obscureText: true,
               ),
               Align(
