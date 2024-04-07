@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_title.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
@@ -15,11 +16,25 @@ final class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
+  double _expandedHeight = 200.0;
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: loginFormKey,
       child: BaseView(
+        sliverAppBar: SliverAppBar(
+          pinned: false,
+          expandedHeight: _expandedHeight,
+          flexibleSpace: FlexibleSpaceBar(
+            background: CurvedImage(
+              image: Assets.icons.icLoginLogistic.svg(
+                fit: BoxFit.fill,
+                package: 'gen',
+              ),
+            ),
+          ),
+        ),
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
             [
@@ -32,12 +47,15 @@ class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
                 labelText: LocaleKeys.authentication_email.tr(),
                 hintText: LocaleKeys.authentication_email_placeholder.tr(),
                 keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextFormField(
                 controller: passwordController,
                 prefixIcon: const Icon(Icons.lock_outline),
                 labelText: LocaleKeys.authentication_password.tr(),
                 hintText: LocaleKeys.authentication_password_placeholder.tr(),
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.done,
                 obscureText: true,
               ),
               Align(

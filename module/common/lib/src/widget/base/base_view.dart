@@ -6,20 +6,20 @@ final class BaseView<T> extends StatefulWidget {
   /// Constructor
   const BaseView({
     required this.onPageBuilder,
+    this.sliverAppBar,
     this.onDispose,
-    this.isAppBarActive = true,
     super.key,
   });
 
   /// [onPageBuilder] is the callback function that is called
   final Widget Function(BuildContext context, T value) onPageBuilder;
 
-  /// [isAppBarActive] is a boolean that determines if the view is for login or not.
-  final bool isAppBarActive;
-
   /// [onDispose] is the callback function that is called
   /// when the view is disposed.
   final VoidCallback? onDispose;
+
+  /// [sliverAppBar] is the sliver app bar for the view.
+  final SliverAppBar? sliverAppBar;
 
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
@@ -47,23 +47,13 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           }
         },
         child: SafeArea(
-          top: !widget.isAppBarActive,
+          top: !(widget.sliverAppBar != null),
           bottom: false,
           child: CustomScrollView(
             // physics: const BouncingScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
-              widget.isAppBarActive
-                  ? const SliverAppBar(
-                      pinned: false,
-                      expandedHeight: 200.0,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: CurvedImage(
-                          imagePath: 'https://picsum.photos/200',
-                        ),
-                      ),
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
+              widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),
               SliverPadding(
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricHorizontal,
                 sliver: widget.onPageBuilder(context, widget as T),

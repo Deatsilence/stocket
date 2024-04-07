@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
 import 'package:stocket/product/init/application_initialize.dart';
 import 'package:stocket/product/init/language/product_localization.dart';
+import 'package:stocket/product/init/theme/custom_light_theme.dart';
 
 Future<void> main() async {
   await ApplicationInitialize().make();
@@ -19,6 +20,7 @@ final class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Stocket',
+      theme: CustomLightTheme().themeData,
       debugShowCheckedModeBanner: false,
       home: const LoginView(),
       localizationsDelegates: context.localizationDelegates,
