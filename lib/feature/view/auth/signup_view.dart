@@ -22,7 +22,6 @@ class _SignUpViewState extends State<SignUpView>
     return Form(
       key: loginFormKey,
       child: BaseView(
-        isAppBarActive: false,
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
             [
