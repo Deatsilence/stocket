@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:stocket/feature/view/widget/auth_title.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 
 /// [SignUpView] is a [StatefulWidget] that displays the sign up view.
+@RoutePage()
 final class SignUpView extends StatefulWidget {
   /// Constructor
   const SignUpView({super.key});
@@ -19,8 +23,9 @@ class _SignUpViewState extends State<SignUpView>
     with AuthCommonViewMixin, SignUpViewMixin {
   @override
   Widget build(BuildContext context) {
+    log('SignUpView build');
     return Form(
-      key: loginFormKey,
+      key: signupFormKey,
       child: BaseView(
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
@@ -70,29 +75,12 @@ class _SignUpViewState extends State<SignUpView>
                 textInputAction: TextInputAction.done,
                 obscureText: true,
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(LocaleKeys.authentication_forgot_password).tr(),
-                ),
-              ),
               Padding(
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                 child: CustomElevatedButton(
                   onPressed: () {},
                   child: const Text(LocaleKeys.authentication_sign_up).tr(),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(LocaleKeys.authentication_dont_have_account).tr(),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(LocaleKeys.authentication_sign_up).tr(),
-                  ),
-                ],
               ),
             ],
           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,10 @@ import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_title.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/navigation/app_router.dart';
 
 /// [LoginView] is a [StatefulWidget] that displays the sign up view.
+@RoutePage()
 final class LoginView extends StatefulWidget {
   /// Constructor
   const LoginView({super.key});
@@ -20,6 +24,7 @@ class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
 
   @override
   Widget build(BuildContext context) {
+    log('LoginView build');
     return Form(
       key: loginFormKey,
       child: BaseView(
@@ -77,7 +82,9 @@ class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
                 children: [
                   const Text(LocaleKeys.authentication_dont_have_account).tr(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.router.push(SignUpRoute());
+                    },
                     child: const Text(LocaleKeys.authentication_sign_up).tr(),
                   ),
                 ],
