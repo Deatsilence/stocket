@@ -50,6 +50,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           top: !(widget.sliverAppBar != null),
           bottom: false,
           child: CustomScrollView(
+            shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
@@ -65,28 +66,3 @@ class _BaseViewState<T> extends State<BaseView<T>> {
     );
   }
 }
-
-// /// [_AuthBody] is a [StatelessWidget] that displays the body of the authentication view.
-// final class _AuthBody extends StatelessWidget {
-//   const _AuthBody({
-//     required this.widget,
-//   });
-
-//   final BaseView widget;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Align(
-//           alignment: Alignment.centerLeft,
-//           child: Text(
-//             widget.titleText,
-//             style: Theme.of(context).textTheme.headlineLarge,
-//           ),
-//         ),
-//         ...widget.formFields
-//       ],
-//     );
-//   }
-// }

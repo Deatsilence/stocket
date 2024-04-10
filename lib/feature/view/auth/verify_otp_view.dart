@@ -1,9 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
+import 'package:stocket/feature/view/widget/auth_title.dart';
+import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/utility/extension/list_gutter_extension.dart';
 
 part '../../part_of_view/part_of_verify_otp_view.dart';
 
@@ -23,7 +27,30 @@ class _VerifyOTPViewState extends State<VerifyOTPView> {
       onPageBuilder: (context, value) => SliverList(
         delegate: SliverChildListDelegate(
           [
+            AuthLabel(titleText: LocaleKeys.authentication_verify),
+            AuthLabel(
+              titleText: LocaleKeys.authentication_verify_email_sent,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).disabledColor,
+                  ),
+            ),
+            AuthLabel(titleText: "Mert", style: Theme.of(context).textTheme.bodyLarge),
             _CustomPinput(),
+            ...[
+              AuthLabel(
+                titleText: LocaleKeys.authentication_did_not_receive_verification_code,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: AuthLabel(
+                  titleText: LocaleKeys.authentication_resend_verification_code,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                ),
+              ),
+            ]
           ],
         ),
       ),

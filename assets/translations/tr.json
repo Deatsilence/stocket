@@ -34,7 +34,11 @@
     "password_confirmed": "Şifreler eşleşmiyor",
     "name_required": "Ad gereklidir",
     "password_reset_link_sent": "Şifre sıfırlama linki e-posta adresinize gönderildi",
-    "dont_have_account": "Hesabınız yok mu?"
+    "dont_have_account": "Hesabınız yok mu?",
+    "verify": "Onaylama",
+    "verify_email_sent": "Lütfen e-posta adresinize gönderilen doğrulama kodunu giriniz",
+    "did_not_receive_verification_code": "Doğrulama kodu E-posta adresinize ulaşmadı mı ?",
+    "resend_verification_code": "Doğrulama kodunu tekrar gönder"
   },
   "home": {
     "title": "Ana Sayfa"

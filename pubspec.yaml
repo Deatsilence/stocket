@@ -27,6 +27,7 @@ dependencies:
   google_fonts: ^6.2.1
   pinput: ^4.0.0
   sizer: ^2.0.15
+  gap: ^3.0.1
 
   gen:
     path: module/gen

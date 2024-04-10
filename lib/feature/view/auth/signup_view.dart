@@ -32,7 +32,7 @@ class _SignUpViewState extends State<SignUpView>
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
             [
-              const AuthTitle(
+              const AuthLabel(
                 titleText: LocaleKeys.authentication_sign_up,
               ),
               CustomTextFormField(
