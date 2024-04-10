@@ -50,7 +50,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           top: !(widget.sliverAppBar != null),
           bottom: false,
           child: CustomScrollView(
-            // physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
               widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),

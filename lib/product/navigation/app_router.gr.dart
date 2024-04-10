@@ -15,16 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AuthRootRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AuthRootView(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginView(),
-      );
-    },
-    SampleRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SampleView(),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -33,7 +33,27 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SignUpView(),
       );
     },
+    VerifyOTPRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const VerifyOTPView(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [AuthRootView]
+class AuthRootRoute extends PageRouteInfo<void> {
+  const AuthRootRoute({List<PageRouteInfo>? children})
+      : super(
+          AuthRootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -51,20 +71,6 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SampleView]
-class SampleRoute extends PageRouteInfo<void> {
-  const SampleRoute({List<PageRouteInfo>? children})
-      : super(
-          SampleRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SampleRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [SignUpView]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute({List<PageRouteInfo>? children})
@@ -74,6 +80,20 @@ class SignUpRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignUpRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [VerifyOTPView]
+class VerifyOTPRoute extends PageRouteInfo<void> {
+  const VerifyOTPRoute({List<PageRouteInfo>? children})
+      : super(
+          VerifyOTPRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'VerifyOTPRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -8,6 +8,7 @@ import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/mixin/signup_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_title.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/navigation/app_router.dart';
 
 /// [SignUpView] is a [StatefulWidget] that displays the sign up view.
 @RoutePage()
@@ -27,6 +28,7 @@ class _SignUpViewState extends State<SignUpView>
     return Form(
       key: signupFormKey,
       child: BaseView(
+        sliverAppBar: SliverAppBar(),
         onPageBuilder: (context, value) => SliverList(
           delegate: SliverChildListDelegate(
             [
@@ -78,7 +80,9 @@ class _SignUpViewState extends State<SignUpView>
               Padding(
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                 child: CustomElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.router.push(VerifyOTPRoute());
+                  },
                   child: const Text(LocaleKeys.authentication_sign_up).tr(),
                 ),
               ),

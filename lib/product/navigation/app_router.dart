@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:stocket/feature/view/auth/auth_root_view.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
-import 'package:stocket/feature/view/auth/sample_view.dart';
+import 'package:stocket/feature/view/auth/verify_otp_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -11,9 +12,16 @@ final class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: LoginRoute.page,
+          page: AuthRootRoute.page,
           initial: true,
-        ),
-        AutoRoute(page: SignUpRoute.page),
+          children: [
+            AutoRoute(
+              page: LoginRoute.page,
+              initial: true,
+            ),
+            AutoRoute(page: SignUpRoute.page),
+            AutoRoute(page: VerifyOTPRoute.page)
+          ],
+        )
       ];
 }
