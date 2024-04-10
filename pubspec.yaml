@@ -21,6 +21,9 @@ dependencies:
   # Navigation
   auto_route: ^8.0.3
 
+  # Network
+  dio: ^5.4.2+1
+
   # Utility
   easy_logger: ^0.0.2
   logger: ^2.2.0

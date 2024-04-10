@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/mixin/signup_view_mixin.dart';
-import 'package:stocket/feature/view/widget/auth_title.dart';
+import 'package:stocket/feature/view/widget/auth_label.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
 
