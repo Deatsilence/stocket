@@ -42,5 +42,8 @@
   },
   "home": {
     "title": "Ana Sayfa"
+  },
+  "errors": {
+    "unknown_response_type": "Bilinmeyen yanıt türü"
   }
 }

@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 final class AuthLabel extends StatelessWidget {
   /// Constructor
   const AuthLabel({
-    required String titleText,
+    required String text,
     TextStyle? style,
     TextAlign textAlign = TextAlign.center,
-  })  : _titleText = titleText,
+  })  : _text = text,
         _textAlign = textAlign,
         _style = style;
 
-  /// [_titleText] is the text to display.
-  final String _titleText;
+  /// [_text] is the text to display.
+  final String _text;
 
   /// [_textAlign] is the alignment of the text.
   final TextAlign _textAlign;
@@ -27,7 +27,7 @@ final class AuthLabel extends StatelessWidget {
     return Padding(
       padding: PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
       child: Text(
-        _titleText,
+        _text,
         textAlign: _textAlign,
         style: _style ??
             Theme.of(context).textTheme.headlineMedium?.copyWith(

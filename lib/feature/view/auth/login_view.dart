@@ -44,7 +44,7 @@ class _LoginViewState extends State<LoginView> with AuthCommonViewMixin {
           delegate: SliverChildListDelegate(
             [
               const AuthLabel(
-                titleText: LocaleKeys.authentication_login,
+                text: LocaleKeys.authentication_login,
               ),
               CustomTextFormField(
                 controller: emailController,

@@ -42,5 +42,8 @@
   },
   "home": {
     "title": "Home"
+  },
+  "errors": {
+    "unknown_response_type": "Unknown response type"
   }
 }
