@@ -33,6 +33,7 @@ class _SignUpViewState extends State<SignUpView>
           delegate: SliverChildListDelegate(
             [
               const AuthLabel(
+                textAlign: TextAlign.start,
                 text: LocaleKeys.authentication_sign_up,
               ),
               CustomTextFormField(
