@@ -1,23 +1,6 @@
 import 'package:envied/envied.dart';
 import 'package:gen/src/environment/app_configuration.dart';
 
-// BASE_URL=localhost:9000
-// POST_USERS_SIGNUP_DOMAIN=/users/signup
-// POST_USERS_LOGIN_DOMAIN=/users/login
-// GET_USERS_DOMAIN=/users
-// GET_USERS_BY_ID_DOMAIN=/users/{userid}
-// POST_PRODUCTS_ADD_DOMAIN=/products/add
-// GET_PRODUCTS_DOMAIN=/products
-// GET_PRODUCTS_BY_ID_DOMAIN=/products/{productid}
-// DELETE_PRODUCTS_BY_ID_DOMAIN=/products/delete/{productid}
-// PUT_PRODUCTS_BY_ID_DOMAIN=/products/update/{productid}
-// PATCH_PRODUCTS_BY_ID_DOMAIN=/products/updatepartially
-// POST_LOGOUT_DOMAIN=/users/logout
-// POST_REQUEST_RESET_PASSWORD_DOMAIN=/passwordreset/request
-// POST_RESET_PASSWORD_DOMAIN=/passwordreset/confirm
-// POST_VERIFY_EMAIL_DOMAIN=/users/verifyemail
-// POST_SEND_VERIFICATION_CODE_TO_EMAIL_DOMAIN=/users/verifyemail
-
 part 'dev_env.g.dart';
 
 @Envied(

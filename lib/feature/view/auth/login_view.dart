@@ -27,6 +27,8 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
   @override
   Widget build(BuildContext context) {
     log('LoginView build');
+    log('Base URL: ${DevEnv().baseUrl}');
+    log('SIGNUP URL: ${DevEnv().postUsersSignupDomain}');
     return BlocProvider(
       create: (context) => loginViewModel,
       child: Form(

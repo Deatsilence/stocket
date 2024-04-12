@@ -17,7 +17,7 @@ final class LoginViewModel extends BaseCubit<LoginState> {
     await CommonService.instance
         .post<User>(domain: DevEnv().postUsersSignupDomain, model: user)
         .then((value) {
-      log('Value: $value');
+      log('status: ${value.isSuccess}');
       _changeLoading();
     });
   }

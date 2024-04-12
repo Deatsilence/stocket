@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:gen/gen.dart';
@@ -10,28 +12,29 @@ import 'package:stocket/product/utility/response/api_response.dart';
 /// [CommonService] is a common service class that contains common methods
 /// that can be used in multiple places.
 /// Like `CRUD` processes, `API` calls, etc.
-class CommonService with CommonServiceMixin {
+final class CommonService with CommonServiceMixin {
   CommonService._() {
     _baseUrl = DevEnv().baseUrl;
+    log('Base URL: $_baseUrl');
 
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,
       connectTimeout: Duration(seconds: 5),
-      receiveTimeout: Duration(seconds: 3),
+      receiveTimeout: Duration(seconds: 5),
     );
     _dio = Dio(baseOptions);
 
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          if (shouldAddToken(options: options)) {
-            // final token = getToken(); // Token'ı alın
-            // options.headers['token'] = 'Bearer $token';
-          }
-          return handler.next(options);
-        },
-      ),
-    );
+    // _dio.interceptors.add(
+    //   InterceptorsWrapper(
+    //     onRequest: (options, handler) {
+    //       if (shouldAddToken(options: options)) {
+    //         // final token = getToken(); // Token'ı alın
+    //         // options.headers['token'] = 'Bearer $token';
+    //       }
+    //       return handler.next(options);
+    //     },
+    //   ),
+    // );
   }
 
   static CommonService instance = CommonService._();
@@ -46,7 +49,7 @@ class CommonService with CommonServiceMixin {
     required T model,
   }) async {
     try {
-      final response = await _dio.get<dynamic>('/$domain');
+      final response = await _dio.get<dynamic>('$domain');
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;
 
@@ -87,7 +90,7 @@ class CommonService with CommonServiceMixin {
   }) async {
     try {
       final response = await _dio.post<dynamic>(
-        '/$domain',
+        '$_baseUrl$domain',
         data: model.toJson(),
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
