@@ -3,6 +3,9 @@ import 'package:stocket/feature/view/auth/signup_view.dart';
 
 /// [SignUpViewMixin] is a [State] mixin that contains the login view logic.
 mixin SignUpViewMixin on State<SignUpView> {
+  /// [_signupFormKey] is the key for the login form.
+  late final GlobalKey<FormState> _signupFormKey;
+
   /// [_nameController] is the controller for the email text field.
   late final TextEditingController _nameController;
 
@@ -11,6 +14,9 @@ mixin SignUpViewMixin on State<SignUpView> {
 
   /// [_confirmPasswordController] is the controller for the password text field.
   late final TextEditingController _confirmPasswordController;
+
+  /// [signupFormKey] is the key for the login form.
+  GlobalKey<FormState> get signupFormKey => _signupFormKey;
 
   /// [nameController] is the controller for the email text field.
   TextEditingController get nameController => _nameController;
@@ -24,6 +30,7 @@ mixin SignUpViewMixin on State<SignUpView> {
   @override
   void initState() {
     super.initState();
+    _signupFormKey = GlobalKey<FormState>();
     _nameController = TextEditingController();
     _surnameController = TextEditingController();
     _confirmPasswordController = TextEditingController();

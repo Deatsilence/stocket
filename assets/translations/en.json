@@ -34,9 +34,16 @@
     "password_confirmed": "Passwords do not match",
     "name_required": "Name is required",
     "password_reset_link_sent": "Password reset link sent to your e-mail address",
-    "dont_have_account": "Don't have an account?"
+    "dont_have_account": "Don't have an account?",
+    "verify": "Verify",
+    "verify_email_sent": "Please enter the verification code sent to your e-mail address",
+    "did_not_receive_verification_code": "Did not receive the verification code?",
+    "resend_verification_code": "Resend verification code"
   },
   "home": {
     "title": "Home"
+  },
+  "errors": {
+    "unknown_response_type": "Unknown response type"
   }
 }
