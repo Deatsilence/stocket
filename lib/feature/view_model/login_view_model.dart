@@ -11,14 +11,4 @@ final class LoginViewModel extends BaseCubit<LoginState> {
   void _changeLoading() {
     emit(state.copyWith(isLoading: !state.isLoading));
   }
-
-  Future<void> signUp({required User user}) async {
-    _changeLoading();
-    await CommonService.instance
-        .post<User>(domain: DevEnv().postUsersSignupDomain, model: user)
-        .then((value) {
-      log('status: ${value.isSuccess}');
-      _changeLoading();
-    });
-  }
 }

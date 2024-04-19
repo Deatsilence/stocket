@@ -89,16 +89,8 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                   children: [
                     const Text(LocaleKeys.authentication_dont_have_account).tr(),
                     TextButton(
-                      onPressed: () async {
-                        await loginViewModel.signUp(
-                          user: User(
-                              name: 'Mert',
-                              surname: 'Dogan',
-                              password: 'Mertdogan3120',
-                              email: 'mert_im2000@hotmail.com',
-                              usertype: "USER"),
-                        );
-                        // context.router.push(SignUpRoute());
+                      onPressed: () {
+                        context.router.push(SignUpRoute());
                       },
                       child: const Text(LocaleKeys.authentication_sign_up).tr(),
                     ),

@@ -5,4 +5,14 @@ enum UserType {
 
   /// [user] observes products
   user;
+
+  /// [name] is used to get the name of the user type.:
+  String get name {
+    switch (this) {
+      case UserType.admin:
+        return 'ADMIN';
+      case UserType.user:
+        return 'USER';
+    }
+  }
 }

@@ -23,6 +23,10 @@ final class ApiResponse<T> {
 
   bool get isSuccess => _result == HttpResult.success;
 
+  T? get data => _data;
+
+  String? get error => _error;
+
   @override
   String toString() {
     if (isSuccess) {
