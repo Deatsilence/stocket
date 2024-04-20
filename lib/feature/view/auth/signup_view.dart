@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/mixin/signup_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_label.dart';
+import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/signup_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/signup_state.dart';
@@ -105,40 +106,13 @@ class _SignUpViewState extends State<SignUpView>
                 ),
               ),
             ),
-            _TransparentScreen(
+            TransparentScreen<SignUpViewModel, SignUpState>(
               child: Assets.lottie.lotLoading.lottie(package: 'gen'),
+              selector: (state) => state.isLoading,
             )
           ],
         ),
       ),
-    );
-  }
-}
-
-final class _TransparentScreen extends StatelessWidget {
-  const _TransparentScreen({required this.child});
-
-  final Widget? child;
-
-  // TODO : viewmodel, state and bloc should be passed as parameter
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<SignUpViewModel, SignUpState, bool>(
-      selector: (state) {
-        return state.isLoading;
-      },
-      builder: (context, state) {
-        return state
-            ? SizedBox(
-                height: 100.h,
-                width: 100.w,
-                child: ColoredBox(
-                  color: Colors.black.withOpacity(0.5),
-                  child: child ?? SizedBox.shrink(),
-                ),
-              )
-            : const SizedBox.shrink();
-      },
     );
   }
 }

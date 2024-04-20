@@ -12,6 +12,7 @@ import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/verify_otp_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
+import 'package:stocket/product/state/verify_otp_state.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 part '../../part_of_view/part_of_verify_otp_view.dart';
@@ -32,43 +33,52 @@ class _VerifyOTPViewState extends State<VerifyOTPView> with VerifyOTPViewMixin {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => verifyOTPViewModel,
-      child: BaseView(
-        onPageBuilder: (context, value) => SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              AuthLabel(text: LocaleKeys.authentication_verify),
-              AuthLabel(
-                text: LocaleKeys.authentication_verify_email_sent,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).disabledColor,
-                    ),
-              ),
-              AuthLabel(text: widget.email, style: Theme.of(context).textTheme.bodyLarge),
-              _CustomPinput(
-                verifyOTPViewModel: verifyOTPViewModel,
-                email: widget.email,
-              ),
-              Column(
-                children: [
+      child: Stack(
+        children: [
+          BaseView(
+            onPageBuilder: (context, value) => SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  AuthLabel(text: LocaleKeys.authentication_verify),
                   AuthLabel(
-                    text: LocaleKeys.authentication_did_not_receive_verification_code,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    text: LocaleKeys.authentication_verify_email_sent,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).disabledColor,
+                        ),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: AuthLabel(
-                      text: LocaleKeys.authentication_resend_verification_code,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            decoration: TextDecoration.underline,
-                          ),
-                    ),
+                  AuthLabel(
+                      text: widget.email, style: Theme.of(context).textTheme.bodyLarge),
+                  _CustomPinput(
+                    verifyOTPViewModel: verifyOTPViewModel,
+                    email: widget.email,
                   ),
+                  Column(
+                    children: [
+                      AuthLabel(
+                        text: LocaleKeys.authentication_did_not_receive_verification_code,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: AuthLabel(
+                          text: LocaleKeys.authentication_resend_verification_code,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                decoration: TextDecoration.underline,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ).onlyPadding(top: 2.h),
+                  CountDown(startValue: countDown),
                 ],
-              ).onlyPadding(top: 2.h),
-              CountDown(startValue: countDown),
-            ],
+              ),
+            ),
           ),
-        ),
+          TransparentScreen<VerifyOTPViewModel, VerifyOTPState>(
+            child: Assets.lottie.lotLoading.lottie(package: 'gen'),
+            selector: (state) => state.isLoading,
+          ),
+        ],
       ),
     );
   }
