@@ -109,8 +109,8 @@ class _SignUpViewState extends State<SignUpView>
             _TransparentScreen(
               child: Assets.lottie.lotLoading.lottie(
                 package: 'gen',
-                animate: true,
-                repeat: true,
+                height: 1.h,
+                width: 1.w,
               ),
             )
           ],
@@ -120,7 +120,7 @@ class _SignUpViewState extends State<SignUpView>
   }
 
   Future<void> _onSignUpPressed() async {
-    if (isSignUpValid()) {
+    if (!isSignUpValid()) {
       final user = User(
           name: nameController.text,
           surname: surnameController.text,
@@ -134,7 +134,7 @@ class _SignUpViewState extends State<SignUpView>
 }
 
 final class _TransparentScreen extends StatelessWidget {
-  const _TransparentScreen({this.child});
+  const _TransparentScreen({required this.child});
 
   final Widget? child;
 
@@ -151,7 +151,7 @@ final class _TransparentScreen extends StatelessWidget {
                 width: 100.w,
                 child: ColoredBox(
                   color: Colors.black.withOpacity(0.5),
-                  child: child ?? const SizedBox.shrink(),
+                  child: child ?? SizedBox.shrink(),
                 ),
               )
             : const SizedBox.shrink();

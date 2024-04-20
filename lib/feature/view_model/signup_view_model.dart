@@ -14,8 +14,9 @@ final class SignUpViewModel extends BaseCubit<SignUpState> {
 
   Future<void> signUp({required User user}) async {
     _changeLoading();
-    await CommonService.instance
-        .post<User>(domain: DevEnv().postUsersSignupDomain, model: user)
+    await Future.delayed(const Duration(seconds: 5))
+        // await CommonService.instance
+        //     .post<User>(domain: DevEnv().postUsersSignupDomain, model: user)
         .then((value) {
       log('value: ${value.toString()}');
       _changeLoading();

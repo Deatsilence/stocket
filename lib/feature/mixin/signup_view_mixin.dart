@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +26,6 @@ mixin SignUpViewMixin on State<SignUpView> {
   /// [_confirmPasswordController] is the controller for the password text field.
   late final TextEditingController _confirmPasswordController;
 
-  /// [_animationController] is the controller for the animation.
-  late final AnimationController _animationController;
-
   /// [signupViewModel] is the view model for the sign up view.
   SignUpViewModel get signupViewModel => _signupViewModel;
 
@@ -41,9 +40,6 @@ mixin SignUpViewMixin on State<SignUpView> {
 
   /// [confirmPasswordController] is the controller for the password text field.
   TextEditingController get confirmPasswordController => _confirmPasswordController;
-
-  /// [animationController] is the controller for the animation.
-  AnimationController get animationController => _animationController;
 
   @override
   void initState() {
@@ -80,8 +76,10 @@ mixin SignUpViewMixin on State<SignUpView> {
   bool isSignUpValid() {
     if (_signupFormKey.hasValue && _signupFormKey.currentState!.validate()) {
       _signupFormKey.currentState!.save();
+      log('Sign up is valid');
       return true;
     }
+    log('Sign up is not valid');
     return false;
   }
 }

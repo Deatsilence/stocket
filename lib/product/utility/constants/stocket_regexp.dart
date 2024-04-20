@@ -7,6 +7,6 @@ final class StocketRegExp {
 
   /// [passwordRegexp] is regexp for password
   RegExp get passwordRegexp => RegExp(
-        r'^(?=.{8,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[^\w\s]{1,})(?=.*[a-zA-Z]{3,})',
+        r"^(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s])(?=.*[a-zA-Z]{3,})",
       );
 }
