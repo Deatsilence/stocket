@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
 import 'package:stocket/feature/view_model/signup_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
@@ -81,5 +82,35 @@ mixin SignUpViewMixin on State<SignUpView> {
     }
     log('Sign up is not valid');
     return false;
+  }
+
+  Future<void> onSignUpPressed() async {
+    if (!isSignUpValid()) {
+      // final user = User(
+      //     name: nameController.text,
+      //     surname: surnameController.text,
+      //     email: emailController.text,
+      //     password: passwordController.text,
+      //     usertype: UserType.user.name);
+      final user = User(
+          name: 'Mert',
+          surname: 'Dogan',
+          email: 'mert_im2000@hotmail.com',
+          password: 'Sylar3120.',
+          usertype: UserType.user.name);
+      log('user: $user');
+      await signupViewModel.signUp(user: user).then(
+        (value) {
+          log('value: ${value.toString()}');
+          value.isSuccess
+              ? context.router.pushAndPopUntil(
+                  VerifyOTPRoute(email: user.email!),
+                  predicate: (route) => route.settings.name == SignUpRoute.name,
+                )
+              : null;
+        },
+      );
+      // TODO: Alert Dialog will be come to instead of null
+    }
   }
 }

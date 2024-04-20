@@ -3,25 +3,25 @@ import 'package:gen/gen.dart';
 import 'package:logger/logger.dart';
 import 'package:stocket/product/service/common_service.dart';
 import 'package:stocket/product/state/base/base_cubit.dart';
-import 'package:stocket/product/state/signup_state.dart';
+import 'package:stocket/product/state/verify_otp_state.dart';
 import 'package:stocket/product/utility/response/api_response.dart';
 
-final class SignUpViewModel extends BaseCubit<SignUpState> {
-  SignUpViewModel() : super(SignUpState(isLoading: false));
+final class VerifyOTPViewModel extends BaseCubit<VerifyOTPState> {
+  VerifyOTPViewModel() : super(VerifyOTPState(isLoading: false));
 
   void _changeLoading() {
     emit(state.copyWith(isLoading: !state.isLoading));
   }
 
-  Future<ApiResponse<dynamic>> signUp({required User user}) async {
+  Future<ApiResponse<dynamic>> verifyOTP({required VerifyOTP otp}) async {
     _changeLoading();
     try {
-      var response = await CommonService.instance.post<User>(
-        domain: DevEnv().postUsersSignupDomain,
-        model: user,
+      var response = await CommonService.instance.post<VerifyOTP>(
+        domain: DevEnv().postVerifyEmailDomain,
+        model: otp,
       );
 
-      log('response: ${response.toString()}');
+      log('value: ${response.toString()}');
       _changeLoading();
 
       return response;

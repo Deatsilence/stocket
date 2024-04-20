@@ -12,7 +12,6 @@ import 'package:stocket/feature/mixin/signup_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_label.dart';
 import 'package:stocket/feature/view_model/signup_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
-import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/state/signup_state.dart';
 
 /// [SignUpView] is a [StatefulWidget] that displays the sign up view.
@@ -98,7 +97,7 @@ class _SignUpViewState extends State<SignUpView>
                       padding:
                           PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                       child: CustomElevatedButton(
-                        onPressed: _onSignUpPressed,
+                        onPressed: onSignUpPressed,
                         child: const Text(LocaleKeys.authentication_sign_up).tr(),
                       ),
                     ),
@@ -107,29 +106,12 @@ class _SignUpViewState extends State<SignUpView>
               ),
             ),
             _TransparentScreen(
-              child: Assets.lottie.lotLoading.lottie(
-                package: 'gen',
-                height: 1.h,
-                width: 1.w,
-              ),
+              child: Assets.lottie.lotLoading.lottie(package: 'gen'),
             )
           ],
         ),
       ),
     );
-  }
-
-  Future<void> _onSignUpPressed() async {
-    if (!isSignUpValid()) {
-      final user = User(
-          name: nameController.text,
-          surname: surnameController.text,
-          email: emailController.text,
-          password: passwordController.text,
-          usertype: UserType.user.name);
-
-      await signupViewModel.signUp(user: user);
-    }
   }
 }
 
@@ -138,6 +120,7 @@ final class _TransparentScreen extends StatelessWidget {
 
   final Widget? child;
 
+  // TODO : viewmodel, state and bloc should be passed as parameter
   @override
   Widget build(BuildContext context) {
     return BlocSelector<SignUpViewModel, SignUpState, bool>(

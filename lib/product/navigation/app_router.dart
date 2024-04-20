@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:stocket/feature/view/auth/auth_root_view.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
