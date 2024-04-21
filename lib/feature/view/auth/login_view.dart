@@ -8,8 +8,11 @@ import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
 import 'package:stocket/feature/mixin/login_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_label.dart';
+import 'package:stocket/feature/view/widget/index.dart';
+import 'package:stocket/feature/view_model/login_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
+import 'package:stocket/product/state/login_state.dart';
 
 /// [LoginView] is a [StatefulWidget] that displays the sign up view.
 @RoutePage()
@@ -33,72 +36,81 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
       create: (context) => loginViewModel,
       child: Form(
         key: loginFormKey,
-        child: BaseView(
-          sliverAppBar: SliverAppBar(
-            pinned: false,
-            expandedHeight: _expandedHeight,
-            flexibleSpace: FlexibleSpaceBar(
-              background: CurvedImage(
-                image: Assets.icons.icLoginLogistic.svg(
-                  fit: BoxFit.fill,
-                  package: 'gen',
+        child: Stack(
+          children: [
+            BaseView(
+              sliverAppBar: SliverAppBar(
+                pinned: false,
+                expandedHeight: _expandedHeight,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: CurvedImage(
+                    image: Assets.icons.icLoginLogistic.svg(
+                      fit: BoxFit.fill,
+                      package: 'gen',
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          onPageBuilder: (context, value) => SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                const AuthLabel(
-                  textAlign: TextAlign.start,
-                  text: LocaleKeys.authentication_login,
-                ),
-                CustomTextFormField(
-                  controller: emailController,
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  labelText: LocaleKeys.authentication_email.tr(),
-                  hintText: LocaleKeys.authentication_email_placeholder.tr(),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                ),
-                CustomTextFormField(
-                  controller: passwordController,
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  labelText: LocaleKeys.authentication_password.tr(),
-                  hintText: LocaleKeys.authentication_password_placeholder.tr(),
-                  keyboardType: TextInputType.visiblePassword,
-                  textInputAction: TextInputAction.done,
-                  obscureText: true,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(LocaleKeys.authentication_forgot_password).tr(),
-                  ),
-                ),
-                Padding(
-                  padding: PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
-                  child: CustomElevatedButton(
-                    onPressed: () {},
-                    child: const Text(LocaleKeys.authentication_login).tr(),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(LocaleKeys.authentication_dont_have_account).tr(),
-                    TextButton(
-                      onPressed: () {
-                        context.router.push(SignUpRoute());
-                      },
-                      child: const Text(LocaleKeys.authentication_sign_up).tr(),
+              onPageBuilder: (context, value) => SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    const AuthLabel(
+                      textAlign: TextAlign.start,
+                      text: LocaleKeys.authentication_login,
+                    ),
+                    CustomTextFormField(
+                      controller: emailController,
+                      prefixIcon: const Icon(Icons.email_outlined),
+                      labelText: LocaleKeys.authentication_email.tr(),
+                      hintText: LocaleKeys.authentication_email_placeholder.tr(),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    CustomTextFormField(
+                      controller: passwordController,
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      labelText: LocaleKeys.authentication_password.tr(),
+                      hintText: LocaleKeys.authentication_password_placeholder.tr(),
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      obscureText: true,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(LocaleKeys.authentication_forgot_password).tr(),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
+                      child: CustomElevatedButton(
+                        onPressed: loginOnPressed,
+                        child: const Text(LocaleKeys.authentication_login).tr(),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(LocaleKeys.authentication_dont_have_account).tr(),
+                        TextButton(
+                          onPressed: () {
+                            context.router.push(SignUpRoute());
+                          },
+                          child: const Text(LocaleKeys.authentication_sign_up).tr(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            TransparentScreen<LoginViewModel, LoginState>(
+              child: Assets.lottie.lotLoading.lottie(package: 'gen'),
+              selector: (state) => state.isLoading,
+            )
+          ],
         ),
       ),
     );

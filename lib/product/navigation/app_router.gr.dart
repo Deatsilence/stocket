@@ -21,6 +21,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthRootView(),
       );
     },
+    DashboardRootRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DashboardRootView(),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HomeView(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -56,6 +68,34 @@ class AuthRootRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DashboardRootView]
+class DashboardRootRoute extends PageRouteInfo<void> {
+  const DashboardRootRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardRootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HomeView]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -95,6 +95,7 @@ final class CommonService with CommonServiceMixin {
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;
+      log('response: $responseBody');
 
       switch (responseCode) {
         case HttpResult.success:
@@ -114,7 +115,11 @@ final class CommonService with CommonServiceMixin {
           );
 
         default:
-          return ApiResponse.failure(data: responseBody, result: responseCode);
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
       }
     } catch (e) {
       Logger().e(e);
