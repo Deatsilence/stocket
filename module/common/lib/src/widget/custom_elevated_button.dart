@@ -23,7 +23,6 @@ final class CustomElevatedButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         onPressed: onPressed,
-        // TODO: This will edit later for in INFD-6
         style: Theme.of(context).elevatedButtonTheme.style,
         child: child,
       ),

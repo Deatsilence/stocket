@@ -20,7 +20,7 @@ final class CommonService with CommonServiceMixin {
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,
       connectTimeout: Duration(seconds: 5),
-      receiveTimeout: Duration(seconds: 5),
+      receiveTimeout: Duration(seconds: 30),
     );
     _dio = Dio(baseOptions);
 
@@ -95,12 +95,19 @@ final class CommonService with CommonServiceMixin {
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;
+      log('response: $responseBody');
 
       switch (responseCode) {
         case HttpResult.success:
           if (responseBody is Map) {
+            //TODO: data will be get dynamic response
             final data = model.fromJson(responseBody.cast<String, dynamic>());
-            return ApiResponse<T>.success(data: data);
+            return ApiResponse<dynamic>.success(data: data);
+          } else if (responseBody is List) {
+            final data = responseBody
+                .map((e) => model.fromJson(e as Map<String, dynamic>))
+                .toList();
+            return ApiResponse<dynamic>.success(data: data);
           }
           return ApiResponse.failure(
             result: HttpResult.unknown,
@@ -108,7 +115,11 @@ final class CommonService with CommonServiceMixin {
           );
 
         default:
-          return ApiResponse.failure(data: responseBody, result: responseCode);
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
       }
     } catch (e) {
       Logger().e(e);
