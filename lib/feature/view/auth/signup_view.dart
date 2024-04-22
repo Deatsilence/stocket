@@ -29,7 +29,7 @@ class _SignUpViewState extends State<SignUpView>
   @override
   Widget build(BuildContext context) {
     log('SignUpView build');
-    return BlocProvider(
+    return BlocProvider<SignUpViewModel>(
       create: (context) => signupViewModel,
       child: Form(
         key: signupFormKey,

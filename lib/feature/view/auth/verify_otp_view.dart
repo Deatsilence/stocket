@@ -31,7 +31,7 @@ final class VerifyOTPView extends StatefulWidget {
 class _VerifyOTPViewState extends State<VerifyOTPView> with VerifyOTPViewMixin {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<VerifyOTPViewModel>(
       create: (context) => verifyOTPViewModel,
       child: Stack(
         children: [

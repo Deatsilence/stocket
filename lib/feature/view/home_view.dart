@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/home_view_mixin.dart';
 import 'package:stocket/feature/view/widget/index.dart';
+import 'package:stocket/feature/view/widget/side_menu.dart';
 import 'package:stocket/feature/view_model/home_view_model.dart';
 import 'package:stocket/product/state/home_state.dart';
 
@@ -20,11 +21,12 @@ final class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with HomeViewMixin {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HomeViewModel>(
       create: (context) => homeViewModel,
       child: Stack(
         children: [
           BaseView(
+            drawer: SideMenu(),
             sliverAppBar: SliverAppBar(),
             onPageBuilder: (context, value) => SliverList(
               delegate: SliverChildListDelegate(

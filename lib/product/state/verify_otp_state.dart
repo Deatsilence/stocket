@@ -4,7 +4,7 @@ final class VerifyOTPState extends BaseState {
   VerifyOTPState({bool isLoading = false}) : super(isLoading: isLoading);
 
   @override
-  List<Object?> get props => [isLoading];
+  List<Object?> get props => super.props..addAll([]);
 
   VerifyOTPState copyWith({bool? isLoading}) {
     return VerifyOTPState(
