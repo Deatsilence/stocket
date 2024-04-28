@@ -17,7 +17,7 @@ final class LoginViewModel extends BaseCubit<LoginState> {
   Future<ApiResponse<dynamic>> login({required User user}) async {
     _changeLoading();
     try {
-      var response = await CommonService.instance.post<User>(
+      var response = await CommonService.instance.postModel<User>(
         domain: DevEnv().postUsersLoginDomain,
         model: user,
       );

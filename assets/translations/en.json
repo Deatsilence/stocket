@@ -41,9 +41,11 @@
     "resend_verification_code": "Resend verification code"
   },
   "home": {
-    "title": "Home"
+    "title": "Home",
+    "add_a_new_product": "Add a new product"
   },
   "errors": {
-    "unknown_response_type": "Unknown response type"
+    "unknown_response_type": "Unknown response type",
+    "occur_an_error": "An error occurred"
   }
 }

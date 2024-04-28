@@ -7,6 +7,7 @@ final class BaseView<T> extends StatefulWidget {
   const BaseView({
     required this.onPageBuilder,
     this.sliverAppBar,
+    this.drawer,
     this.onDispose,
     super.key,
   });
@@ -20,6 +21,9 @@ final class BaseView<T> extends StatefulWidget {
 
   /// [sliverAppBar] is the sliver app bar for the view.
   final SliverAppBar? sliverAppBar;
+
+  /// [drawer] is the drawer for the view.
+  final Widget? drawer;
 
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
@@ -37,6 +41,8 @@ class _BaseViewState<T> extends State<BaseView<T>> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: widget.sliverAppBar != null ? widget.drawer : null,
+      drawerEnableOpenDragGesture: false,
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () {

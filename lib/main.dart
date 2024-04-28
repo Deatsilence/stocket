@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/product/init/application_initialize.dart';
 import 'package:stocket/product/init/language/product_localization.dart';
+import 'package:stocket/product/init/state_initialize.dart';
 import 'package:stocket/product/init/theme/custom_light_theme.dart';
 import 'package:stocket/product/navigation/app_router.dart';
 
 Future<void> main() async {
   await ApplicationInitialize().make();
 
-  runApp(ProductLocalization(child: const Stocket()));
+  runApp(
+    ProductLocalization(
+      child: StateInitialize(
+        child: const Stocket(),
+      ),
+    ),
+  );
 }
 
 /// [Stocket] is the root widget of the application.

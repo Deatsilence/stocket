@@ -5,7 +5,7 @@ final class HomeState extends BaseState {
   HomeState({bool isLoading = false}) : super(isLoading: isLoading);
 
   @override
-  List<Object?> get props => [isLoading];
+  List<Object?> get props => super.props..addAll([]);
 
   HomeState copyWith({bool? isLoading}) {
     return HomeState(
