@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +23,13 @@ final class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with HomeViewMixin {
   @override
   Widget build(BuildContext context) {
+    log('${context.router.stack}');
     return BlocProvider<HomeViewModel>(
       create: (context) => homeViewModel,
       child: Stack(
         children: [
           BaseView(
-            drawer: SideMenu(),
+            drawer: SideMenu(homeViewModel: homeViewModel),
             sliverAppBar: SliverAppBar(),
             onPageBuilder: (context, value) => SliverList(
               delegate: SliverChildListDelegate(

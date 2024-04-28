@@ -16,7 +16,7 @@ final class SignUpViewModel extends BaseCubit<SignUpState> {
   Future<ApiResponse<dynamic>> signUp({required User user}) async {
     _changeLoading();
     try {
-      var response = await CommonService.instance.post<User>(
+      var response = await CommonService.instance.postModel<User>(
         domain: DevEnv().postUsersSignupDomain,
         model: user,
       );

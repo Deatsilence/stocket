@@ -24,27 +24,31 @@ final class CommonService with CommonServiceMixin {
     );
     _dio = Dio(baseOptions);
 
-    // _dio.interceptors.add(
-    //   InterceptorsWrapper(
-    //     onRequest: (options, handler) {
-    //       if (shouldAddToken(options: options)) {
-    //         // final token = getToken(); // Token'ı alın
-    //         // options.headers['token'] = 'Bearer $token';
-    //       }
-    //       return handler.next(options);
-    //     },
-    //   ),
-    // );
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          if (shouldAddToken(options: options)) {
+            log('should add token');
+            options.headers['token'] = _token;
+          }
+          return handler.next(options);
+        },
+      ),
+    );
   }
 
   static CommonService instance = CommonService._();
 
+  late String _token;
   late String _baseUrl;
   late Dio _dio;
 
-  /// [get] method is generic method that is used to get data from the API.
+  /// [set] method is used to set the token.
+  set token(String token) => _token = token;
+
+  /// [getModel] method is generic method that is used to get data from the API.
   /// [ApiResponse] is returned based on the response.
-  Future<ApiResponse<dynamic>> get<T extends BaseModel<T>>({
+  Future<ApiResponse<dynamic>> getModel<T extends BaseModel<T>>({
     required String domain,
     required T model,
   }) async {
@@ -66,6 +70,7 @@ final class CommonService with CommonServiceMixin {
           }
 
           return ApiResponse.failure(
+            data: responseBody,
             result: HttpResult.unknown,
             error: LocaleKeys.errors_unknown_response_type.tr(),
           );
@@ -82,9 +87,9 @@ final class CommonService with CommonServiceMixin {
     }
   }
 
-  /// [post] method is a generic method that is used to send data to the API.
+  /// [postModel] method is a generic method that is used to send data to the API.
   /// [ApiResponse] is returned based on the response.
-  Future<ApiResponse<dynamic>> post<T extends BaseModel<T>>({
+  Future<ApiResponse<dynamic>> postModel<T extends BaseModel<T>>({
     required String domain,
     required T model,
   }) async {
@@ -110,9 +115,41 @@ final class CommonService with CommonServiceMixin {
             return ApiResponse<dynamic>.success(data: data);
           }
           return ApiResponse.failure(
+            data: responseBody,
             result: HttpResult.unknown,
             error: LocaleKeys.errors_unknown_response_type.tr(),
           );
+
+        default:
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
+      }
+    } catch (e) {
+      Logger().e(e);
+      return ApiResponse.failure(
+        error: e.toString(),
+        result: HttpResult.unknown,
+      );
+    }
+  }
+
+  /// [postWithoutModel] method is a generic method that is used to send data to the API.
+  Future<ApiResponse<dynamic>> postWithoutModel({
+    required String domain,
+  }) async {
+    try {
+      final response = await _dio.post<dynamic>(
+        '$_baseUrl$domain',
+      );
+      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseBody = response.data;
+
+      switch (responseCode) {
+        case HttpResult.success:
+          return ApiResponse<dynamic>.success(data: responseBody);
 
         default:
           return ApiResponse.failure(

@@ -41,9 +41,11 @@
     "resend_verification_code": "Doğrulama kodunu tekrar gönder"
   },
   "home": {
-    "title": "Ana Sayfa"
+    "title": "Ana Sayfa",
+    "add_a_new_product": "Yeni Ürün Ekle"
   },
   "errors": {
-    "unknown_response_type": "Bilinmeyen yanıt türü"
+    "unknown_response_type": "Bilinmeyen yanıt türü",
+    "occur_an_error": "Bir hata oluştu"
   }
 }

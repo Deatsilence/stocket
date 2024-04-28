@@ -16,7 +16,7 @@ final class VerifyOTPViewModel extends BaseCubit<VerifyOTPState> {
   Future<ApiResponse<dynamic>> verifyOTP({required VerifyOTP otp}) async {
     _changeLoading();
     try {
-      var response = await CommonService.instance.post<VerifyOTP>(
+      var response = await CommonService.instance.postModel<VerifyOTP>(
         domain: DevEnv().postVerifyEmailDomain,
         model: otp,
       );
