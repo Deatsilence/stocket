@@ -69,7 +69,10 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     super.dispose();
   }
 
-  Future<void> onPressedCreateProduct({required int? category}) async {
+  Future<void> onPressedCreateProduct({
+    required int? category,
+    required String token,
+  }) async {
     final product = Product(
       barcode: "444444444",
       name: "mouse",
@@ -78,6 +81,6 @@ mixin ProductAddViewMixin on State<ProductAddView> {
       price: 4000,
       stock: 10,
     );
-    await productAddViewModel.createProduct(product: product);
+    await productAddViewModel.createProduct(product: product, token: token);
   }
 }

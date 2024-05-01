@@ -17,9 +17,13 @@ final class ProductAddViewModel extends BaseCubit<ProductAddState> {
     emit(state.copyWith(category: category));
   }
 
-  Future<ApiResponse<dynamic>> createProduct({required Product product}) async {
+  Future<ApiResponse<dynamic>> createProduct({
+    required Product product,
+    required String token,
+  }) async {
     _changeLoading();
     try {
+      CommonService.instance.token = token;
       var response = await CommonService.instance.postModel<Product>(
         domain: DevEnv().postProductsAddDomain,
         model: product,
