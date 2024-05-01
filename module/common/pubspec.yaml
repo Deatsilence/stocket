@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Selecting for a category
+  chips_choice: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

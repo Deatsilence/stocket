@@ -14,6 +14,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
     this.barcode,
     this.createdat,
     this.description,
+    this.category,
     this.name,
     this.price,
     this.productid,
@@ -29,6 +30,9 @@ final class Product extends BaseModel<Product> with EquatableMixin {
 
   /// [description] is the description of product
   final String? description;
+
+  /// [category] is the category of product
+  final int? category;
 
   /// [name] is the name of product
   final String? name;
@@ -56,6 +60,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
         barcode,
         createdat,
         description,
+        category,
         name,
         price,
         productid,
@@ -68,6 +73,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
     String? barcode,
     String? createdat,
     String? description,
+    int? category,
     String? name,
     int? price,
     String? productid,
@@ -78,6 +84,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
       barcode: barcode ?? this.barcode,
       createdat: createdat ?? this.createdat,
       description: description ?? this.description,
+      category: category ?? this.category,
       name: name ?? this.name,
       price: price ?? this.price,
       productid: productid ?? this.productid,

@@ -11,17 +11,11 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
   /// [_loginFormKey] is the key for the login form.
   late final GlobalKey<FormState> _loginFormKey;
 
-  // /// [_rootViewModel] is the view model for the root view.
-  // late final RootViewModel _rootViewModel;
-
   /// [_loginViewModel] is the view model for the login view.
   late final LoginViewModel _loginViewModel;
 
   /// [loginFormKey] is the key for the login form.
   GlobalKey<FormState> get loginFormKey => _loginFormKey;
-
-  // /// [rootViewModel] is the view model for the root view.
-  // RootViewModel get rootViewModel => _rootViewModel;
 
   /// [loginViewModel] is the view model for the login view.
   LoginViewModel get loginViewModel => _loginViewModel;
@@ -30,7 +24,6 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
   void initState() {
     super.initState();
     _loginFormKey = GlobalKey<FormState>();
-    // _rootViewModel = RootViewModel();
     _loginViewModel = LoginViewModel();
   }
 
@@ -40,7 +33,7 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
   }
 
   Future<void> loginOnPressed() async {
-    var user = User(
+    final user = User(
       email: 'mert_im2000@hotmail.com',
       password: 'Sylar3120.',
     );
