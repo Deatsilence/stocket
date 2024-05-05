@@ -65,6 +65,7 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                       hintText: LocaleKeys.authentication_email_placeholder.tr(),
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
+                      validator: emailValidator,
                     ),
                     CustomTextFormField(
                       controller: passwordController,
@@ -74,6 +75,7 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
                       obscureText: true,
+                      validator: passwordValidator,
                     ),
                     Align(
                       alignment: Alignment.centerRight,

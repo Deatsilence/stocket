@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
+import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [ProductAddViewMixin] is a [State] mixin that contains the home view logic.
@@ -57,11 +61,6 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   /// [stockController] is the controller for the stock field.
   TextEditingController get stockController => _stockController;
 
-  // /// [category] is the category of the product.
-  // set category(int value) {
-  //   _category = value;
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -85,6 +84,43 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _priceController.dispose();
     _stockController.dispose();
     super.dispose();
+  }
+
+  /// [barcodeValidator] is validator for surname field
+  String? barcodeValidator(String? value) =>
+      value.hasValue ? null : LocaleKeys.product_add_barcode_required.tr();
+
+  /// [nameValidator] is validator for name field
+  String? nameValidator(String? value) =>
+      value.hasValue && (value!.length >= 2 && value.length <= 50)
+          ? null
+          : LocaleKeys.product_add_name_required.tr();
+
+  /// [descriptionValidator] is validator for description field
+  String? descriptionValidator(String? value) =>
+      value.hasValue && (value!.length >= 2 && value.length <= 100)
+          ? null
+          : LocaleKeys.product_add_description_required.tr();
+
+  /// [priceValidator] is validator for price field
+  String? priceValidator(String? value) =>
+      value.hasValue && double.tryParse(value!) != null
+          ? null
+          : LocaleKeys.product_add_price_required.tr();
+
+  /// [stockValidator] is validator for stock field
+  String? stockValidator(String? value) => value.hasValue && int.tryParse(value!) != null
+      ? null
+      : LocaleKeys.product_add_stock_required.tr();
+
+  bool isAddingProductValid() {
+    if (_productAddFormKey.hasValue && _productAddFormKey.currentState!.validate()) {
+      _productAddFormKey.currentState!.save();
+      log('Adding a product is valid');
+      return true;
+    }
+    log('Adding a product is not valid');
+    return false;
   }
 
   Future<void> onPressedCreateProduct({
@@ -113,10 +149,12 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   }
 
   Future<void> onPressed({required int? state}) async {
-    final token = context.read<RootViewModel>().state.currentUser?.token;
-    await onPressedCreateProduct(
-      category: state,
-      token: token ?? '',
-    );
+    if (!isAddingProductValid()) {
+      final token = context.read<RootViewModel>().state.currentUser?.token;
+      await onPressedCreateProduct(
+        category: state,
+        token: token ?? '',
+      );
+    }
   }
 }

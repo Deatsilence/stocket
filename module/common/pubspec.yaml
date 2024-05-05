@@ -14,6 +14,9 @@ dependencies:
   # Selecting for a category
   chips_choice: ^3.0.1
 
+  # Scanning QR, Barcode
+  mobile_scanner: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

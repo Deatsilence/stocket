@@ -62,6 +62,7 @@
     "price_placeholder": "Lütfen Ürün fiyatını girin",
     "category_placeholder": "Lütfen Ürün kategorisini seçin",
     "image_placeholder": "Lütfen Ürün resmini seçin",
+    "barcode_required": "Ürün barkodu gereklidir",
     "name_required": "Ürün adı gereklidir",
     "description_required": "Ürün açıklaması gereklidir",
     "price_required": "Ürün fiyatı gereklidir",
