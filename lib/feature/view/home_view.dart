@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
               label: const Text(LocaleKeys.home_add_a_new_product).tr(),
             ),
             drawer: SideMenu(homeViewModel: homeViewModel),
-            sliverAppBar: SliverAppBar(),
+            sliverAppBar: SliverAppBar(title: Text(LocaleKeys.home_title).tr()),
             onPageBuilder: (context, value) => SliverList(
               delegate: SliverChildListDelegate(
                 [],

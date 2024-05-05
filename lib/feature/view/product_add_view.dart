@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/product_add_view_mixin.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
+import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/product_add_state.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
@@ -34,7 +35,10 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
         child: Stack(
           children: [
             BaseView(
-              sliverAppBar: SliverAppBar(),
+              physics: AlwaysScrollableScrollPhysics(),
+              sliverAppBar: SliverAppBar(
+                title: Text(LocaleKeys.home_add_a_new_product).tr(),
+              ),
               onPageBuilder: (context, value) => SliverList(
                 delegate: SliverChildListDelegate(
                   [
@@ -102,12 +106,11 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       },
                       builder: (context, state) {
                         return CustomElevatedButton(
-                            onPressed: () async {
-                              await onPressedCreateProduct(category: state);
-                            },
-                            child: Text('create'));
+                          onPressed: () => onPressed(state: state),
+                          child: Text(LocaleKeys.product_add_save_product).tr(),
+                        );
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

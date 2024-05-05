@@ -10,6 +10,7 @@ final class BaseView<T> extends StatefulWidget {
     this.drawer,
     this.floatingActionButton,
     this.onDispose,
+    this.physics,
     super.key,
   });
 
@@ -28,6 +29,9 @@ final class BaseView<T> extends StatefulWidget {
 
   /// [floatingActionButton] is the floating action button for the view.
   final Widget? floatingActionButton;
+
+  /// [physics] is the scroll physics for the view.
+  final ScrollPhysics? physics;
 
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
@@ -62,7 +66,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           bottom: false,
           child: CustomScrollView(
             shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
+            physics: widget.physics ?? const NeverScrollableScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
               widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),

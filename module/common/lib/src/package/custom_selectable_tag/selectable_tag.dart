@@ -30,7 +30,7 @@ class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
         setState(() {
           tag = value;
           if (widget.onChanged != null) {
-            widget.onChanged!(value + 1);
+            widget.onChanged!(value);
           }
         });
       },

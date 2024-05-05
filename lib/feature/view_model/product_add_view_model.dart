@@ -23,6 +23,7 @@ final class ProductAddViewModel extends BaseCubit<ProductAddState> {
   }) async {
     _changeLoading();
     try {
+      log('product: ${product.toString()}');
       CommonService.instance.token = token;
       var response = await CommonService.instance.postModel<Product>(
         domain: DevEnv().postProductsAddDomain,

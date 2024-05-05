@@ -45,6 +45,7 @@
     "add_a_new_product": "Add a new product"
   },
   "product_add": {
+    "save_product": "Save New a Product",
     "product_information": "Product Information",
     "title": "Add Product",
     "name": "Product Name",
