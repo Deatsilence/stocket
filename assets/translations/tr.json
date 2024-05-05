@@ -44,6 +44,33 @@
     "title": "Ana Sayfa",
     "add_a_new_product": "Yeni Ürün Ekle"
   },
+  "product_add": {
+    "save_product": "Yeni Bir Ürün Kaydet",
+    "product_information": "Ürün Bilgileri",
+    "title": "Ürün Ekle",
+    "barcode": "Barkod",
+    "name": "Ürün Adı",
+    "description": "Açıklama",
+    "price": "Fiyat",
+    "category": "Ürün Kategorisi",
+    "stock": "Stok",
+    "image": "Resim",
+    "add_product": "Ürün Ekle",
+    "barcode_placeholder": "Lütfen Ürün barkodunu girin",
+    "name_placeholder": "Lütfen Ürün adını girin",
+    "description_placeholder": "Lütfen Ürün açıklamasını girin",
+    "price_placeholder": "Lütfen Ürün fiyatını girin",
+    "category_placeholder": "Lütfen Ürün kategorisini seçin",
+    "image_placeholder": "Lütfen Ürün resmini seçin",
+    "name_required": "Ürün adı gereklidir",
+    "description_required": "Ürün açıklaması gereklidir",
+    "price_required": "Ürün fiyatı gereklidir",
+    "category_required": "Ürün kategorisi gereklidir",
+    "stock_required": "Ürün stok miktarı gereklidir",
+    "image_required": "Ürün resmi gereklidir",
+    "add_product_success": "Ürün başarıyla eklendi",
+    "add_product_fail": "Ürün eklenirken bir hata oluştu"
+  },
   "errors": {
     "unknown_response_type": "Bilinmeyen yanıt türü",
     "occur_an_error": "Bir hata oluştu"

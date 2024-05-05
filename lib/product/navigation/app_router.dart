@@ -6,6 +6,7 @@ import 'package:stocket/feature/view/auth/signup_view.dart';
 import 'package:stocket/feature/view/auth/verify_otp_view.dart';
 import 'package:stocket/feature/view/dashboard_root_view.dart';
 import 'package:stocket/feature/view/home_view.dart';
+import 'package:stocket/feature/view/product_add_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -33,6 +34,7 @@ final class AppRouter extends _$AppRouter {
               page: HomeRoute.page,
               initial: true,
             ),
+            AutoRoute(page: ProductAddRoute.page),
           ],
         ),
       ];

@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
     log('LoginView build');
     log('Base URL: ${DevEnv().baseUrl}');
     log('SIGNUP URL: ${DevEnv().postUsersSignupDomain}');
-    return BlocProvider(
+    return BlocProvider<LoginViewModel>(
       create: (context) => loginViewModel,
       child: Form(
         key: loginFormKey,

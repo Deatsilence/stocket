@@ -8,7 +8,9 @@ final class BaseView<T> extends StatefulWidget {
     required this.onPageBuilder,
     this.sliverAppBar,
     this.drawer,
+    this.floatingActionButton,
     this.onDispose,
+    this.physics,
     super.key,
   });
 
@@ -24,6 +26,12 @@ final class BaseView<T> extends StatefulWidget {
 
   /// [drawer] is the drawer for the view.
   final Widget? drawer;
+
+  /// [floatingActionButton] is the floating action button for the view.
+  final Widget? floatingActionButton;
+
+  /// [physics] is the scroll physics for the view.
+  final ScrollPhysics? physics;
 
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
@@ -44,6 +52,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
       drawer: widget.sliverAppBar != null ? widget.drawer : null,
       drawerEnableOpenDragGesture: false,
       resizeToAvoidBottomInset: false,
+      floatingActionButton: widget.floatingActionButton,
       body: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -57,7 +66,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           bottom: false,
           child: CustomScrollView(
             shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
+            physics: widget.physics ?? const NeverScrollableScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
               widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),

@@ -39,6 +39,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginView(),
       );
     },
+    ProductAddRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProductAddView(),
+      );
+    },
     SignUpRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -110,6 +116,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProductAddView]
+class ProductAddRoute extends PageRouteInfo<void> {
+  const ProductAddRoute({List<PageRouteInfo>? children})
+      : super(
+          ProductAddRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductAddRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

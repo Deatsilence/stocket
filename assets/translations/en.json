@@ -44,6 +44,31 @@
     "title": "Home",
     "add_a_new_product": "Add a new product"
   },
+  "product_add": {
+    "save_product": "Save New a Product",
+    "product_information": "Product Information",
+    "title": "Add Product",
+    "name": "Product Name",
+    "description": "Description",
+    "price": "Price",
+    "category": "Category",
+    "stock": "Stock",
+    "image": "Image",
+    "add_product": "Add Product",
+    "name_placeholder": "Please enter the product name",
+    "description_placeholder": "Please enter the product description",
+    "price_placeholder": "Please enter the product price",
+    "category_placeholder": "Please select the product category",
+    "image_placeholder": "Please select the product image",
+    "name_required": "Product name is required",
+    "description_required": "Product description is required",
+    "price_required": "Product price is required",
+    "category_required": "Product category is required",
+    "stock_required": "Product stock is required",
+    "image_required": "Product image is required",
+    "add_product_success": "Product added successfully",
+    "add_product_fail": "Product add failed"
+  },
   "errors": {
     "unknown_response_type": "Unknown response type",
     "occur_an_error": "An error occurred"

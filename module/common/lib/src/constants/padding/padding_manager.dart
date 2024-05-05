@@ -33,4 +33,8 @@ final class PaddingManager {
   /// [paddingManagerMorePaddingSymmetricVertical] is padding for more as `20`
   static const EdgeInsets paddingManagerMorePaddingSymmetricVertical =
       EdgeInsets.symmetric(vertical: 20);
+
+  /// Constant Paddings will be here
+  static const double paddingManagerNormalPadding = 10;
+  static const double paddingManagerMorePadding = 20;
 }
