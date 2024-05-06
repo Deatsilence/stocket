@@ -12,6 +12,7 @@ import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/product_add_state.dart';
+import 'package:stocket/product/utility/extension/has_value_extension.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 /// [ProductAddView] is main screen of the app
@@ -27,7 +28,15 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
   @override
   Widget build(BuildContext context) {
     log('${context.router.stack}');
-    return Scanner();
+    return Scanner(
+      onDetect: (barcodes) async {
+        var barcode = barcodes.barcodes.last.rawValue ?? '';
+        if (barcode.hasValue) {
+          log('Barcode detected: ${barcode}');
+          await context.router.maybePop();
+        }
+      },
+    );
     // return BlocProvider<ProductAddViewModel>(
     //   create: (context) => productAddViewModel,
     //   child: Form(
