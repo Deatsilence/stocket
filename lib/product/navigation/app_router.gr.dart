@@ -21,6 +21,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthRootView(),
       );
     },
+    BarcodeScannerRoute.name: (routeData) {
+      final args = routeData.argsAs<BarcodeScannerRouteArgs>(
+          orElse: () => const BarcodeScannerRouteArgs());
+      return AutoRoutePage<String>(
+        routeData: routeData,
+        child: BarcodeScannerView(
+          key: args.key,
+          onDetect: args.onDetect,
+        ),
+      );
+    },
     DashboardRootRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -76,6 +87,44 @@ class AuthRootRoute extends PageRouteInfo<void> {
   static const String name = 'AuthRootRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BarcodeScannerView]
+class BarcodeScannerRoute extends PageRouteInfo<BarcodeScannerRouteArgs> {
+  BarcodeScannerRoute({
+    Key? key,
+    void Function(String)? onDetect,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BarcodeScannerRoute.name,
+          args: BarcodeScannerRouteArgs(
+            key: key,
+            onDetect: onDetect,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BarcodeScannerRoute';
+
+  static const PageInfo<BarcodeScannerRouteArgs> page =
+      PageInfo<BarcodeScannerRouteArgs>(name);
+}
+
+class BarcodeScannerRouteArgs {
+  const BarcodeScannerRouteArgs({
+    this.key,
+    this.onDetect,
+  });
+
+  final Key? key;
+
+  final void Function(String)? onDetect;
+
+  @override
+  String toString() {
+    return 'BarcodeScannerRouteArgs{key: $key, onDetect: $onDetect}';
+  }
 }
 
 /// generated route for

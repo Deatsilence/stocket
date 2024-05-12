@@ -19,7 +19,7 @@ final class CommonService with CommonServiceMixin {
 
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,
-      connectTimeout: Duration(seconds: 5),
+      connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 30),
     );
     _dio = Dio(baseOptions);

@@ -11,6 +11,7 @@ final class BaseView<T> extends StatefulWidget {
     this.floatingActionButton,
     this.onDispose,
     this.physics,
+    this.resizeToAvoidBottomInset = true,
     super.key,
   });
 
@@ -33,6 +34,9 @@ final class BaseView<T> extends StatefulWidget {
   /// [physics] is the scroll physics for the view.
   final ScrollPhysics? physics;
 
+  /// [resizeToAvoidBottomInset] is the flag to resize the view to avoid the bottom inset.
+  final bool resizeToAvoidBottomInset;
+
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
 }
@@ -51,7 +55,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
     return Scaffold(
       drawer: widget.sliverAppBar != null ? widget.drawer : null,
       drawerEnableOpenDragGesture: false,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       floatingActionButton: widget.floatingActionButton,
       body: GestureDetector(
         onTap: () {
@@ -66,13 +70,18 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           bottom: false,
           child: CustomScrollView(
             shrinkWrap: true,
-            physics: widget.physics ?? const NeverScrollableScrollPhysics(),
+            physics: MediaQuery.of(context).viewInsets.bottom > 0
+                ? const AlwaysScrollableScrollPhysics()
+                : widget.physics ?? const NeverScrollableScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
               widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),
               SliverPadding(
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricHorizontal,
                 sliver: widget.onPageBuilder(context, widget as T),
+              ),
+              const SliverFillRemaining(
+                hasScrollBody: false,
               ),
             ],
           ),

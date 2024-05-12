@@ -30,4 +30,23 @@ final class HomeViewModel extends BaseCubit<HomeState> {
       throw e;
     }
   }
+
+  Future<ApiResponse<dynamic>> getProducts({required String token}) async {
+    _changeLoading();
+    try {
+      Products products = Products();
+      CommonService.instance.token = token;
+      var response = await CommonService.instance.getModel<Products>(
+        domain: DevEnv().getProductsDomain,
+        model: products,
+      );
+
+      log('response: ${response.toString()}');
+      _changeLoading();
+      return response;
+    } catch (e) {
+      Logger().e(e.toString());
+      throw e;
+    }
+  }
 }

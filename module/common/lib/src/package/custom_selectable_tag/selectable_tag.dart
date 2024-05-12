@@ -39,6 +39,9 @@ class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
         value: (index, item) => index,
         label: (index, item) => item,
       ),
+      choiceStyle: C2ChipStyle(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+      ),
     );
   }
 }

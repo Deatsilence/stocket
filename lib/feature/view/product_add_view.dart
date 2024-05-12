@@ -4,15 +4,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/product_add_view_mixin.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
-import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/state/product_add_state.dart';
+import 'package:stocket/product/utility/extension/has_value_extension.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 /// [ProductAddView] is main screen of the app
@@ -27,7 +29,6 @@ final class ProductAddView extends StatefulWidget {
 class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixin {
   @override
   Widget build(BuildContext context) {
-    log('${context.router.stack}');
     return BlocProvider<ProductAddViewModel>(
       create: (context) => productAddViewModel,
       child: Form(
@@ -38,6 +39,10 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
               physics: AlwaysScrollableScrollPhysics(),
               sliverAppBar: SliverAppBar(
                 title: Text(LocaleKeys.home_add_a_new_product).tr(),
+                centerTitle: true,
+                pinned: true,
+                floating: false,
+                scrolledUnderElevation: 0,
               ),
               onPageBuilder: (context, value) => SliverList(
                 delegate: SliverChildListDelegate(
@@ -49,10 +54,8 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                     ).tr()),
                     SelectableTag(
                       source: CategoryType.names,
-                      onChanged: (value) {
-                        log('Selected: $value');
-                        productAddViewModel.setCategory(category: value);
-                      },
+                      onChanged: (value) =>
+                          productAddViewModel.setCategory(category: value),
                     ),
                     CustomDivider(
                             text: Text(
@@ -62,11 +65,16 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                         .onlyPadding(bottom: 2.0.h),
                     CustomTextFormField(
                       controller: barcodeController,
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.qr_code_scanner),
+                        onPressed: onPressedNavigateToBarcodeScan,
+                      ),
                       prefixIcon: const Icon(Icons.barcode_reader),
                       labelText: LocaleKeys.product_add_barcode.tr(),
                       hintText: LocaleKeys.product_add_barcode_placeholder.tr(),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
+                      validator: barcodeValidator,
                     ),
                     CustomTextFormField(
                       controller: nameController,
@@ -75,6 +83,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       hintText: LocaleKeys.product_add_name_placeholder.tr(),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
+                      validator: nameValidator,
                     ),
                     CustomTextFormField(
                       controller: descriptionController,
@@ -83,6 +92,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       hintText: LocaleKeys.product_add_description_placeholder.tr(),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
+                      validator: descriptionValidator,
                     ),
                     CustomTextFormField(
                       controller: priceController,
@@ -91,14 +101,17 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       hintText: LocaleKeys.product_add_price_placeholder.tr(),
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
+                      validator: priceValidator,
                     ),
                     CustomTextFormField(
                       controller: stockController,
                       prefixIcon: const Icon(Icons.storage_outlined),
                       labelText: LocaleKeys.product_add_stock.tr(),
-                      hintText: LocaleKeys.authentication_email_placeholder.tr(),
+                      hintText: LocaleKeys.product_add_stock_placeholder.tr(),
                       keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textInputAction: TextInputAction.done,
+                      validator: stockValidator,
                     ),
                     BlocSelector<ProductAddViewModel, ProductAddState, int?>(
                       selector: (state) {

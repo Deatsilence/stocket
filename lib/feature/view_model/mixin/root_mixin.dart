@@ -3,10 +3,10 @@ import 'package:stocket/feature/view_model/root/root_view_model.dart';
 
 /// [RootMixin] is a [State] mixin that contains the root state logic.
 mixin RootMixin<T extends StatefulWidget> on State<T> {
-  /// [_homeViewModel] is the view model for the login view.
+  /// [_rootViewModel] is the view model for the login view.
   late final RootViewModel _rootViewModel;
 
-  /// [homeViewModel] is the view model for the login view.
+  /// [rootViewModel] is the view model for the login view.
   RootViewModel get rootViewModel => _rootViewModel;
 
   @override

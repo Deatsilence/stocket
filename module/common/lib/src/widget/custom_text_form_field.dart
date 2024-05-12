@@ -27,6 +27,7 @@ final class CustomTextFormField extends StatefulWidget {
     this.autocorrect = false,
     this.obscureText = false,
     this.obscuringCharacter = '•',
+    this.suffixIcon,
   });
 
   final String? labelText;
@@ -48,6 +49,7 @@ final class CustomTextFormField extends StatefulWidget {
   final bool obscureText;
   final String obscuringCharacter;
   final FocusNode? focusNode;
+  final IconButton? suffixIcon;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -74,17 +76,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       },
       decoration: CustomInputDecoration(
         prefixIcon: widget.prefixIcon,
-        suffixIcon: _isClearButtonVisible
-            ? InkWell(
+        suffixIcon: SizedBox(
+          width: _isClearButtonVisible ? MediaQuery.sizeOf(context).width * 0.2 : 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              widget.suffixIcon ?? const SizedBox.shrink(),
+              _SuffixClearIcon(
                 onTap: () {
                   setState(() {
                     _isClearButtonVisible = false;
                   });
                   widget.controller?.clear();
                 },
-                child: const Icon(Icons.clear_outlined),
-              )
-            : null,
+                isVisible: _isClearButtonVisible,
+              ),
+            ],
+          ),
+        ),
         labelText: widget.labelText,
         hintText: widget.hintText,
         borderColor: widget.borderColor ?? Theme.of(context).colorScheme.primary,
@@ -106,5 +116,23 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       focusNode: widget.focusNode,
       onFieldSubmitted: widget.onFieldSubmitted,
     );
+  }
+}
+
+/// [_SuffixClearIcon] is a private class that is used to show the suffix icon in the text form field
+final class _SuffixClearIcon extends StatelessWidget {
+  const _SuffixClearIcon({this.onTap, this.isVisible = false});
+
+  final VoidCallback? onTap;
+  final bool isVisible;
+
+  @override
+  Widget build(BuildContext context) {
+    return isVisible
+        ? InkWell(
+            onTap: onTap,
+            child: const Icon(Icons.clear_outlined),
+          )
+        : const SizedBox.shrink();
   }
 }

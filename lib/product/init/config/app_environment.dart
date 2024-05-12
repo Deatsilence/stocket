@@ -22,14 +22,14 @@ enum AppEnvironmentItems {
   baseUrl;
 
   /// [value] is the value of the environment variable.
-  String get value {
-    try {
-      switch (this) {
-        case AppEnvironmentItems.baseUrl:
-          return AppEnvironment._config.baseUrl;
-      }
-    } catch (e) {
-      throw Exception('Environment variable is not found. ');
-    }
-  }
+  // String get value {
+  //   try {
+  //     switch (this) {
+  //       case AppEnvironmentItems.baseUrl:
+  //         return AppEnvironment._config.baseUrl;
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Environment variable is not found. ');
+  //   }
+  // }
 }
