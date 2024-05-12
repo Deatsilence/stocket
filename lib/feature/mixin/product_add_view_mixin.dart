@@ -9,6 +9,7 @@ import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [ProductAddViewMixin] is a [State] mixin that contains the home view logic.
@@ -128,12 +129,12 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     required String token,
   }) async {
     final product = Product(
-      barcode: "555555555",
-      name: "mouse",
-      description: "mouse description",
+      barcode: barcodeController.text,
+      name: "keyboard",
+      description: "keyboard description",
       category: category,
-      price: 4000,
-      stock: 10,
+      price: 999,
+      stock: 230,
     );
     if (!token.hasValue) {
       // TODO: Show error alert
@@ -156,5 +157,12 @@ mixin ProductAddViewMixin on State<ProductAddView> {
         token: token ?? '',
       );
     }
+  }
+
+  Future<void> onPressedNavigateToBarcodeScan() async {
+    var barcode = await context.router.push<String>(
+      BarcodeScannerRoute(),
+    );
+    barcodeController.text = barcode ?? '';
   }
 }

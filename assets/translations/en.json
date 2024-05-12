@@ -60,6 +60,7 @@
     "price_placeholder": "Please enter the product price",
     "category_placeholder": "Please select the product category",
     "image_placeholder": "Please select the product image",
+    "stock_placeholder": "Please enter the product stock",
     "barcode_required": "Product barcode is required",
     "name_required": "Product name is required",
     "description_required": "Product description is required",

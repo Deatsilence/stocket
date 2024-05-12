@@ -31,6 +31,7 @@ class _ScannerState extends State<Scanner>
   Widget build(BuildContext context) {
     return MobileScanner(
       controller: controller,
+      onDetect: widget.onDetect,
       overlayBuilder: (context, constraints) {
         return AnimatedBuilder(
           animation: animation,

@@ -4,6 +4,7 @@ import 'package:stocket/feature/view/auth/auth_root_view.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
 import 'package:stocket/feature/view/auth/verify_otp_view.dart';
+import 'package:stocket/feature/view/barcode_scanner_view.dart';
 import 'package:stocket/feature/view/dashboard_root_view.dart';
 import 'package:stocket/feature/view/home_view.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
@@ -34,7 +35,12 @@ final class AppRouter extends _$AppRouter {
               page: HomeRoute.page,
               initial: true,
             ),
-            AutoRoute(page: ProductAddRoute.page),
+            AutoRoute(
+              page: ProductAddRoute.page,
+            ),
+            AutoRoute(
+              page: BarcodeScannerRoute.page,
+            ),
           ],
         ),
       ];
