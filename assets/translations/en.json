@@ -73,6 +73,7 @@
   },
   "errors": {
     "unknown_response_type": "Unknown response type",
-    "occur_an_error": "An error occurred"
+    "occur_an_error": "An error occurred",
+    "no_products_available": "No products available"
   }
 }

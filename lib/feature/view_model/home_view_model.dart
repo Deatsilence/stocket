@@ -13,6 +13,10 @@ final class HomeViewModel extends BaseCubit<HomeState> {
     emit(state.copyWith(isLoading: !state.isLoading));
   }
 
+  void setProducts({required Products products}) {
+    emit(state.copyWith(products: products));
+  }
+
   Future<ApiResponse<dynamic>> logout({required String token}) async {
     _changeLoading();
     try {

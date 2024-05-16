@@ -3,15 +3,14 @@ import 'package:stocket/product/state/base/base_state.dart';
 
 /// [HomeState] is the state for the home view.
 final class HomeState extends BaseState {
-  HomeState({bool isLoading = false, List<Product>? products})
-      : super(isLoading: isLoading);
+  HomeState({this.products, bool isLoading = false}) : super(isLoading: isLoading);
 
-  final List<Product> products = [];
+  final Products? products;
 
   @override
   List<Object?> get props => super.props..addAll([products]);
 
-  HomeState copyWith({bool? isLoading, List<Product>? products}) {
+  HomeState copyWith({bool? isLoading, Products? products}) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
       products: products ?? this.products,

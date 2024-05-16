@@ -38,11 +38,20 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
             BaseView(
               physics: AlwaysScrollableScrollPhysics(),
               sliverAppBar: SliverAppBar(
-                title: Text(LocaleKeys.home_add_a_new_product).tr(),
+                title: Text(
+                  LocaleKeys.home_add_a_new_product,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                ).tr(),
                 centerTitle: true,
                 pinned: true,
                 floating: false,
                 scrolledUnderElevation: 0,
+                backgroundColor: Theme.of(context).primaryColor,
+                iconTheme: Theme.of(context).iconTheme.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
               ),
               onPageBuilder: (context, value) => SliverList(
                 delegate: SliverChildListDelegate(

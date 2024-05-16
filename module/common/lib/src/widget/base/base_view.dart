@@ -69,7 +69,6 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           top: !(widget.sliverAppBar != null),
           bottom: false,
           child: CustomScrollView(
-            shrinkWrap: true,
             physics: MediaQuery.of(context).viewInsets.bottom > 0
                 ? const AlwaysScrollableScrollPhysics()
                 : widget.physics ?? const NeverScrollableScrollPhysics(),

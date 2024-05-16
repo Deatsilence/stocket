@@ -31,6 +31,7 @@ class _SideMenuState extends State<SideMenu> {
         selector: (state) => state.currentUser,
         builder: (context, state) {
           return ListView(
+            physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.zero,
             children: [
               UserAccountsDrawerHeader(
