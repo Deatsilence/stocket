@@ -33,4 +33,13 @@ final class Products extends BaseModel<Products> with EquatableMixin {
       totalCount: totalCount ?? this.totalCount,
     );
   }
+
+  /// [merge] merges the new products with the existing products.
+  Products merge(Products newProducts) {
+    return Products(
+      productItems: List<Product>.from(productItems ?? [])
+        ..addAll(newProducts.productItems ?? []),
+      totalCount: newProducts.totalCount ?? totalCount,
+    );
+  }
 }

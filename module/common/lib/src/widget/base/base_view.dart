@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,9 @@ final class BaseView<T> extends StatefulWidget {
     this.floatingActionButton,
     this.onDispose,
     this.physics,
+    this.controller,
     this.resizeToAvoidBottomInset = true,
+    this.isSliverFillRemaining = false,
     super.key,
   });
 
@@ -34,8 +38,14 @@ final class BaseView<T> extends StatefulWidget {
   /// [physics] is the scroll physics for the view.
   final ScrollPhysics? physics;
 
+  /// [controller] is the scroll controller for the view.
+  final ScrollController? controller;
+
   /// [resizeToAvoidBottomInset] is the flag to resize the view to avoid the bottom inset.
   final bool resizeToAvoidBottomInset;
+
+  /// [isSliverFillRemaining] is the flag to fill the remaining space with the sliver.
+  final bool isSliverFillRemaining;
 
   @override
   State<BaseView<T>> createState() => _BaseViewState<T>();
@@ -52,6 +62,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
+    log('BaseView build');
     return Scaffold(
       drawer: widget.sliverAppBar != null ? widget.drawer : null,
       drawerEnableOpenDragGesture: false,
@@ -69,7 +80,7 @@ class _BaseViewState<T> extends State<BaseView<T>> {
           top: !(widget.sliverAppBar != null),
           bottom: false,
           child: CustomScrollView(
-            shrinkWrap: true,
+            controller: widget.controller,
             physics: MediaQuery.of(context).viewInsets.bottom > 0
                 ? const AlwaysScrollableScrollPhysics()
                 : widget.physics ?? const NeverScrollableScrollPhysics(),
@@ -80,9 +91,11 @@ class _BaseViewState<T> extends State<BaseView<T>> {
                 padding: PaddingManager.paddingManagerNormalPaddingSymmetricHorizontal,
                 sliver: widget.onPageBuilder(context, widget as T),
               ),
-              const SliverFillRemaining(
-                hasScrollBody: false,
-              ),
+              widget.isSliverFillRemaining
+                  ? const SliverFillRemaining(
+                      hasScrollBody: false,
+                    )
+                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
             ],
           ),
         ),

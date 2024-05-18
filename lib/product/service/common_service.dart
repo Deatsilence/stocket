@@ -51,9 +51,13 @@ final class CommonService with CommonServiceMixin {
   Future<ApiResponse<dynamic>> getModel<T extends BaseModel<T>>({
     required String domain,
     required T model,
+    Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final response = await _dio.get<dynamic>('$domain');
+      final response = await _dio.get<dynamic>(
+        '$_baseUrl$domain',
+        queryParameters: queryParameters,
+      );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;
 

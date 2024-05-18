@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// [CategoryType] is an enum class that represents the category type of the product.
 enum CategoryType {
   stationary,
@@ -35,5 +37,21 @@ enum CategoryType {
       default:
         return CategoryType.other.index;
     }
+  }
+
+  /// [getIconAccordingToCategory] is used to get the icon according to the category type.
+  static IconData getIconAccordingToCategory({required int index}) {
+    if (index case 1)
+      return Icons.book_outlined;
+    else if (index case 2)
+      return Icons.electric_bolt_sharp;
+    else if (index case 4)
+      return Icons.fastfood;
+    else if (index case 5)
+      return Icons.local_drink;
+    else if (index case 6)
+      return Icons.category;
+    else
+      return Icons.category;
   }
 }

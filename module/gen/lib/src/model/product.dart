@@ -38,7 +38,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
   final String? name;
 
   /// [price] is the price of product
-  final int? price;
+  final double? price;
 
   /// [productid] is the productid of product
   final String? productid;
@@ -75,7 +75,7 @@ final class Product extends BaseModel<Product> with EquatableMixin {
     String? description,
     int? category,
     String? name,
-    int? price,
+    double? price,
     String? productid,
     int? stock,
     String? updatedat,

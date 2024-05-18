@@ -75,6 +75,7 @@
   },
   "errors": {
     "unknown_response_type": "Bilinmeyen yanıt türü",
-    "occur_an_error": "Bir hata oluştu"
+    "occur_an_error": "Bir hata oluştu",
+    "no_products_available": "Ürün bulunamadı"
   }
 }
