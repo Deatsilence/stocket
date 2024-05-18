@@ -25,7 +25,7 @@ final class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonViewMixin {
-  double _expandedHeight = 200.0;
+  double _expandedHeight = 300.0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                 flexibleSpace: FlexibleSpaceBar(
                   background: CurvedImage(
                     image: Assets.icons.icLoginLogistic.svg(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                       package: 'gen',
                     ),
                   ),

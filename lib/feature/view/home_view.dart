@@ -35,7 +35,9 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
       child: Stack(
         children: [
           BaseView(
+            controller: scrollController,
             physics: AlwaysScrollableScrollPhysics(),
+            isSliverFillRemaining: false,
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () async => await context.router.push(const ProductAddRoute()),
               icon: const Icon(Icons.add),
@@ -60,10 +62,10 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
             ),
             onPageBuilder: (context, value) => _ProductList(),
           ),
-          TransparentScreen<HomeViewModel, HomeState>(
-            child: Assets.lottie.lotLoading.lottie(package: 'gen'),
-            selector: (state) => state.isLoading,
-          )
+          // TransparentScreen<HomeViewModel, HomeState>(
+          //   child: Assets.lottie.lotLoading.lottie(package: 'gen'),
+          //   selector: (state) => state.isLoading,
+          // )
         ],
       ),
     );
@@ -76,6 +78,7 @@ final class _ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('ProductList build');
     return BlocBuilder<HomeViewModel, HomeState>(
       builder: (context, state) {
         if (state.isLoading) {
@@ -90,9 +93,14 @@ final class _ProductList extends StatelessWidget {
           );
         } else {
           final _products = state.products!;
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+          log('HOME PAGE: ${state.page}');
+          return SliverList.builder(
+            itemCount: state.isLoading
+                ? _products.productItems!.length + 1
+                : _products.productItems!.length,
+            itemBuilder: (context, index) {
+              if (index < _products.productItems!.length) {
+                log('_products.productItems!.length: ${_products.productItems!.length}');
                 final _product = _products.productItems![index];
                 return ProductCard(
                   barcode: _product.barcode ?? '',
@@ -102,9 +110,11 @@ final class _ProductList extends StatelessWidget {
                   stock: _product.stock ?? 0,
                   category: _product.category ?? 1,
                 );
-              },
-              childCount: _products.productItems?.length ?? 0,
-            ),
+              }
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            },
           );
         }
       },

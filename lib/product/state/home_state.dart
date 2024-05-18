@@ -3,17 +3,21 @@ import 'package:stocket/product/state/base/base_state.dart';
 
 /// [HomeState] is the state for the home view.
 final class HomeState extends BaseState {
-  HomeState({this.products, bool isLoading = false}) : super(isLoading: isLoading);
+  HomeState({this.products, this.page = 1, bool isLoading = false})
+      : super(isLoading: isLoading);
 
   final Products? products;
 
-  @override
-  List<Object?> get props => super.props..addAll([products]);
+  final int page;
 
-  HomeState copyWith({bool? isLoading, Products? products}) {
+  @override
+  List<Object?> get props => super.props..addAll([products, page]);
+
+  HomeState copyWith({bool? isLoading, Products? products, int? page}) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
       products: products ?? this.products,
+      page: page ?? this.page,
     );
   }
 }
