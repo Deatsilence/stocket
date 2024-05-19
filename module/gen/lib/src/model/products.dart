@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:gen/gen.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
@@ -39,7 +41,23 @@ final class Products extends BaseModel<Products> with EquatableMixin {
     return Products(
       productItems: List<Product>.from(productItems ?? [])
         ..addAll(newProducts.productItems ?? []),
-      totalCount: newProducts.totalCount ?? totalCount,
+      totalCount: totalCount != null ? totalCount! + 1 : null,
+    );
+  }
+
+  /// [deleteProduct] the product with the given [index] from productItems.
+  Products deleteProduct(int index) {
+    return Products(
+      productItems: List<Product>.from(productItems ?? [])..removeAt(index),
+      totalCount: totalCount != null ? totalCount! - 1 : null,
+    );
+  }
+
+  /// [addProduct] adds the new product to the productItems.
+  Products addProduct(Product product) {
+    return Products(
+      productItems: List<Product>.from(productItems ?? [])..add(product),
+      totalCount: totalCount != null ? totalCount! + 1 : null,
     );
   }
 }

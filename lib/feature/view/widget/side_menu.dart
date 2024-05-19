@@ -51,10 +51,14 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   Future<void> _logout({required User state}) async {
+    final homeViewModel = widget.homeViewModel;
     if (state.hasValue && state.token.hasValue) {
-      await widget.homeViewModel.logout(token: state.token!).whenComplete(
-        () async {
-          await context.router.replaceAll([AuthRootRoute()]);
+      await homeViewModel.logout(token: state.token!).then(
+        (value) async {
+          if (value.isSuccess) {
+            homeViewModel.setThePageAsDefault();
+            await context.router.replaceAll([AuthRootRoute()]);
+          }
         },
       );
     } else {

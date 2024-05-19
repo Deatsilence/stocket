@@ -36,9 +36,9 @@ flutter_gen:
     lottie: true
     flutter_svg: true
 
-  # colors:
-  #   inputs:
-  #     - assets/color/colors.xml
+  colors:
+    inputs:
+      - asset/color/colors.xml
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

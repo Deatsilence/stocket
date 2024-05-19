@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
@@ -12,9 +11,7 @@ import 'package:stocket/feature/mixin/product_add_view_mixin.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
-import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/state/product_add_state.dart';
-import 'package:stocket/product/utility/extension/has_value_extension.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 /// [ProductAddView] is main screen of the app

@@ -170,4 +170,38 @@ final class CommonService with CommonServiceMixin {
       );
     }
   }
+
+  /// [delete] method is a generic method that is used to delete data from the API.
+  Future<ApiResponse<dynamic>> delete({
+    required String domain,
+    required String id,
+  }) async {
+    log('_TOKEN: $_token');
+    log('URL: $_baseUrl$domain/$id');
+    try {
+      final response = await _dio.delete<dynamic>(
+        '$_baseUrl$domain/$id',
+      );
+      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseBody = response.data;
+
+      switch (responseCode) {
+        case HttpResult.success:
+          return ApiResponse<dynamic>.success(data: responseBody);
+
+        default:
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
+      }
+    } catch (e) {
+      Logger().e(e);
+      return ApiResponse.failure(
+        error: e.toString(),
+        result: HttpResult.unknown,
+      );
+    }
+  }
 }
