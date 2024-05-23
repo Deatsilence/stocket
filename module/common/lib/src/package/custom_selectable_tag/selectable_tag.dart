@@ -9,7 +9,11 @@ final class SelectableTag extends StatefulWidget {
     super.key,
     required this.source,
     this.onChanged,
+    this.value = 1,
   });
+
+  /// [value] is the current selected tag
+  final int value;
 
   /// [source] is a list of strings that will be used as tags
   final List<String> source;
@@ -25,10 +29,10 @@ class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
   @override
   Widget build(BuildContext context) {
     return ChipsChoice<int>.single(
-      value: tag,
+      value: tagValue,
       onChanged: (value) {
         setState(() {
-          tag = value;
+          tagValue = value;
           if (widget.onChanged != null) {
             widget.onChanged!(value);
           }

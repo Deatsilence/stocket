@@ -19,6 +19,7 @@ import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/service/common_service.dart';
 import 'package:stocket/product/state/home_state.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [HomeView] is main screen of the app
@@ -42,12 +43,10 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         isSliverFillRemaining: false,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            final result = await context.router.push<bool?>(const ProductAddRoute());
-            if (result == true) {
-              log('PRODUCTADDED');
+            var result = await context.router.push<bool?>(ProductAddRoute());
+            if (result.hasValue && result!) {
               await getProducts(context: context);
             }
-            log('RESULT: $result');
           },
           icon: const Icon(Icons.add),
           label: const Text(LocaleKeys.home_add_a_new_product).tr(),
@@ -120,7 +119,7 @@ class _ProductListState extends State<_ProductList> {
       );
     } else {
       final _products = widget.state.products!;
-      log('HOME PAGE: ${widget.state.page}');
+      // log('HOME PAGE: ${widget.state.page}');
       return SliverList.builder(
         itemCount: widget.state.isLoading
             ? _products.productItems!.length + 1
@@ -132,7 +131,14 @@ class _ProductListState extends State<_ProductList> {
               SlidableAction(
                 icon: Icons.edit_outlined,
                 backgroundColor: ColorName.edit,
-                onPressed: (context) {},
+                onPressed: (context) async {
+                  var result = await context.router.push<bool?>(
+                    ProductAddRoute(
+                      viewType: ProductViewType.edit,
+                      product: _products.productItems![index],
+                    ),
+                  );
+                },
               ),
               SlidableAction(
                 icon: Icons.delete_outlined,

@@ -73,6 +73,10 @@
     "add_product_success": "Ürün başarıyla eklendi",
     "add_product_fail": "Ürün eklenirken bir hata oluştu"
   },
+  "product_update": {
+    "update_product": "Ürünü Güncelle",
+    "product_information": "Ürün Bilgileri"
+  },
   "product_delete": {
     "delete_product": "Ürünü Sil",
     "delete_product_message": "Ürünü silmek istediğinize emin misiniz ?",

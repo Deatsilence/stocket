@@ -28,7 +28,6 @@ final class CommonService with CommonServiceMixin {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          log('_token: $_token');
           if (_token.hasValue) {
             log('should add token');
             options.headers['token'] = _token;
@@ -106,7 +105,7 @@ final class CommonService with CommonServiceMixin {
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;
-      log('response: $responseBody');
+      // log('response: $responseBody');
 
       switch (responseCode) {
         case HttpResult.success:
@@ -178,8 +177,6 @@ final class CommonService with CommonServiceMixin {
     required String domain,
     required String id,
   }) async {
-    log('_TOKEN: $_token');
-    log('URL: $_baseUrl$domain/$id');
     try {
       final response = await _dio.delete<dynamic>(
         '$_baseUrl$domain/$id',
@@ -190,6 +187,53 @@ final class CommonService with CommonServiceMixin {
       switch (responseCode) {
         case HttpResult.success:
           return ApiResponse<dynamic>.success(data: responseBody);
+
+        default:
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
+      }
+    } catch (e) {
+      Logger().e(e);
+      return ApiResponse.failure(
+        error: e.toString(),
+        result: HttpResult.unknown,
+      );
+    }
+  }
+
+  /// [putModel] method is a generic method that is used to update data to the API.
+  Future<ApiResponse<dynamic>> putModel<T extends BaseModel<T>>({
+    required String domain,
+    required T model,
+    required String id,
+  }) async {
+    try {
+      final response = await _dio.put<dynamic>(
+        '$_baseUrl$domain/$id',
+        data: model.toJson(),
+      );
+      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseBody = response.data;
+
+      switch (responseCode) {
+        case HttpResult.success:
+          if (responseBody is Map) {
+            final data = model.fromJson(responseBody.cast<String, dynamic>());
+            return ApiResponse<dynamic>.success(data: data);
+          } else if (responseBody is List) {
+            final data = responseBody
+                .map((e) => model.fromJson(e as Map<String, dynamic>))
+                .toList();
+            return ApiResponse<dynamic>.success(data: data);
+          }
+          return ApiResponse.failure(
+            data: responseBody,
+            result: HttpResult.unknown,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
 
         default:
           return ApiResponse.failure(

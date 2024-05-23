@@ -22,7 +22,7 @@ final class LoginViewModel extends BaseCubit<LoginState> {
         model: user,
       );
 
-      log('response: ${response.toString()}');
+      // log('response: ${response.toString()}');
       _changeLoading();
 
       return response;

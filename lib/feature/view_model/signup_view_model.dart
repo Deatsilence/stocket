@@ -21,7 +21,7 @@ final class SignUpViewModel extends BaseCubit<SignUpState> {
         model: user,
       );
 
-      log('response: ${response.toString()}');
+      // log('response: ${response.toString()}');
       _changeLoading();
 
       return response;

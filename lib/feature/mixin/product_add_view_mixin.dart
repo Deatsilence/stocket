@@ -20,6 +20,9 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   /// [_productAddViewModel] is the view model for the login view.
   late final ProductAddViewModel _productAddViewModel;
 
+  /// [_productid] is the _productid of the product.
+  late final String _productid;
+
   /// [_category] is the _category of the product.
   late final int _category;
 
@@ -44,6 +47,9 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   /// [productAddViewModel] is the view model for the login view.
   ProductAddViewModel get productAddViewModel => _productAddViewModel;
 
+  /// [productid] is the productid of the product.
+  String get productid => _productid;
+
   /// [category] is the category of the product.
   int get category => _category;
 
@@ -67,12 +73,19 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     super.initState();
     _productAddFormKey = GlobalKey<FormState>();
     _productAddViewModel = ProductAddViewModel();
-    _category = CategoryType.stationary.index + 1;
+    _productid = widget.product?.productid ?? '';
+    _category = widget.product?.category ?? CategoryType.stationary.index + 1;
     _barcodeController = TextEditingController();
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
     _priceController = TextEditingController();
     _stockController = TextEditingController();
+
+    _barcodeController.text = widget.product?.barcode ?? '';
+    _nameController.text = widget.product?.name ?? '';
+    _descriptionController.text = widget.product?.description ?? '';
+    _priceController.text = widget.product?.price.toString() ?? '';
+    _stockController.text = widget.product?.stock.toString() ?? '';
 
     productAddViewModel.setCategory(category: _category);
   }
@@ -142,18 +155,56 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     await productAddViewModel.createProduct(product: product, token: token).then((value) {
       if (value.isSuccess) {
         // TODO : Show success alert
-        context.router.maybePop(true);
+        context.router.maybePop<bool?>(true);
       } else {
         null;
       }
     });
   }
 
-  Future<void> onPressed({required int? state}) async {
-    if (!isAddingProductValid()) {
+  Future<void> onPressedEditProduct({
+    required int? category,
+    required String token,
+  }) async {
+    final product = Product(
+      productid: productid,
+      barcode: barcodeController.text,
+      name: nameController.text,
+      description: descriptionController.text,
+      category: category,
+      price: double.tryParse(priceController.text) ?? 0.0,
+      stock: int.tryParse(stockController.text) ?? 0,
+    );
+    if (!token.hasValue) {
+      // TODO: Show error alert
+    }
+    await productAddViewModel.editProduct(product: product, token: token).then((value) {
+      if (value.isSuccess) {
+        // TODO : Show success alert
+        log('Product edited');
+        // context.router.maybePop<bool?>(true);
+      } else {
+        log('Product not edited');
+        null;
+      }
+    });
+  }
+
+  Future<void> onPressedCreate({required int? category}) async {
+    if (isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
       await onPressedCreateProduct(
-        category: state,
+        category: category,
+        token: token ?? '',
+      );
+    }
+  }
+
+  Future<void> onPressedEdit({required int? category}) async {
+    if (isAddingProductValid()) {
+      final token = context.read<RootViewModel>().state.currentUser?.token;
+      await onPressedEditProduct(
+        category: category,
         token: token ?? '',
       );
     }

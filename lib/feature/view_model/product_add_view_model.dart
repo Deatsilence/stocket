@@ -30,7 +30,29 @@ final class ProductAddViewModel extends BaseCubit<ProductAddState> {
         model: product,
       );
 
-      log('response: ${response.toString()}');
+      _changeLoading();
+
+      return response;
+    } catch (e) {
+      Logger().e(e.toString());
+      throw e;
+    }
+  }
+
+  Future<ApiResponse<dynamic>> editProduct({
+    required Product product,
+    required String token,
+  }) async {
+    _changeLoading();
+    try {
+      log('product: ${product.toString()}');
+      CommonService.instance.token = token;
+      var response = await CommonService.instance.putModel<Product>(
+        domain: DevEnv().putProductsByIdDomain,
+        model: product,
+        id: product.productid ?? '',
+      );
+
       _changeLoading();
 
       return response;

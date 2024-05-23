@@ -57,7 +57,7 @@ mixin HomeViewMixin on State<HomeView> {
     }
   }
 
-  /// [_getProducts] is a method that fetches the products from the API.
+  /// [getProducts] is a method that fetches the products from the API.
   Future<void> getProducts({required BuildContext context}) async {
     final token = context.read<RootViewModel>().state.currentUser?.token ?? '';
     await _homeViewModel.getProducts(token: token).then(

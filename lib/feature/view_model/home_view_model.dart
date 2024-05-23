@@ -14,8 +14,7 @@ final class HomeViewModel extends BaseCubit<HomeState> {
   }
 
   void setProducts({required Products products}) {
-    final updateProducts = state.products?.merge(products) ?? products;
-    emit(state.copyWith(products: updateProducts));
+    emit(state.copyWith(products: products));
   }
 
   void extractAProductFromProducts({required int index}) {
@@ -61,12 +60,12 @@ final class HomeViewModel extends BaseCubit<HomeState> {
         domain: DevEnv().getProductsDomain,
         model: products,
         queryParameters: {
-          'page': state.page,
+          'page': 1,
           'recordPerPage': _recordPerPage,
         },
       );
       log('page: ${state.page}');
-      _increasePage();
+      // _increasePage();
 
       log('response: ${response.toString()}');
       _changeLoading();

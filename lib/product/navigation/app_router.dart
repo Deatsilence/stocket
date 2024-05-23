@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/auth/auth_root_view.dart';
 import 'package:stocket/feature/view/auth/login_view.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
@@ -8,6 +9,7 @@ import 'package:stocket/feature/view/barcode_scanner_view.dart';
 import 'package:stocket/feature/view/dashboard_root_view.dart';
 import 'package:stocket/feature/view/home_view.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
+import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
 
 part 'app_router.gr.dart';
 
