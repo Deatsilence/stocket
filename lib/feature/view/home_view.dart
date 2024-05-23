@@ -33,7 +33,7 @@ final class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with HomeViewMixin {
   @override
   Widget build(BuildContext context) {
-    log('${context.router.stack}');
+    log('HOMEVIEWBUILD');
     return BlocProvider<HomeViewModel>(
       create: (context) => homeViewModel,
       child: BaseView(
@@ -41,7 +41,14 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         physics: AlwaysScrollableScrollPhysics(),
         isSliverFillRemaining: false,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async => await context.router.push(const ProductAddRoute()),
+          onPressed: () async {
+            final result = await context.router.push<bool?>(const ProductAddRoute());
+            if (result == true) {
+              log('PRODUCTADDED');
+              await getProducts(context: context);
+            }
+            log('RESULT: $result');
+          },
           icon: const Icon(Icons.add),
           label: const Text(LocaleKeys.home_add_a_new_product).tr(),
         ),
@@ -62,12 +69,18 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
         ),
-        onPageBuilder: (context, value) => _ProductList(({
-          required BuildContext context,
-          required int index,
-          required String id,
-        }) =>
-            deleteProduct(context: context, index: index, productId: id)),
+        onPageBuilder: (context, value) => BlocBuilder<HomeViewModel, HomeState>(
+          builder: (context, state) {
+            return _ProductList(
+                ({
+                  required BuildContext context,
+                  required int index,
+                  required String id,
+                }) =>
+                    deleteProduct(context: context, index: index, productId: id),
+                state);
+          },
+        ),
       ),
     );
   }
@@ -75,13 +88,15 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
 
 /// [_ProductList] is the list of products.
 final class _ProductList extends StatefulWidget {
-  const _ProductList(this.deleteProduct);
+  const _ProductList(this.deleteProduct, this.state);
 
   final Future<void> Function({
     required BuildContext context,
     required int index,
     required String id,
   }) deleteProduct;
+
+  final HomeState state;
 
   @override
   State<_ProductList> createState() => _ProductListState();
@@ -90,58 +105,55 @@ final class _ProductList extends StatefulWidget {
 class _ProductListState extends State<_ProductList> {
   @override
   Widget build(BuildContext context) {
-    log('ProductList build');
-    return BlocBuilder<HomeViewModel, HomeState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return SliverToBoxAdapter(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        } else if (!state.products.hasValue && state.products?.totalCount == null ||
-            state.products!.totalCount == 0) {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: Text(LocaleKeys.errors_no_products_available).tr(),
-            ),
-          );
-        } else {
-          final _products = state.products!;
-          log('HOME PAGE: ${state.page}');
-          return SliverList.builder(
-            itemCount: state.isLoading
-                ? _products.productItems!.length + 1
-                : _products.productItems!.length,
-            itemBuilder: (context, index) => Slidable(
-              endActionPane: ActionPane(
-                motion: StretchMotion(),
-                children: [
-                  SlidableAction(
-                    icon: Icons.edit_outlined,
-                    backgroundColor: ColorName.edit,
-                    onPressed: (context) {},
-                  ),
-                  SlidableAction(
-                    icon: Icons.delete_outlined,
-                    backgroundColor: ColorName.delete,
-                    onPressed: (context) async {
-                      await _onPressedDeleteProduct(
-                        context: context,
-                        index: index,
-                        products: _products,
-                      );
-                    },
-                  ),
-                ],
+    log('PRODUCTBUILD');
+    if (widget.state.isLoading) {
+      return SliverToBoxAdapter(
+        child: CircularProgressIndicator.adaptive(),
+      );
+    } else if (!widget.state.products.hasValue &&
+            widget.state.products?.totalCount == null ||
+        widget.state.products!.totalCount == 0) {
+      return SliverToBoxAdapter(
+        child: Center(
+          child: Text(LocaleKeys.errors_no_products_available).tr(),
+        ),
+      );
+    } else {
+      final _products = widget.state.products!;
+      log('HOME PAGE: ${widget.state.page}');
+      return SliverList.builder(
+        itemCount: widget.state.isLoading
+            ? _products.productItems!.length + 1
+            : _products.productItems!.length,
+        itemBuilder: (context, index) => Slidable(
+          endActionPane: ActionPane(
+            motion: StretchMotion(),
+            children: [
+              SlidableAction(
+                icon: Icons.edit_outlined,
+                backgroundColor: ColorName.edit,
+                onPressed: (context) {},
               ),
-              child: _ProductItemBuilder(
-                index: index,
-                products: _products,
+              SlidableAction(
+                icon: Icons.delete_outlined,
+                backgroundColor: ColorName.delete,
+                onPressed: (context) async {
+                  await _onPressedDeleteProduct(
+                    context: context,
+                    index: index,
+                    products: _products,
+                  );
+                },
               ),
-            ),
-          );
-        }
-      },
-    );
+            ],
+          ),
+          child: _ProductItemBuilder(
+            index: index,
+            products: _products,
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _onPressedDeleteProduct({

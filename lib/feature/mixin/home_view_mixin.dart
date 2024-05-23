@@ -29,10 +29,10 @@ mixin HomeViewMixin on State<HomeView> {
   @override
   void initState() {
     super.initState();
-    log("home view mixin init");
+    log("HOMEVIEWMIXININIT");
     _homeViewModel = HomeViewModel();
     _scrollController = ScrollController();
-    _getProducts(context: context);
+    getProducts(context: context);
     _scrollController.addListener(() => _onScroll(context: context));
   }
 
@@ -50,7 +50,7 @@ mixin HomeViewMixin on State<HomeView> {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent &&
         !_homeViewModel.state.isLoading) {
       // final currentScrollPosition = _scrollController.position.pixels;
-      await _getProducts(context: context);
+      await getProducts(context: context);
       // WidgetsBinding.instance.addPostFrameCallback((_) {
       //   _scrollController.jumpTo(currentScrollPosition);
       // });
@@ -58,7 +58,7 @@ mixin HomeViewMixin on State<HomeView> {
   }
 
   /// [_getProducts] is a method that fetches the products from the API.
-  Future<void> _getProducts({required BuildContext context}) async {
+  Future<void> getProducts({required BuildContext context}) async {
     final token = context.read<RootViewModel>().state.currentUser?.token ?? '';
     await _homeViewModel.getProducts(token: token).then(
       (value) {

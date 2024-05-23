@@ -142,7 +142,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     await productAddViewModel.createProduct(product: product, token: token).then((value) {
       if (value.isSuccess) {
         // TODO : Show success alert
-        context.router.maybePop();
+        context.router.maybePop(true);
       } else {
         null;
       }

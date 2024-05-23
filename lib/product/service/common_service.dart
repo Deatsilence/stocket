@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/service/mixin/common_service_mixin.dart';
 import 'package:stocket/product/utility/constants/enums/status_code.dart';
+import 'package:stocket/product/utility/extension/has_value_extension.dart';
 import 'package:stocket/product/utility/response/api_response.dart';
 
 /// [CommonService] is a common service class that contains common methods
@@ -27,7 +28,8 @@ final class CommonService with CommonServiceMixin {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          if (shouldAddToken(options: options)) {
+          log('_token: $_token');
+          if (_token.hasValue) {
             log('should add token');
             options.headers['token'] = _token;
           }
@@ -39,7 +41,7 @@ final class CommonService with CommonServiceMixin {
 
   static CommonService instance = CommonService._();
 
-  late String _token;
+  String? _token;
   late String _baseUrl;
   late Dio _dio;
 
