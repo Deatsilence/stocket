@@ -73,6 +73,14 @@
     "add_product_success": "Ürün başarıyla eklendi",
     "add_product_fail": "Ürün eklenirken bir hata oluştu"
   },
+  "product_delete": {
+    "delete_product": "Ürünü Sil",
+    "delete_product_message": "Ürünü silmek istediğinize emin misiniz ?",
+    "delete": "Sil",
+    "cancel": "İptal",
+    "delete_product_success": "Ürün başarıyla silindi",
+    "delete_product_fail": "Ürün silinirken bir hata oluştu"
+  },
   "errors": {
     "unknown_response_type": "Bilinmeyen yanıt türü",
     "occur_an_error": "Bir hata oluştu",

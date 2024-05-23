@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/service/mixin/common_service_mixin.dart';
 import 'package:stocket/product/utility/constants/enums/status_code.dart';
+import 'package:stocket/product/utility/extension/has_value_extension.dart';
 import 'package:stocket/product/utility/response/api_response.dart';
 
 /// [CommonService] is a common service class that contains common methods
@@ -27,7 +28,8 @@ final class CommonService with CommonServiceMixin {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          if (shouldAddToken(options: options)) {
+          log('_token: $_token');
+          if (_token.hasValue) {
             log('should add token');
             options.headers['token'] = _token;
           }
@@ -39,7 +41,7 @@ final class CommonService with CommonServiceMixin {
 
   static CommonService instance = CommonService._();
 
-  late String _token;
+  String? _token;
   late String _baseUrl;
   late Dio _dio;
 
@@ -147,6 +149,40 @@ final class CommonService with CommonServiceMixin {
     try {
       final response = await _dio.post<dynamic>(
         '$_baseUrl$domain',
+      );
+      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseBody = response.data;
+
+      switch (responseCode) {
+        case HttpResult.success:
+          return ApiResponse<dynamic>.success(data: responseBody);
+
+        default:
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
+      }
+    } catch (e) {
+      Logger().e(e);
+      return ApiResponse.failure(
+        error: e.toString(),
+        result: HttpResult.unknown,
+      );
+    }
+  }
+
+  /// [delete] method is a generic method that is used to delete data from the API.
+  Future<ApiResponse<dynamic>> delete({
+    required String domain,
+    required String id,
+  }) async {
+    log('_TOKEN: $_token');
+    log('URL: $_baseUrl$domain/$id');
+    try {
+      final response = await _dio.delete<dynamic>(
+        '$_baseUrl$domain/$id',
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode!);
       final responseBody = response.data;

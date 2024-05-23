@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:gen/gen.dart';
 
@@ -17,5 +19,12 @@ mixin CommonServiceMixin {
   bool shouldAddToken({
     required RequestOptions options,
   }) =>
-      _domainsToAddToken.any((domain) => options.path == '${DevEnv().baseUrl}$domain');
+      _domainsToAddToken.any(
+        (domain) {
+          var _requestUrl = '${DevEnv().baseUrl}$domain';
+          log('request url: $_requestUrl');
+          log('options path: ${options.path}');
+          return _requestUrl.contains(options.path);
+        },
+      );
 }
