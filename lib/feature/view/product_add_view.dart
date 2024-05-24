@@ -8,11 +8,14 @@ import 'package:gen/gen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/product_add_view_mixin.dart';
 import 'package:stocket/feature/view/widget/appbar_title.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/product_add_state.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 /// [ProductAddView] is main screen of the app
@@ -41,8 +44,13 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
         child: Stack(
           children: [
             BaseView(
+              onPopInvoked: (didPop) async =>
+                  didPop ? await context.router.maybePop<bool?>(true) : null,
               physics: AlwaysScrollableScrollPhysics(),
               sliverAppBar: SliverAppBar(
+                leading: BackButton(
+                  onPressed: () async => await context.router.maybePop<bool?>(true),
+                ),
                 title: FlexableLabel(
                   title: widget.viewType == ProductViewType.add
                       ? LocaleKeys.home_add_a_new_product
@@ -66,6 +74,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       style: Theme.of(context).textTheme.bodyLarge,
                     ).tr()),
                     SelectableTag(
+                      value: category,
                       source: CategoryType.names,
                       onChanged: (value) =>
                           productAddViewModel.setCategory(category: value),
@@ -133,9 +142,30 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       builder: (context, state) {
                         return CustomElevatedButton(
                           onPressed: () async {
-                            widget.viewType == ProductViewType.add
-                                ? await onPressedCreate(category: state)
-                                : await onPressedEdit(category: state);
+                            if (widget.viewType == ProductViewType.add) {
+                              await onPressedCreate(context: context, category: state);
+                            } else {
+                              var result =
+                                  await onPressedEdit(context: context, category: state);
+                              if (result != null && result.isSuccess) {
+                                CustomSnackbar.show(
+                                  context: context,
+                                  message: LocaleKeys
+                                      .product_update_product_update_success
+                                      .tr(),
+                                  second: DurationSeconds.medium,
+                                  responseType: ResponseType.success,
+                                );
+                              } else {
+                                CustomSnackbar.show(
+                                  context: context,
+                                  message:
+                                      LocaleKeys.product_update_product_update_fail.tr(),
+                                  second: DurationSeconds.medium,
+                                  responseType: ResponseType.error,
+                                );
+                              }
+                            }
                           },
                           child: FlexableLabel(
                             title: widget.viewType == ProductViewType.add

@@ -73,7 +73,9 @@
   },
   "product_update": {
     "update_product": "Update Product",
-    "product_information": "Product Information"
+    "product_information": "Product Information",
+    "product_update_success": "Product updated successfully",
+    "product_update_fail": "Product update failed"
   },
   "product_delete": {
     "delete_product": "Delete Product",

@@ -1,8 +1,7 @@
 import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,10 @@ import 'package:stocket/product/service/common_service.dart';
 import 'package:stocket/product/state/home_state.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
+
+part '../part_of_view/part_of_home_view.dart';
 
 /// [HomeView] is main screen of the app
 @RoutePage()
@@ -71,13 +73,15 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         onPageBuilder: (context, value) => BlocBuilder<HomeViewModel, HomeState>(
           builder: (context, state) {
             return _ProductList(
-                ({
-                  required BuildContext context,
-                  required int index,
-                  required String id,
-                }) =>
-                    deleteProduct(context: context, index: index, productId: id),
-                state);
+              deleteProduct: ({
+                required BuildContext context,
+                required int index,
+                required String id,
+              }) =>
+                  deleteProduct(context: context, index: index, productId: id),
+              getProducts: ({required context}) => getProducts(context: context),
+              state: state,
+            );
           },
         ),
       ),
@@ -87,13 +91,21 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
 
 /// [_ProductList] is the list of products.
 final class _ProductList extends StatefulWidget {
-  const _ProductList(this.deleteProduct, this.state);
+  const _ProductList({
+    required this.deleteProduct,
+    required this.state,
+    required this.getProducts,
+  });
 
   final Future<void> Function({
     required BuildContext context,
     required int index,
     required String id,
   }) deleteProduct;
+
+  final Future<void> Function({
+    required BuildContext context,
+  }) getProducts;
 
   final HomeState state;
 
@@ -102,6 +114,14 @@ final class _ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<_ProductList> {
+  late BuildContext _parentContext;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _parentContext = context;
+  }
+
   @override
   Widget build(BuildContext context) {
     log('PRODUCTBUILD');
@@ -119,7 +139,6 @@ class _ProductListState extends State<_ProductList> {
       );
     } else {
       final _products = widget.state.products!;
-      // log('HOME PAGE: ${widget.state.page}');
       return SliverList.builder(
         itemCount: widget.state.isLoading
             ? _products.productItems!.length + 1
@@ -138,6 +157,9 @@ class _ProductListState extends State<_ProductList> {
                       product: _products.productItems![index],
                     ),
                   );
+                  if (result.hasValue && result!) {
+                    await widget.getProducts(context: _parentContext);
+                  }
                 },
               ),
               SlidableAction(
@@ -172,40 +194,12 @@ class _ProductListState extends State<_ProductList> {
     log('product: ${_product.productid}');
     if (!_product.productid.hasValue) {
       CustomSnackbar.show(
-          context: context,
-          message: LocaleKeys.product_delete_delete_product_fail.tr(),
-          backgroundColor: Theme.of(context).colorScheme.onError,
-          textColor: Theme.of(context).colorScheme.onPrimary,
-          duration: Duration(seconds: DurationSeconds.veryShort.value));
-    }
-    await widget.deleteProduct(context: context, index: index, id: _product.productid!);
-  }
-}
-
-final class _ProductItemBuilder extends StatelessWidget {
-  final int index;
-  final Products products;
-
-  const _ProductItemBuilder({
-    required this.index,
-    required this.products,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (index < products.productItems!.length) {
-      final _product = products.productItems![index];
-      return ProductCard(
-        barcode: _product.barcode ?? '',
-        description: _product.description ?? '',
-        name: _product.name ?? '',
-        price: _product.price ?? 0.0,
-        stock: _product.stock ?? 0,
-        category: _product.category ?? 1,
+        context: context,
+        message: LocaleKeys.product_delete_delete_product_fail.tr(),
+        second: DurationSeconds.short,
+        responseType: ResponseType.error,
       );
     }
-    return const Center(
-      child: CircularProgressIndicator.adaptive(),
-    );
+    await widget.deleteProduct(context: context, index: index, id: _product.productid!);
   }
 }

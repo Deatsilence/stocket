@@ -12,6 +12,8 @@ final class BaseView<T> extends StatefulWidget {
     this.drawer,
     this.floatingActionButton,
     this.onDispose,
+    this.onPopInvoked,
+    this.onPressedBackButton,
     this.physics,
     this.controller,
     this.resizeToAvoidBottomInset = true,
@@ -25,6 +27,12 @@ final class BaseView<T> extends StatefulWidget {
   /// [onDispose] is the callback function that is called
   /// when the view is disposed.
   final VoidCallback? onDispose;
+
+  /// [onPressedBackButton] is the callback function that is called on app bar back button pressed.
+  final VoidCallback? onPressedBackButton;
+
+  /// [ PopScope] is the scope for the view.
+  final void Function(bool didPop)? onPopInvoked;
 
   /// [sliverAppBar] is the sliver app bar for the view.
   final SliverAppBar? sliverAppBar;
@@ -63,40 +71,44 @@ class _BaseViewState<T> extends State<BaseView<T>> {
   @override
   Widget build(BuildContext context) {
     log('BaseView build');
-    return Scaffold(
-      drawer: widget.sliverAppBar != null ? widget.drawer : null,
-      drawerEnableOpenDragGesture: false,
-      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-      floatingActionButton: widget.floatingActionButton,
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
+    return PopScope(
+      canPop: true,
+      onPopInvoked: widget.onPopInvoked,
+      child: Scaffold(
+        drawer: widget.sliverAppBar != null ? widget.drawer : null,
+        drawerEnableOpenDragGesture: false,
+        resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+        floatingActionButton: widget.floatingActionButton,
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
 
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: SafeArea(
-          top: !(widget.sliverAppBar != null),
-          bottom: false,
-          child: CustomScrollView(
-            controller: widget.controller,
-            physics: MediaQuery.of(context).viewInsets.bottom > 0
-                ? const AlwaysScrollableScrollPhysics()
-                : widget.physics ?? const NeverScrollableScrollPhysics(),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            slivers: [
-              widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),
-              SliverPadding(
-                padding: PaddingManager.paddingManagerNormalPaddingSymmetricHorizontal,
-                sliver: widget.onPageBuilder(context, widget as T),
-              ),
-              widget.isSliverFillRemaining
-                  ? const SliverFillRemaining(
-                      hasScrollBody: false,
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-            ],
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: SafeArea(
+            top: !(widget.sliverAppBar != null),
+            bottom: false,
+            child: CustomScrollView(
+              controller: widget.controller,
+              physics: MediaQuery.of(context).viewInsets.bottom > 0
+                  ? const AlwaysScrollableScrollPhysics()
+                  : widget.physics ?? const NeverScrollableScrollPhysics(),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              slivers: [
+                widget.sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox.shrink()),
+                SliverPadding(
+                  padding: PaddingManager.paddingManagerNormalPaddingSymmetricHorizontal,
+                  sliver: widget.onPageBuilder(context, widget as T),
+                ),
+                widget.isSliverFillRemaining
+                    ? const SliverFillRemaining(
+                        hasScrollBody: false,
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+              ],
+            ),
           ),
         ),
       ),

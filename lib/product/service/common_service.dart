@@ -220,20 +220,7 @@ final class CommonService with CommonServiceMixin {
 
       switch (responseCode) {
         case HttpResult.success:
-          if (responseBody is Map) {
-            final data = model.fromJson(responseBody.cast<String, dynamic>());
-            return ApiResponse<dynamic>.success(data: data);
-          } else if (responseBody is List) {
-            final data = responseBody
-                .map((e) => model.fromJson(e as Map<String, dynamic>))
-                .toList();
-            return ApiResponse<dynamic>.success(data: data);
-          }
-          return ApiResponse.failure(
-            data: responseBody,
-            result: HttpResult.unknown,
-            error: LocaleKeys.errors_unknown_response_type.tr(),
-          );
+          return ApiResponse<dynamic>.success(data: responseBody);
 
         default:
           return ApiResponse.failure(

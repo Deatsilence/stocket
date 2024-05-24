@@ -3,14 +3,18 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
+import 'package:stocket/product/utility/response/api_response.dart';
 
 /// [ProductAddViewMixin] is a [State] mixin that contains the home view logic.
 mixin ProductAddViewMixin on State<ProductAddView> {
@@ -74,7 +78,9 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _productAddFormKey = GlobalKey<FormState>();
     _productAddViewModel = ProductAddViewModel();
     _productid = widget.product?.productid ?? '';
+    log('category: ${widget.product?.category}');
     _category = widget.product?.category ?? CategoryType.stationary.index + 1;
+    log("_category : ${_category}");
     _barcodeController = TextEditingController();
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
@@ -86,8 +92,6 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _descriptionController.text = widget.product?.description ?? '';
     _priceController.text = widget.product?.price.toString() ?? '';
     _stockController.text = widget.product?.stock.toString() ?? '';
-
-    productAddViewModel.setCategory(category: _category);
   }
 
   @override
@@ -138,6 +142,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   }
 
   Future<void> onPressedCreateProduct({
+    required BuildContext context,
     required int? category,
     required String token,
   }) async {
@@ -162,7 +167,8 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     });
   }
 
-  Future<void> onPressedEditProduct({
+  Future<ApiResponse<dynamic>> onPressedEditProduct({
+    required BuildContext context,
     required int? category,
     required String token,
   }) async {
@@ -178,36 +184,36 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     if (!token.hasValue) {
       // TODO: Show error alert
     }
-    await productAddViewModel.editProduct(product: product, token: token).then((value) {
-      if (value.isSuccess) {
-        // TODO : Show success alert
-        log('Product edited');
-        // context.router.maybePop<bool?>(true);
-      } else {
-        log('Product not edited');
-        null;
-      }
-    });
+    final response =
+        await productAddViewModel.editProduct(product: product, token: token);
+
+    return response;
   }
 
-  Future<void> onPressedCreate({required int? category}) async {
+  Future<void> onPressedCreate(
+      {required BuildContext context, required int? category}) async {
     if (isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
       await onPressedCreateProduct(
+        context: context,
         category: category,
         token: token ?? '',
       );
     }
   }
 
-  Future<void> onPressedEdit({required int? category}) async {
+  Future<ApiResponse<dynamic>?> onPressedEdit(
+      {required BuildContext context, required int? category}) async {
     if (isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
-      await onPressedEditProduct(
+      final response = await onPressedEditProduct(
+        context: context,
         category: category,
         token: token ?? '',
       );
+      return response;
     }
+    return null;
   }
 
   Future<void> onPressedNavigateToBarcodeScan() async {

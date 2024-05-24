@@ -2,5 +2,9 @@
 <?xml version="1.0" encoding="utf-8™?>
 <resources>
     <color name="delete">#F44C42</color>
-    <color name="Edit">#EACB2B</color>
+    <color name="edit">#EACB2B</color>
+    <color name="success">#007154</color>
+    <color name="warning">#F7D3A7</color>
+    <color name="info">#B3E5FC</color>
+    <color name="error">#F44C42</color>
 </resources>

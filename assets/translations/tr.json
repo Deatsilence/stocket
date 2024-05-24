@@ -75,7 +75,9 @@
   },
   "product_update": {
     "update_product": "Ürünü Güncelle",
-    "product_information": "Ürün Bilgileri"
+    "product_information": "Ürün Bilgileri",
+    "product_update_success": "Ürün başarıyla güncellendi",
+    "product_update_fail": "Ürün güncellenirken bir hata oluştu"
   },
   "product_delete": {
     "delete_product": "Ürünü Sil",

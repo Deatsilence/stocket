@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:gen/gen.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
