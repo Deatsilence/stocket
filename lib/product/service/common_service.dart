@@ -22,14 +22,16 @@ final class CommonService with CommonServiceMixin {
       baseUrl: _baseUrl,
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 30),
+      validateStatus: (status) =>
+          status.hasValue && ((status! >= 200 && status <= 399) || status == 409),
     );
+
     _dio = Dio(baseOptions);
 
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
           if (_token.hasValue) {
-            log('should add token');
             options.headers['token'] = _token;
           }
           return handler.next(options);
@@ -59,7 +61,7 @@ final class CommonService with CommonServiceMixin {
         '$_baseUrl$domain',
         queryParameters: queryParameters,
       );
-      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);
       final responseBody = response.data;
 
       switch (responseCode) {
@@ -103,9 +105,8 @@ final class CommonService with CommonServiceMixin {
         '$_baseUrl$domain',
         data: model.toJson(),
       );
-      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);
       final responseBody = response.data;
-      // log('response: $responseBody');
 
       switch (responseCode) {
         case HttpResult.success:
@@ -123,6 +124,13 @@ final class CommonService with CommonServiceMixin {
             data: responseBody,
             result: HttpResult.unknown,
             error: LocaleKeys.errors_unknown_response_type.tr(),
+          );
+
+        case HttpResult.conflict:
+          return ApiResponse.failure(
+            data: responseBody,
+            result: responseCode,
+            error: LocaleKeys.errors_product_already_exists.tr(),
           );
 
         default:
@@ -149,7 +157,7 @@ final class CommonService with CommonServiceMixin {
       final response = await _dio.post<dynamic>(
         '$_baseUrl$domain',
       );
-      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);
       final responseBody = response.data;
 
       switch (responseCode) {
@@ -181,7 +189,7 @@ final class CommonService with CommonServiceMixin {
       final response = await _dio.delete<dynamic>(
         '$_baseUrl$domain/$id',
       );
-      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);
       final responseBody = response.data;
 
       switch (responseCode) {
@@ -215,7 +223,7 @@ final class CommonService with CommonServiceMixin {
         '$_baseUrl$domain/$id',
         data: model.toJson(),
       );
-      final responseCode = HttpResult.fromStatusCode(response.statusCode!);
+      final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);
       final responseBody = response.data;
 
       switch (responseCode) {

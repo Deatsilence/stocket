@@ -27,6 +27,8 @@ final class ApiResponse<T> {
 
   String? get error => _error;
 
+  HttpResult? get result => _result;
+
   @override
   String toString() {
     if (isSuccess) {

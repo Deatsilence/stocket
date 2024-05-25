@@ -1,16 +1,11 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/home_view.dart';
-import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/home_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
-import 'package:stocket/product/init/language/locale_keys.g.dart';
-import 'package:stocket/product/utility/constants/enums/duration.dart';
-import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [HomeViewMixin] is a [State] mixin that contains the home view logic.
 mixin HomeViewMixin on State<HomeView> {

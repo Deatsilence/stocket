@@ -13,8 +13,9 @@ import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
+import 'package:stocket/product/utility/constants/enums/status_code.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
-import 'package:stocket/product/utility/response/api_response.dart';
 
 /// [ProductAddViewMixin] is a [State] mixin that contains the home view logic.
 mixin ProductAddViewMixin on State<ProductAddView> {
@@ -79,7 +80,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _productAddViewModel = ProductAddViewModel();
     _productid = widget.product?.productid ?? '';
     log('category: ${widget.product?.category}');
-    _category = widget.product?.category ?? CategoryType.stationary.index + 1;
+    _category = widget.product?.category ?? CategoryType.stationary.index;
     log("_category : ${_category}");
     _barcodeController = TextEditingController();
     _nameController = TextEditingController();
@@ -92,6 +93,8 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _descriptionController.text = widget.product?.description ?? '';
     _priceController.text = widget.product?.price.toString() ?? '';
     _stockController.text = widget.product?.stock.toString() ?? '';
+
+    _productAddViewModel.setCategory(category: _category);
   }
 
   @override
@@ -155,19 +158,43 @@ mixin ProductAddViewMixin on State<ProductAddView> {
       stock: 230,
     );
     if (!token.hasValue) {
-      // TODO: Show error alert
+      CustomSnackbar.show(
+        context: context,
+        message: LocaleKeys.product_add_add_product_fail.tr(),
+        second: DurationSeconds.medium,
+        responseType: ResponseType.error,
+      );
     }
-    await productAddViewModel.createProduct(product: product, token: token).then((value) {
+    await productAddViewModel
+        .createProduct(product: product, token: token)
+        .then((value) async {
       if (value.isSuccess) {
-        // TODO : Show success alert
-        context.router.maybePop<bool?>(true);
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.product_add_add_product_success.tr(),
+          second: DurationSeconds.short,
+          responseType: ResponseType.success,
+        );
+        await context.router.maybePop<bool?>(true);
+      } else if (value.result == HttpResult.conflict) {
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.errors_product_already_exists.tr(),
+          second: DurationSeconds.short,
+          responseType: ResponseType.info,
+        );
       } else {
-        null;
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.product_add_add_product_fail.tr(),
+          second: DurationSeconds.medium,
+          responseType: ResponseType.error,
+        );
       }
     });
   }
 
-  Future<ApiResponse<dynamic>> onPressedEditProduct({
+  Future<void> onPressedEditProduct({
     required BuildContext context,
     required int? category,
     required String token,
@@ -182,17 +209,38 @@ mixin ProductAddViewMixin on State<ProductAddView> {
       stock: int.tryParse(stockController.text) ?? 0,
     );
     if (!token.hasValue) {
-      // TODO: Show error alert
+      CustomSnackbar.show(
+        context: context,
+        message: LocaleKeys.product_update_product_update_fail.tr(),
+        second: DurationSeconds.medium,
+        responseType: ResponseType.error,
+      );
     }
-    final response =
-        await productAddViewModel.editProduct(product: product, token: token);
 
-    return response;
+    await productAddViewModel.editProduct(product: product, token: token).then(
+      (value) {
+        if (value.isSuccess) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.product_update_product_update_success.tr(),
+            second: DurationSeconds.short,
+            responseType: ResponseType.success,
+          );
+        } else {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.product_update_product_update_fail.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.error,
+          );
+        }
+      },
+    );
   }
 
   Future<void> onPressedCreate(
       {required BuildContext context, required int? category}) async {
-    if (isAddingProductValid()) {
+    if (!isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
       await onPressedCreateProduct(
         context: context,
@@ -202,18 +250,16 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     }
   }
 
-  Future<ApiResponse<dynamic>?> onPressedEdit(
+  Future<void> onPressedEdit(
       {required BuildContext context, required int? category}) async {
     if (isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
-      final response = await onPressedEditProduct(
+      await onPressedEditProduct(
         context: context,
         category: category,
         token: token ?? '',
       );
-      return response;
     }
-    return null;
   }
 
   Future<void> onPressedNavigateToBarcodeScan() async {

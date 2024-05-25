@@ -56,12 +56,12 @@ final class CustomSnackbar {
       case ResponseType.info:
         return _SnackbarColors(
           background: ColorName.info,
-          text: theme.colorScheme.onSecondary,
+          text: theme.colorScheme.primary,
         );
       default:
         return _SnackbarColors(
           background: ColorName.info,
-          text: theme.colorScheme.onSecondary,
+          text: theme.colorScheme.primary,
         );
     }
   }
