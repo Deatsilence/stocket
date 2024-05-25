@@ -26,6 +26,7 @@ final class CustomTextFormField extends StatefulWidget {
     this.onChanged,
     this.autocorrect = false,
     this.obscureText = false,
+    this.enabled = true,
     this.obscuringCharacter = '•',
     this.suffixIcon,
   });
@@ -47,6 +48,7 @@ final class CustomTextFormField extends StatefulWidget {
   final Color? errorBorderColor;
   final bool autocorrect;
   final bool obscureText;
+  final bool enabled;
   final String obscuringCharacter;
   final FocusNode? focusNode;
   final IconButton? suffixIcon;
@@ -56,7 +58,17 @@ final class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _isClearButtonVisible = false;
+  late bool _isClearButtonVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) {
+      widget.controller!.text.isEmpty
+          ? _isClearButtonVisible = false
+          : _isClearButtonVisible = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +89,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: CustomInputDecoration(
         prefixIcon: widget.prefixIcon,
         suffixIcon: SizedBox(
-          width: _isClearButtonVisible ? MediaQuery.sizeOf(context).width * 0.2 : 0,
+          width: _isClearButtonVisible ? MediaQuery.sizeOf(context).width * 0.3 : 0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: widget.suffixIcon != null
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
               widget.suffixIcon ?? const SizedBox.shrink(),
@@ -115,6 +129,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: widget.textInputAction,
       focusNode: widget.focusNode,
       onFieldSubmitted: widget.onFieldSubmitted,
+      enabled: widget.enabled,
     );
   }
 }

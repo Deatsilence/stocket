@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 enum CategoryType {
   stationary,
   electronics,
-  books,
   food,
   drinks,
   other;
@@ -13,7 +12,6 @@ enum CategoryType {
   static List<String> get names => [
         'Stationary',
         'Electronics',
-        'Books',
         'Food',
         'Drinks',
         'Other',
@@ -27,12 +25,10 @@ enum CategoryType {
       case 1:
         return CategoryType.electronics.index;
       case 2:
-        return CategoryType.books.index;
-      case 3:
         return CategoryType.food.index;
-      case 4:
+      case 3:
         return CategoryType.drinks.index;
-      case 5:
+      case 4:
         return CategoryType.other.index;
       default:
         return CategoryType.other.index;
@@ -41,15 +37,15 @@ enum CategoryType {
 
   /// [getIconAccordingToCategory] is used to get the icon according to the category type.
   static IconData getIconAccordingToCategory({required int index}) {
-    if (index case 1)
+    if (index case 0)
       return Icons.book_outlined;
-    else if (index case 2)
+    else if (index case 1)
       return Icons.electric_bolt_sharp;
-    else if (index case 4)
+    else if (index case 2)
       return Icons.fastfood;
-    else if (index case 5)
+    else if (index case 3)
       return Icons.local_drink;
-    else if (index case 6)
+    else if (index case 4)
       return Icons.category;
     else
       return Icons.category;

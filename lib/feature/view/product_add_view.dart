@@ -7,16 +7,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/product_add_view_mixin.dart';
+import 'package:stocket/feature/view/widget/appbar_title.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/product_add_state.dart';
+import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 /// [ProductAddView] is main screen of the app
 @RoutePage<bool?>()
 final class ProductAddView extends StatefulWidget {
-  const ProductAddView({super.key});
+  const ProductAddView({
+    super.key,
+    this.viewType = ProductViewType.add,
+    this.product,
+  });
+
+  final ProductViewType viewType;
+  final Product? product;
 
   @override
   State<ProductAddView> createState() => _ProductAddViewState();
@@ -32,14 +41,18 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
         child: Stack(
           children: [
             BaseView(
+              onPopInvoked: (didPop) async =>
+                  didPop ? await context.router.maybePop<bool?>(true) : null,
               physics: AlwaysScrollableScrollPhysics(),
               sliverAppBar: SliverAppBar(
-                title: Text(
-                  LocaleKeys.home_add_a_new_product,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                ).tr(),
+                leading: BackButton(
+                  onPressed: () async => await context.router.maybePop<bool?>(true),
+                ),
+                title: FlexableLabel(
+                  title: widget.viewType == ProductViewType.add
+                      ? LocaleKeys.home_add_a_new_product
+                      : LocaleKeys.product_update_product_information,
+                ),
                 centerTitle: true,
                 pinned: true,
                 floating: false,
@@ -58,6 +71,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       style: Theme.of(context).textTheme.bodyLarge,
                     ).tr()),
                     SelectableTag(
+                      value: category,
                       source: CategoryType.names,
                       onChanged: (value) =>
                           productAddViewModel.setCategory(category: value),
@@ -79,6 +93,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       hintText: LocaleKeys.product_add_barcode_placeholder.tr(),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
+                      enabled: widget.viewType == ProductViewType.add,
                       validator: barcodeValidator,
                     ),
                     CustomTextFormField(
@@ -124,8 +139,15 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       },
                       builder: (context, state) {
                         return CustomElevatedButton(
-                          onPressed: () => onPressed(state: state),
-                          child: Text(LocaleKeys.product_add_save_product).tr(),
+                          onPressed: () async => widget.viewType == ProductViewType.add
+                              ? await onPressedCreate(context: context, category: state)
+                              : await onPressedEdit(context: context, category: state),
+                          child: FlexableLabel(
+                            title: widget.viewType == ProductViewType.add
+                                ? LocaleKeys.home_add_a_new_product
+                                : LocaleKeys.product_update_update_product,
+                            isStyleActive: false,
+                          ),
                         );
                       },
                     ),

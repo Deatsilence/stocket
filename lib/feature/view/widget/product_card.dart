@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gen/gen.dart';
@@ -28,9 +29,9 @@ final class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(10),
+      margin: PaddingManager.paddingManagerLessPaddingAll,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: PaddingManager.paddingManagerLessPaddingAll,
         child: ListTile(
           contentPadding: const EdgeInsets.all(16),
           title: Text(

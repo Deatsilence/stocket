@@ -73,6 +73,12 @@
     "add_product_success": "Ürün başarıyla eklendi",
     "add_product_fail": "Ürün eklenirken bir hata oluştu"
   },
+  "product_update": {
+    "update_product": "Ürünü Güncelle",
+    "product_information": "Ürün Bilgileri",
+    "product_update_success": "Ürün başarıyla güncellendi",
+    "product_update_fail": "Ürün güncellenirken bir hata oluştu"
+  },
   "product_delete": {
     "delete_product": "Ürünü Sil",
     "delete_product_message": "Ürünü silmek istediğinize emin misiniz ?",
@@ -84,6 +90,7 @@
   "errors": {
     "unknown_response_type": "Bilinmeyen yanıt türü",
     "occur_an_error": "Bir hata oluştu",
-    "no_products_available": "Ürün bulunamadı"
+    "no_products_available": "Ürün bulunamadı",
+    "product_already_exists": "Ürün zaten mevcut"
   }
 }

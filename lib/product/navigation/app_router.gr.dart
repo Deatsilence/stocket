@@ -51,9 +51,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ProductAddRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
+      final args = routeData.argsAs<ProductAddRouteArgs>(
+          orElse: () => const ProductAddRouteArgs());
+      return AutoRoutePage<bool?>(
         routeData: routeData,
-        child: const ProductAddView(),
+        child: ProductAddView(
+          key: args.key,
+          viewType: args.viewType,
+          product: args.product,
+        ),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -171,16 +177,45 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProductAddView]
-class ProductAddRoute extends PageRouteInfo<void> {
-  const ProductAddRoute({List<PageRouteInfo>? children})
-      : super(
+class ProductAddRoute extends PageRouteInfo<ProductAddRouteArgs> {
+  ProductAddRoute({
+    Key? key,
+    ProductViewType viewType = ProductViewType.add,
+    Product? product,
+    List<PageRouteInfo>? children,
+  }) : super(
           ProductAddRoute.name,
+          args: ProductAddRouteArgs(
+            key: key,
+            viewType: viewType,
+            product: product,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ProductAddRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ProductAddRouteArgs> page =
+      PageInfo<ProductAddRouteArgs>(name);
+}
+
+class ProductAddRouteArgs {
+  const ProductAddRouteArgs({
+    this.key,
+    this.viewType = ProductViewType.add,
+    this.product,
+  });
+
+  final Key? key;
+
+  final ProductViewType viewType;
+
+  final Product? product;
+
+  @override
+  String toString() {
+    return 'ProductAddRouteArgs{key: $key, viewType: $viewType, product: $product}';
+  }
 }
 
 /// generated route for

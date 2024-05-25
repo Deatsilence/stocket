@@ -3,13 +3,18 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
+import 'package:stocket/product/utility/constants/enums/status_code.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [ProductAddViewMixin] is a [State] mixin that contains the home view logic.
@@ -19,6 +24,9 @@ mixin ProductAddViewMixin on State<ProductAddView> {
 
   /// [_productAddViewModel] is the view model for the login view.
   late final ProductAddViewModel _productAddViewModel;
+
+  /// [_productid] is the _productid of the product.
+  late final String _productid;
 
   /// [_category] is the _category of the product.
   late final int _category;
@@ -44,6 +52,9 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   /// [productAddViewModel] is the view model for the login view.
   ProductAddViewModel get productAddViewModel => _productAddViewModel;
 
+  /// [productid] is the productid of the product.
+  String get productid => _productid;
+
   /// [category] is the category of the product.
   int get category => _category;
 
@@ -67,14 +78,23 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     super.initState();
     _productAddFormKey = GlobalKey<FormState>();
     _productAddViewModel = ProductAddViewModel();
-    _category = CategoryType.stationary.index + 1;
+    _productid = widget.product?.productid ?? '';
+    log('category: ${widget.product?.category}');
+    _category = widget.product?.category ?? CategoryType.stationary.index;
+    log("_category : ${_category}");
     _barcodeController = TextEditingController();
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
     _priceController = TextEditingController();
     _stockController = TextEditingController();
 
-    productAddViewModel.setCategory(category: _category);
+    _barcodeController.text = widget.product?.barcode ?? '';
+    _nameController.text = widget.product?.name ?? '';
+    _descriptionController.text = widget.product?.description ?? '';
+    _priceController.text = widget.product?.price.toString() ?? '';
+    _stockController.text = widget.product?.stock.toString() ?? '';
+
+    _productAddViewModel.setCategory(category: _category);
   }
 
   @override
@@ -125,6 +145,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   }
 
   Future<void> onPressedCreateProduct({
+    required BuildContext context,
     required int? category,
     required String token,
   }) async {
@@ -137,23 +158,105 @@ mixin ProductAddViewMixin on State<ProductAddView> {
       stock: 230,
     );
     if (!token.hasValue) {
-      // TODO: Show error alert
+      CustomSnackbar.show(
+        context: context,
+        message: LocaleKeys.product_add_add_product_fail.tr(),
+        second: DurationSeconds.medium,
+        responseType: ResponseType.error,
+      );
     }
-    await productAddViewModel.createProduct(product: product, token: token).then((value) {
+    await productAddViewModel
+        .createProduct(product: product, token: token)
+        .then((value) async {
       if (value.isSuccess) {
-        // TODO : Show success alert
-        context.router.maybePop(true);
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.product_add_add_product_success.tr(),
+          second: DurationSeconds.short,
+          responseType: ResponseType.success,
+        );
+        await context.router.maybePop<bool?>(true);
+      } else if (value.result == HttpResult.conflict) {
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.errors_product_already_exists.tr(),
+          second: DurationSeconds.short,
+          responseType: ResponseType.info,
+        );
       } else {
-        null;
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.product_add_add_product_fail.tr(),
+          second: DurationSeconds.medium,
+          responseType: ResponseType.error,
+        );
       }
     });
   }
 
-  Future<void> onPressed({required int? state}) async {
+  Future<void> onPressedEditProduct({
+    required BuildContext context,
+    required int? category,
+    required String token,
+  }) async {
+    final product = Product(
+      productid: productid,
+      barcode: barcodeController.text,
+      name: nameController.text,
+      description: descriptionController.text,
+      category: category,
+      price: double.tryParse(priceController.text) ?? 0.0,
+      stock: int.tryParse(stockController.text) ?? 0,
+    );
+    if (!token.hasValue) {
+      CustomSnackbar.show(
+        context: context,
+        message: LocaleKeys.product_update_product_update_fail.tr(),
+        second: DurationSeconds.medium,
+        responseType: ResponseType.error,
+      );
+    }
+
+    await productAddViewModel.editProduct(product: product, token: token).then(
+      (value) {
+        if (value.isSuccess) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.product_update_product_update_success.tr(),
+            second: DurationSeconds.short,
+            responseType: ResponseType.success,
+          );
+        } else {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.product_update_product_update_fail.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.error,
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> onPressedCreate(
+      {required BuildContext context, required int? category}) async {
     if (!isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
       await onPressedCreateProduct(
-        category: state,
+        context: context,
+        category: category,
+        token: token ?? '',
+      );
+    }
+  }
+
+  Future<void> onPressedEdit(
+      {required BuildContext context, required int? category}) async {
+    if (isAddingProductValid()) {
+      final token = context.read<RootViewModel>().state.currentUser?.token;
+      await onPressedEditProduct(
+        context: context,
+        category: category,
         token: token ?? '',
       );
     }

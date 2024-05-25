@@ -71,9 +71,24 @@
     "add_product_success": "Product added successfully",
     "add_product_fail": "Product add failed"
   },
+  "product_update": {
+    "update_product": "Update Product",
+    "product_information": "Product Information",
+    "product_update_success": "Product updated successfully",
+    "product_update_fail": "Product update failed"
+  },
+  "product_delete": {
+    "delete_product": "Delete Product",
+    "delete_product_message": "Are you sure you want to delete this product?",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "delete_product_success": "Product deleted successfully",
+    "delete_product_fail": "Product delete failed"
+  },
   "errors": {
     "unknown_response_type": "Unknown response type",
     "occur_an_error": "An error occurred",
-    "no_products_available": "No products available"
+    "no_products_available": "No products available",
+    "product_already_exists": "Product already exists"
   }
 }

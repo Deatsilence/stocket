@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:gen/gen.dart';
 import 'package:logger/logger.dart';
@@ -22,7 +21,7 @@ final class LoginViewModel extends BaseCubit<LoginState> {
         model: user,
       );
 
-      log('response: ${response.toString()}');
+      // log('response: ${response.toString()}');
       _changeLoading();
 
       return response;

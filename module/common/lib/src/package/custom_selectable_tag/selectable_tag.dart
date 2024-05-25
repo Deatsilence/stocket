@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'mixin/selectable_tag_mixin.dart';
@@ -9,7 +11,11 @@ final class SelectableTag extends StatefulWidget {
     super.key,
     required this.source,
     this.onChanged,
+    this.value = 0,
   });
+
+  /// [value] is the current selected tag
+  final int value;
 
   /// [source] is a list of strings that will be used as tags
   final List<String> source;
@@ -24,11 +30,13 @@ final class SelectableTag extends StatefulWidget {
 class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
   @override
   Widget build(BuildContext context) {
+    log('TAGBUILD build $tagValue');
     return ChipsChoice<int>.single(
-      value: tag,
+      value: tagValue,
       onChanged: (value) {
+        log('TAGBUILD onChanged $value');
         setState(() {
-          tag = value;
+          tagValue = value;
           if (widget.onChanged != null) {
             widget.onChanged!(value);
           }
@@ -40,7 +48,7 @@ class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
         label: (index, item) => item,
       ),
       choiceStyle: C2ChipStyle(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

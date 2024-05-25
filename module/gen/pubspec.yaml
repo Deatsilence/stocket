@@ -38,7 +38,7 @@ flutter_gen:
 
   colors:
     inputs:
-      - asset/color/colors.xml
+      - assets/color/colors.xml
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
