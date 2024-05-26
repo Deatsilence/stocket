@@ -7,6 +7,9 @@ enum HttpResult {
   /// Redirection status code [300, 399]
   redirection,
 
+  /// Not found status code [404]
+  notFound,
+
   /// Client error status code [409]
   conflict,
 
@@ -27,6 +30,9 @@ enum HttpResult {
 
       case >= 300 && <= 399:
         return HttpResult.redirection;
+
+      case 404:
+        return HttpResult.notFound;
 
       case 409:
         return HttpResult.conflict;

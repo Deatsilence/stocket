@@ -34,11 +34,14 @@
     "name_required": "Name is required",
     "surname_required": "Surname is required",
     "password_reset_link_sent": "Password reset link sent to your e-mail address",
+    "enter_your_email_to_reset_password": "Please enter your e-mail address to reset your password",
     "dont_have_account": "Don't have an account?",
     "verify": "Verify",
     "verify_email_sent": "Please enter the verification code sent to your e-mail address",
     "did_not_receive_verification_code": "Did not receive the verification code?",
-    "resend_verification_code": "Resend verification code"
+    "resend_verification_code": "Resend verification code",
+    "password_reset": "Password Reset",
+    "send_verification_code_to_email": "Send Verification Code"
   },
   "home": {
     "title": "Home",
@@ -89,6 +92,8 @@
     "unknown_response_type": "Unknown response type",
     "occur_an_error": "An error occurred",
     "no_products_available": "No products available",
-    "product_already_exists": "Product already exists"
+    "product_already_exists": "Product already exists",
+    "user_not_found": "User not found",
+    "occur_an_error_while_send_verification_code": "An error occurred while sending the verification code"
   }
 }

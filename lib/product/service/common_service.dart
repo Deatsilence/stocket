@@ -23,7 +23,8 @@ final class CommonService with CommonServiceMixin {
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 30),
       validateStatus: (status) =>
-          status.hasValue && ((status! >= 200 && status <= 399) || status == 409),
+          status.hasValue &&
+          ((status! >= 200 && status <= 399) || status == 404 || status == 409),
     );
 
     _dio = Dio(baseOptions);

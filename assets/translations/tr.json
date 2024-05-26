@@ -34,11 +34,14 @@
     "name_required": "Ad gereklidir",
     "surname_required": "Soyad gereklidir",
     "password_reset_link_sent": "Şifre sıfırlama linki e-posta adresinize gönderildi",
+    "enter_your_email_to_reset_password": "Şifrenizi sıfırlamak için lütfen e-posta adresinizi giriniz",
     "dont_have_account": "Hesabınız yok mu?",
     "verify": "Onaylama",
     "verify_email_sent": "Lütfen e-posta adresinize gönderilen doğrulama kodunu giriniz",
     "did_not_receive_verification_code": "Doğrulama kodu E-posta adresinize ulaşmadı mı ?",
-    "resend_verification_code": "Doğrulama kodunu tekrar gönder"
+    "resend_verification_code": "Doğrulama kodunu tekrar gönder",
+    "password_reset": "Şifre Sıfırlama",
+    "send_verification_code_to_email": "Doğrulama Kodu Gönder"
   },
   "home": {
     "title": "Ana Sayfa",
@@ -91,6 +94,8 @@
     "unknown_response_type": "Bilinmeyen yanıt türü",
     "occur_an_error": "Bir hata oluştu",
     "no_products_available": "Ürün bulunamadı",
-    "product_already_exists": "Ürün zaten mevcut"
+    "product_already_exists": "Ürün zaten mevcut",
+    "user_not_found": "Kullanıcı bulunamadı",
+    "occur_an_error_while_send_verification_code": "Doğrulama kodu gönderilirken bir hata oluştu"
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,9 +28,6 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
 
   @override
   Widget build(BuildContext context) {
-    log('LoginView build');
-    log('Base URL: ${DevEnv().baseUrl}');
-    log('SIGNUP URL: ${DevEnv().postUsersSignupDomain}');
     return BlocProvider<LoginViewModel>(
       create: (context) => loginViewModel,
       child: Form(
@@ -80,7 +76,9 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await context.router.push(SendCodeToEMailRoute());
+                        },
                         child: const Text(LocaleKeys.authentication_forgot_password).tr(),
                       ),
                     ),

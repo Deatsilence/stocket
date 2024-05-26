@@ -52,10 +52,7 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
         }
       },
     );
-    // context.router.pushAndPopUntil(
-    //   DashboardRootRoute(),
-    //   predicate: (route) => route.settings.name == LoginRoute.name,
-    // );
+
     // TODO: Alert Dialog will be come instead of null
   }
 }

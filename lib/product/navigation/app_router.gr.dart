@@ -50,6 +50,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginView(),
       );
     },
+    PasswordResetRoute.name: (routeData) {
+      final args = routeData.argsAs<PasswordResetRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PasswordResetView(
+          key: args.key,
+          verifyOTP: args.verifyOTP,
+        ),
+      );
+    },
     ProductAddRoute.name: (routeData) {
       final args = routeData.argsAs<ProductAddRouteArgs>(
           orElse: () => const ProductAddRouteArgs());
@@ -60,6 +70,12 @@ abstract class _$AppRouter extends RootStackRouter {
           viewType: args.viewType,
           product: args.product,
         ),
+      );
+    },
+    SendCodeToEMailRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SendCodeToEMailView(),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -75,6 +91,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: VerifyOTPView(
           key: args.key,
           email: args.email,
+          afterOtpVerify: args.afterOtpVerify,
         ),
       );
     },
@@ -176,6 +193,44 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PasswordResetView]
+class PasswordResetRoute extends PageRouteInfo<PasswordResetRouteArgs> {
+  PasswordResetRoute({
+    Key? key,
+    required VerifyOTP verifyOTP,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PasswordResetRoute.name,
+          args: PasswordResetRouteArgs(
+            key: key,
+            verifyOTP: verifyOTP,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PasswordResetRoute';
+
+  static const PageInfo<PasswordResetRouteArgs> page =
+      PageInfo<PasswordResetRouteArgs>(name);
+}
+
+class PasswordResetRouteArgs {
+  const PasswordResetRouteArgs({
+    this.key,
+    required this.verifyOTP,
+  });
+
+  final Key? key;
+
+  final VerifyOTP verifyOTP;
+
+  @override
+  String toString() {
+    return 'PasswordResetRouteArgs{key: $key, verifyOTP: $verifyOTP}';
+  }
+}
+
+/// generated route for
 /// [ProductAddView]
 class ProductAddRoute extends PageRouteInfo<ProductAddRouteArgs> {
   ProductAddRoute({
@@ -219,6 +274,20 @@ class ProductAddRouteArgs {
 }
 
 /// generated route for
+/// [SendCodeToEMailView]
+class SendCodeToEMailRoute extends PageRouteInfo<void> {
+  const SendCodeToEMailRoute({List<PageRouteInfo>? children})
+      : super(
+          SendCodeToEMailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SendCodeToEMailRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SignUpView]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute({List<PageRouteInfo>? children})
@@ -238,12 +307,14 @@ class VerifyOTPRoute extends PageRouteInfo<VerifyOTPRouteArgs> {
   VerifyOTPRoute({
     Key? key,
     required String email,
+    AfterOtpVerify afterOtpVerify = AfterOtpVerify.login,
     List<PageRouteInfo>? children,
   }) : super(
           VerifyOTPRoute.name,
           args: VerifyOTPRouteArgs(
             key: key,
             email: email,
+            afterOtpVerify: afterOtpVerify,
           ),
           initialChildren: children,
         );
@@ -258,14 +329,17 @@ class VerifyOTPRouteArgs {
   const VerifyOTPRouteArgs({
     this.key,
     required this.email,
+    this.afterOtpVerify = AfterOtpVerify.login,
   });
 
   final Key? key;
 
   final String email;
 
+  final AfterOtpVerify afterOtpVerify;
+
   @override
   String toString() {
-    return 'VerifyOTPRouteArgs{key: $key, email: $email}';
+    return 'VerifyOTPRouteArgs{key: $key, email: $email, afterOtpVerify: $afterOtpVerify}';
   }
 }

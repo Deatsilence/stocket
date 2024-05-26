@@ -4,28 +4,23 @@ final class _CustomPinput extends StatelessWidget {
   const _CustomPinput({
     required VerifyOTPViewModel verifyOTPViewModel,
     required String email,
+    required this.afterOtpVerify,
   })  : _viewModel = verifyOTPViewModel,
         _email = email;
 
   final VerifyOTPViewModel _viewModel;
   final String _email;
   final int _digitLength = 6;
+  final AfterOtpVerify afterOtpVerify;
 
   @override
   Widget build(BuildContext context) {
     return Pinput(
-      onCompleted: (value) async {
-        final otp = VerifyOTP(email: _email, code: value);
-        await _viewModel.verifyOTP(otp: otp).then(
-              (value) => value.isSuccess
-                  ? context.router.pushAndPopUntil(
-                      LoginRoute(),
-                      predicate: (route) => route.settings.name == VerifyOTPRoute.name,
-                    )
-                  : null,
-            );
-        // TODO: Alert Dialog will be come to instead of null
-      },
+      onCompleted: (value) => _onComplated(
+        context: context,
+        value: value,
+        afterOtpVerify: afterOtpVerify,
+      ),
       length: _digitLength,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
@@ -60,6 +55,43 @@ final class _CustomPinput extends StatelessWidget {
               color: Theme.of(context).colorScheme.onPrimary,
             ),
       ),
+    );
+  }
+
+  Future<void> _onComplated({
+    required BuildContext context,
+    required String value,
+    required AfterOtpVerify afterOtpVerify,
+  }) async {
+    final otp = VerifyOTP(email: _email, code: value);
+    await _viewModel.verifyOTP(otp: otp).then(
+      (value) async {
+        if (value.isSuccess) {
+          afterOtpVerify == AfterOtpVerify.login
+              ? await context.router.pushAndPopUntil(
+                  LoginRoute(),
+                  predicate: (route) => route.settings.name == VerifyOTPRoute.name,
+                )
+              : await context.router.pushAndPopUntil(
+                  PasswordResetRoute(verifyOTP: otp),
+                  predicate: (route) => route.settings.name == VerifyOTPRoute.name,
+                );
+        } else if (value.result == HttpResult.notFound) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_user_not_found.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.info,
+          );
+        } else {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_occur_an_error_while_send_verification_code.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.error,
+          );
+        }
+      },
     );
   }
 }

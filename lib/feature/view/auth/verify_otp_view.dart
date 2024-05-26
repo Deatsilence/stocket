@@ -1,18 +1,25 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/verify_otp_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_label.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/verify_otp_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/state/verify_otp_state.dart';
+import 'package:stocket/product/utility/constants/enums/after_otp_verify.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
+import 'package:stocket/product/utility/constants/enums/status_code.dart';
 import 'package:stocket/product/utility/extension/padding_extension.dart';
 
 part '../../part_of_view/part_of_verify_otp_view.dart';
@@ -20,9 +27,14 @@ part '../../part_of_view/part_of_verify_otp_view.dart';
 /// [VerifyOTPView] is a [StatefulWidget] that displays the verify OTP view.
 @RoutePage()
 final class VerifyOTPView extends StatefulWidget {
-  const VerifyOTPView({super.key, required this.email});
+  const VerifyOTPView({
+    super.key,
+    required this.email,
+    this.afterOtpVerify = AfterOtpVerify.login,
+  });
 
   final String email;
+  final AfterOtpVerify afterOtpVerify;
 
   @override
   State<VerifyOTPView> createState() => _VerifyOTPViewState();
@@ -51,6 +63,7 @@ class _VerifyOTPViewState extends State<VerifyOTPView> with VerifyOTPViewMixin {
                   _CustomPinput(
                     verifyOTPViewModel: verifyOTPViewModel,
                     email: widget.email,
+                    afterOtpVerify: widget.afterOtpVerify,
                   ),
                   Column(
                     children: [
