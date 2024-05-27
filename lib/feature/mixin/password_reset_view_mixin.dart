@@ -1,8 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gen/gen.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/password_reset_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
+import 'package:stocket/product/utility/constants/enums/status_code.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [PasswordResetViewMixin] is a [State] mixin that contains the login view logic.
@@ -56,7 +61,25 @@ mixin PasswordResetViewMixin<T extends StatefulWidget> on State<T> {
         verifyOTP: verifyOTP,
         newPassword: confirmPasswordController.text,
       );
-      await passwordResetViewModel.resetPassword(resetPassword: resetPassword);
+      final result =
+          await passwordResetViewModel.resetPassword(resetPassword: resetPassword);
+
+      if (result.isSuccess) {
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.authentication_reset_password_success.tr(),
+          second: DurationSeconds.medium,
+          responseType: ResponseType.success,
+        );
+        context.router.popUntilRoot();
+      } else {
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.errors_occur_an_error_while_change_password.tr(),
+          second: DurationSeconds.medium,
+          responseType: ResponseType.warning,
+        );
+      }
     }
   }
 }

@@ -51,7 +51,7 @@ final class CustomSnackbar {
       case ResponseType.warning:
         return _SnackbarColors(
           background: ColorName.warning,
-          text: theme.colorScheme.onSecondary,
+          text: theme.colorScheme.primary,
         );
       case ResponseType.info:
         return _SnackbarColors(

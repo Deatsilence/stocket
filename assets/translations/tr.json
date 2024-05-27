@@ -96,6 +96,10 @@
     "no_products_available": "Ürün bulunamadı",
     "product_already_exists": "Ürün zaten mevcut",
     "user_not_found": "Kullanıcı bulunamadı",
-    "occur_an_error_while_send_verification_code": "Doğrulama kodu gönderilirken bir hata oluştu"
+    "occur_an_error_while_send_verification_code": "Doğrulama kodu gönderilirken bir hata oluştu",
+    "user_unauthorized": "E-Posta veya şifre yanlış",
+    "occur_an_error_while_register": "Kayıt işlemi sırasında bir hata oluştu",
+    "occur_an_error_while_login": "Giriş işlemi sırasında bir hata oluştu",
+    "occur_an_error_while_change_password": "Şifre değiştirme işlemi sırasında bir hata oluştu"
   }
 }

@@ -43,7 +43,6 @@ class _PasswordResetState extends State<PasswordResetView>
         child: Stack(
           children: [
             BaseView(
-              sliverAppBar: SliverAppBar(),
               onPageBuilder: (context, value) => SliverList(
                 delegate: SliverChildListDelegate(
                   [

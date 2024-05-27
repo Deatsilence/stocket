@@ -94,6 +94,10 @@
     "no_products_available": "No products available",
     "product_already_exists": "Product already exists",
     "user_not_found": "User not found",
-    "occur_an_error_while_send_verification_code": "An error occurred while sending the verification code"
+    "occur_an_error_while_send_verification_code": "An error occurred while sending the verification code",
+    "user_unauthorized": "E-mail or password is incorrect",
+    "occur_an_error_while_register": "An error occurred while registering",
+    "occur_an_error_while_login": "An error occurred while registering",
+    "occur_an_error_while_change_password": "An error occurred while changing the password"
   }
 }
