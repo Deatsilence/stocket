@@ -41,7 +41,7 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
   Future<void> loginOnPressed() async {
     final user = User(
       email: 'mert_im2000@hotmail.com',
-      password: 'Bergendal3120.',
+      password: 'Sylar3120.',
     );
     await loginViewModel.login(user: user).then(
       (value) async {

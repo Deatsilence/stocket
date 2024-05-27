@@ -67,15 +67,23 @@ final class _CustomPinput extends StatelessWidget {
     await _viewModel.verifyOTP(otp: otp).then(
       (value) async {
         if (value.isSuccess) {
-          afterOtpVerify == AfterOtpVerify.login
-              ? await context.router.pushAndPopUntil(
-                  LoginRoute(),
-                  predicate: (route) => route.settings.name == VerifyOTPRoute.name,
-                )
-              : await context.router.pushAndPopUntil(
-                  PasswordResetRoute(verifyOTP: otp),
-                  predicate: (route) => route.settings.name == VerifyOTPRoute.name,
-                );
+          if (afterOtpVerify == AfterOtpVerify.login) {
+            await context.router.pushAndPopUntil(
+              LoginRoute(),
+              predicate: (route) => route.settings.name == VerifyOTPRoute.name,
+            );
+            CustomSnackbar.show(
+              context: context,
+              message: LocaleKeys.authentication_register_success.tr(),
+              second: DurationSeconds.medium,
+              responseType: ResponseType.success,
+            );
+          } else {
+            await context.router.pushAndPopUntil(
+              PasswordResetRoute(verifyOTP: otp),
+              predicate: (route) => route.settings.name == VerifyOTPRoute.name,
+            );
+          }
         } else if (value.result == HttpResult.notFound) {
           CustomSnackbar.show(
             context: context,

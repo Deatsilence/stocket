@@ -100,6 +100,7 @@
     "user_unauthorized": "E-Posta veya şifre yanlış",
     "occur_an_error_while_register": "Kayıt işlemi sırasında bir hata oluştu",
     "occur_an_error_while_login": "Giriş işlemi sırasında bir hata oluştu",
-    "occur_an_error_while_change_password": "Şifre değiştirme işlemi sırasında bir hata oluştu"
+    "occur_an_error_while_change_password": "Şifre değiştirme işlemi sırasında bir hata oluştu",
+    "email_already_exists": "Bu e-posta adresi zaten kullanılmakta"
   }
 }
