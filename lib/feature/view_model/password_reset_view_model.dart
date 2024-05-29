@@ -29,4 +29,22 @@ final class PasswordResetViewModel extends BaseCubit<PasswordResetState> {
       throw e;
     }
   }
+
+  Future<ApiResponse<dynamic>> changePassword(
+      {required ChangePassword changePassword}) async {
+    _changeLoading();
+    try {
+      var response = await CommonService.instance.postModel<ChangePassword>(
+        domain: DevEnv().postChangePasswordDomain,
+        model: changePassword,
+      );
+
+      _changeLoading();
+
+      return response;
+    } catch (e) {
+      Logger().e(e.toString());
+      throw e;
+    }
+  }
 }

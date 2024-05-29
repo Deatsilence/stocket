@@ -40,6 +40,9 @@ abstract class AppConfiguration {
   /// [postSendVerificationCodeToEmailDomain] is the domain for the post send verification code to email.
   String get postRequestResetPasswordDomain;
 
+  /// [postChangePasswordDomain] is the domain for the post reset password.
+  String get postChangePasswordDomain;
+
   /// [postResetPasswordDomain] is the domain for the post reset password.
   String get postResetPasswordDomain;
 

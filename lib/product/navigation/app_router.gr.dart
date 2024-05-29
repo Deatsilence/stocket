@@ -56,6 +56,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: PasswordResetView(
           key: args.key,
+          islogin: args.islogin,
           verifyOTP: args.verifyOTP,
         ),
       );
@@ -197,12 +198,14 @@ class LoginRoute extends PageRouteInfo<void> {
 class PasswordResetRoute extends PageRouteInfo<PasswordResetRouteArgs> {
   PasswordResetRoute({
     Key? key,
+    required bool islogin,
     required VerifyOTP verifyOTP,
     List<PageRouteInfo>? children,
   }) : super(
           PasswordResetRoute.name,
           args: PasswordResetRouteArgs(
             key: key,
+            islogin: islogin,
             verifyOTP: verifyOTP,
           ),
           initialChildren: children,
@@ -217,16 +220,19 @@ class PasswordResetRoute extends PageRouteInfo<PasswordResetRouteArgs> {
 class PasswordResetRouteArgs {
   const PasswordResetRouteArgs({
     this.key,
+    required this.islogin,
     required this.verifyOTP,
   });
 
   final Key? key;
 
+  final bool islogin;
+
   final VerifyOTP verifyOTP;
 
   @override
   String toString() {
-    return 'PasswordResetRouteArgs{key: $key, verifyOTP: $verifyOTP}';
+    return 'PasswordResetRouteArgs{key: $key, islogin: $islogin, verifyOTP: $verifyOTP}';
   }
 }
 

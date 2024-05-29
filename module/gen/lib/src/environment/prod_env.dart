@@ -50,6 +50,9 @@ final class ProdEnv implements AppConfiguration {
   static final String _postRequestResetPasswordDomain =
       _ProdEnv._postRequestResetPasswordDomain;
 
+  @EnviedField(varName: 'POST_REQUEST_CHANGE_PASSWORD_DOMAIN')
+  static final String _postChangePasswordDomain = _ProdEnv._postChangePasswordDomain;
+
   @EnviedField(varName: 'POST_RESET_PASSWORD_DOMAIN')
   static final String _postResetPasswordDomain = _ProdEnv._postResetPasswordDomain;
 
@@ -98,6 +101,9 @@ final class ProdEnv implements AppConfiguration {
 
   @override
   String get postRequestResetPasswordDomain => _postRequestResetPasswordDomain;
+
+  @override
+  String get postChangePasswordDomain => _postChangePasswordDomain;
 
   @override
   String get postResetPasswordDomain => _postResetPasswordDomain;

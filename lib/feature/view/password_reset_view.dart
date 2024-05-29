@@ -22,10 +22,12 @@ final class PasswordResetView extends StatefulWidget {
   /// Constructor
   const PasswordResetView({
     super.key,
+    required this.islogin,
     required this.verifyOTP,
   });
 
   final VerifyOTP verifyOTP;
+  final bool islogin;
 
   @override
   State<PasswordResetView> createState() => _PasswordResetState();
@@ -43,6 +45,7 @@ class _PasswordResetState extends State<PasswordResetView>
         child: Stack(
           children: [
             BaseView(
+              sliverAppBar: widget.islogin ? SliverAppBar() : null,
               onPageBuilder: (context, value) => SliverList(
                 delegate: SliverChildListDelegate(
                   [
@@ -50,6 +53,17 @@ class _PasswordResetState extends State<PasswordResetView>
                       textAlign: TextAlign.start,
                       text: LocaleKeys.authentication_password_reset,
                     ),
+                    if (widget.islogin)
+                      CustomTextFormField(
+                        controller: oldPasswordController,
+                        prefixIcon: const Icon(Icons.password_outlined),
+                        labelText: LocaleKeys.authentication_old_password.tr(),
+                        hintText: LocaleKeys.authentication_old_password_placeholder.tr(),
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+                        obscureText: true,
+                        validator: passwordValidator,
+                      ),
                     CustomTextFormField(
                       controller: passwordController,
                       prefixIcon: const Icon(Icons.password_outlined),
@@ -78,9 +92,12 @@ class _PasswordResetState extends State<PasswordResetView>
                       child: CustomElevatedButton(
                         onPressed: () => onPressed(
                           context: context,
+                          isLogin: widget.islogin,
                           verifyOTP: widget.verifyOTP,
                         ),
-                        child: const Text(LocaleKeys.authentication_reset_password).tr(),
+                        child: widget.islogin
+                            ? const Text(LocaleKeys.authentication_change_password).tr()
+                            : const Text(LocaleKeys.authentication_reset_password).tr(),
                       ),
                     ),
                   ],

@@ -2,6 +2,7 @@
   "authentication": {
     "login": "Giriş Yap",
     "email": "E-posta",
+    "old_password": "Mevcut Şifre",
     "password": "Şifre",
     "sign_up": "Kayıt Ol",
     "forgot_password": "Şifremi Unuttum",
@@ -12,6 +13,7 @@
     "surname": "Soyad",
     "logout": "Çıkış Yap",
     "email_placeholder": "E-posta adresinizi girin",
+    "old_password_placeholder": "Mevcut şifrenizi girin",
     "password_placeholder": "Şifrenizi girin",
     "confirm_password_placeholder": "Şifrenizi tekrar girin",
     "name_placeholder": "Adınızı girin",
@@ -41,7 +43,9 @@
     "did_not_receive_verification_code": "Doğrulama kodu E-posta adresinize ulaşmadı mı ?",
     "resend_verification_code": "Doğrulama kodunu tekrar gönder",
     "password_reset": "Şifre Sıfırlama",
-    "send_verification_code_to_email": "Doğrulama Kodu Gönder"
+    "send_verification_code_to_email": "Doğrulama Kodu Gönder",
+    "change_password": "Şifre Değiştir",
+    "wrong_password": "Yanlış şifre"
   },
   "home": {
     "title": "Ana Sayfa",

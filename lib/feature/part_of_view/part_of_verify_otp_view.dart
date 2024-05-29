@@ -80,7 +80,7 @@ final class _CustomPinput extends StatelessWidget {
             );
           } else {
             await context.router.pushAndPopUntil(
-              PasswordResetRoute(verifyOTP: otp),
+              PasswordResetRoute(verifyOTP: otp, islogin: false),
               predicate: (route) => route.settings.name == VerifyOTPRoute.name,
             );
           }

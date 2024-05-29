@@ -42,6 +42,7 @@ final class AppRouter extends _$AppRouter {
               page: HomeRoute.page,
               initial: true,
             ),
+            AutoRoute(page: PasswordResetRoute.page),
             AutoRoute(
               page: ProductAddRoute.page,
             ),
