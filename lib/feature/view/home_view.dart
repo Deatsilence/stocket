@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
-// import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +33,6 @@ final class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with HomeViewMixin {
   @override
   Widget build(BuildContext context) {
-    log('HOMEVIEWBUILD');
     return BlocProvider<HomeViewModel>(
       create: (context) => homeViewModel,
       child: BaseView(

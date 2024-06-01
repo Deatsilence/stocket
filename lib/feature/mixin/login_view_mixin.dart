@@ -1,10 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
+import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/login_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
+import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
+import 'package:stocket/product/utility/constants/enums/duration.dart';
+import 'package:stocket/product/utility/constants/enums/response_type.dart';
+import 'package:stocket/product/utility/constants/enums/status_code.dart';
 
 /// [LoginViewMixin] is a [State] mixin that contains the login view logic.
 mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
@@ -47,15 +53,29 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
             DashboardRootRoute(),
             predicate: (route) => route.settings.name == LoginRoute.name,
           );
+        } else if (value.result == HttpResult.notFound) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_user_not_found.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.error,
+          );
+        } else if (value.result == HttpResult.unauthorized) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_user_unauthorized.tr(),
+            second: DurationSeconds.short,
+            responseType: ResponseType.error,
+          );
         } else {
-          null;
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_occur_an_error_while_login.tr(),
+            second: DurationSeconds.medium,
+            responseType: ResponseType.error,
+          );
         }
       },
     );
-    // context.router.pushAndPopUntil(
-    //   DashboardRootRoute(),
-    //   predicate: (route) => route.settings.name == LoginRoute.name,
-    // );
-    // TODO: Alert Dialog will be come instead of null
   }
 }

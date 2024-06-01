@@ -135,7 +135,8 @@ mixin ProductAddViewMixin on State<ProductAddView> {
       : LocaleKeys.product_add_stock_required.tr();
 
   bool isAddingProductValid() {
-    if (_productAddFormKey.hasValue && _productAddFormKey.currentState!.validate()) {
+    if (_productAddFormKey.currentState.hasValue &&
+        _productAddFormKey.currentState!.validate()) {
       _productAddFormKey.currentState!.save();
       log('Adding a product is valid');
       return true;
