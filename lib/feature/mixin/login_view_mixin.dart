@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
@@ -38,16 +39,29 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
     super.dispose();
   }
 
-  Future<void> loginOnPressed() async {
+  Future<void> loginOnPressed({required BuildContext context}) async {
     final user = User(
       email: 'mert_im2000@hotmail.com',
-      password: 'Sylar3120.',
+      password: 'Bergendal3120.',
     );
     await loginViewModel.login(user: user).then(
       (value) async {
         if (value.isSuccess) {
           final rootViewModel = context.read<RootViewModel>();
           rootViewModel.setCurrentUser(user: value.data! as User);
+
+          final isRememberMe = loginViewModel.state.isRememberMe;
+
+          if (isRememberMe) {
+            final login = Login(
+              email: user.email,
+              password: user.password,
+            );
+
+            await loginViewModel.setIsLoginToSP(isLogin: true);
+            await loginViewModel.setUserDataToSP(user: value.data as User);
+            await loginViewModel.setLoginDataToSP(login: login);
+          }
 
           await context.router.pushAndPopUntil(
             DashboardRootRoute(),

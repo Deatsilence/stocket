@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/auth_common_view_mixin.dart';
@@ -75,18 +76,13 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                     ),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () async {
-                          await context.router.push(SendCodeToEMailRoute());
-                        },
-                        child: const Text(LocaleKeys.authentication_forgot_password).tr(),
-                      ),
+                      child: _IsRememberMe(loginViewModel: loginViewModel),
                     ),
                     Padding(
                       padding:
                           PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                       child: CustomElevatedButton(
-                        onPressed: loginOnPressed,
+                        onPressed: () => loginOnPressed(context: context),
                         child: const Text(LocaleKeys.authentication_login).tr(),
                       ),
                     ),
@@ -113,6 +109,48 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
           ],
         ),
       ),
+    );
+  }
+}
+
+final class _IsRememberMe extends StatelessWidget {
+  const _IsRememberMe({
+    required this.loginViewModel,
+  });
+
+  final LoginViewModel loginViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        BlocSelector<LoginViewModel, LoginState, bool>(
+          selector: (state) {
+            return state.isRememberMe;
+          },
+          builder: (context, state) {
+            return Row(
+              children: [
+                Checkbox(
+                  value: state,
+                  onChanged: (value) => loginViewModel.changeIsRememberMe(value ?? false),
+                ),
+                Text(
+                  LocaleKeys.authentication_remember_me,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ).tr(),
+              ],
+            );
+          },
+        ),
+        TextButton(
+          onPressed: () async {
+            await context.router.push(SendCodeToEMailRoute());
+          },
+          child: const Text(LocaleKeys.authentication_forgot_password).tr(),
+        ),
+      ],
     );
   }
 }

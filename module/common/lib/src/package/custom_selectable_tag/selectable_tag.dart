@@ -30,11 +30,9 @@ final class SelectableTag extends StatefulWidget {
 class _SelectableTagState extends State<SelectableTag> with SelectableTagMixin {
   @override
   Widget build(BuildContext context) {
-    log('TAGBUILD build $tagValue');
     return ChipsChoice<int>.single(
       value: tagValue,
       onChanged: (value) {
-        log('TAGBUILD onChanged $value');
         setState(() {
           tagValue = value;
           if (widget.onChanged != null) {

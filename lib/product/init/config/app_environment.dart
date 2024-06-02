@@ -16,20 +16,20 @@ final class AppEnvironment {
   static late final AppConfiguration _config;
 }
 
-/// [AppEnvironmentItems] gets the environment variables.
-enum AppEnvironmentItems {
-  /// [baseUrl] is the base url of the application.
-  baseUrl;
+// /// [AppEnvironmentItems] gets the environment variables.
+// enum AppEnvironmentItems {
+//   /// [baseUrl] is the base url of the application.
+//   baseUrl;
 
-  /// [value] is the value of the environment variable.
-  // String get value {
-  //   try {
-  //     switch (this) {
-  //       case AppEnvironmentItems.baseUrl:
-  //         return AppEnvironment._config.baseUrl;
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Environment variable is not found. ');
-  //   }
-  // }
-}
+//   /// [value] is the value of the environment variable.
+//   String get value {
+//     try {
+//       switch (this) {
+//         case AppEnvironmentItems.baseUrl:
+//           return AppEnvironment._config.baseUrl;
+//       }
+//     } catch (e) {
+//       throw Exception('Environment variable is not found. ');
+//     }
+//   }
+// }

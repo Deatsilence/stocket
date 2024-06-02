@@ -16,6 +16,5 @@ mixin SelectableTagMixin on State<SelectableTag> {
   void initState() {
     super.initState();
     _tag = widget.value;
-    log('TAGINIT $tagValue');
   }
 }

@@ -26,7 +26,6 @@ enum HttpResult {
   unknown;
 
   static HttpResult fromStatusCode(int statusCode) {
-    log('Status Code: $statusCode');
     switch (statusCode) {
       case >= 200 && <= 299:
         return HttpResult.success;

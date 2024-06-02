@@ -5,13 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/auth/signup_view.dart';
-import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/signup_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
-import 'package:stocket/product/utility/constants/enums/duration.dart';
-import 'package:stocket/product/utility/constants/enums/response_type.dart';
-import 'package:stocket/product/utility/constants/enums/status_code.dart';
 import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [SignUpViewMixin] is a [State] mixin that contains the login view logic.
@@ -81,10 +77,8 @@ mixin SignUpViewMixin on State<SignUpView> {
   bool isSignUpValid() {
     if (_signupFormKey.hasValue && _signupFormKey.currentState!.validate()) {
       _signupFormKey.currentState!.save();
-      log('Sign up is valid');
       return true;
     }
-    log('Sign up is not valid');
     return false;
   }
 
@@ -102,7 +96,6 @@ mixin SignUpViewMixin on State<SignUpView> {
           email: 'mert_im2000@hotmail.com',
           password: 'Sylar3120.',
           usertype: UserType.user.name);
-      log('user: $user');
       await signupViewModel.signUp(user: user).then(
         (value) {
           if (value.isSuccess) {

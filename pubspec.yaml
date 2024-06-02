@@ -39,6 +39,9 @@ dependencies:
   sizer: ^2.0.15
   gap: ^3.0.1
 
+  # Cache
+  shared_preferences: ^2.2.3
+
   gen:
     path: module/gen
 

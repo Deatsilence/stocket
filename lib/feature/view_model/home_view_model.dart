@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:gen/gen.dart';
 import 'package:logger/logger.dart';
+import 'package:stocket/product/init/cache/cache_manager.dart';
 import 'package:stocket/product/service/common_service.dart';
 import 'package:stocket/product/state/base/base_cubit.dart';
 import 'package:stocket/product/state/home_state.dart';
@@ -23,13 +24,15 @@ final class HomeViewModel extends BaseCubit<HomeState> {
   }
 
   void _increasePage() {
-    log('BEFORE page: ${state.page}');
     emit(state.copyWith(page: state.page + 1));
-    log('AFTER page: ${state.page}');
   }
 
   void setThePageAsDefault() {
     emit(state.copyWith(page: 1));
+  }
+
+  Future<void> clearCache() async {
+    await CacheManager.instance.clearSP();
   }
 
   Future<ApiResponse<dynamic>> logout({required String token}) async {
@@ -40,7 +43,6 @@ final class HomeViewModel extends BaseCubit<HomeState> {
         domain: DevEnv().postLogoutDomain,
       );
 
-      log('response: ${response.toString()}');
       _changeLoading();
 
       return response;
@@ -64,10 +66,7 @@ final class HomeViewModel extends BaseCubit<HomeState> {
           'recordPerPage': _recordPerPage,
         },
       );
-      log('page: ${state.page}');
-      // _increasePage();
 
-      log('response: ${response.toString()}');
       _changeLoading();
       return response;
     } catch (e) {
@@ -88,7 +87,6 @@ final class HomeViewModel extends BaseCubit<HomeState> {
         id: id,
       );
 
-      log('response: ${response.toString()}');
       _changeLoading();
 
       return response;

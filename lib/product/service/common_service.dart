@@ -16,7 +16,6 @@ import 'package:stocket/product/utility/response/api_response.dart';
 final class CommonService with CommonServiceMixin {
   CommonService._() {
     _baseUrl = DevEnv().baseUrl;
-    log('Base URL: $_baseUrl');
 
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,

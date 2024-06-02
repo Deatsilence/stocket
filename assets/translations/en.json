@@ -103,6 +103,7 @@
     "occur_an_error_while_register": "An error occurred while registering",
     "occur_an_error_while_login": "An error occurred while registering",
     "occur_an_error_while_change_password": "An error occurred while changing the password",
-    "email_already_exists": "E-mail already exists"
+    "email_already_exists": "E-mail already exists",
+    "occur_an_error_while_login_with_cache": "An error occurred while logging in with cache"
   }
 }
