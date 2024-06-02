@@ -26,11 +26,8 @@ final class ApplicationInitialize {
     EasyLocalization.logger.enableLevels = [LevelMessages.error];
 
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    log(Platform.localeName);
     FlutterError.onError = (details) {
-      // Logger().e('Flutter Error: ${details.exception}');
-      /// crashlytics log instert here
-      /// custom service or custom logger insert here
+      Logger().e('Flutter Error: ${details.exception}');
     };
 
     AppEnvironment.general();

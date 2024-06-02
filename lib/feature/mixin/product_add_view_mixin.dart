@@ -79,9 +79,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     _productAddFormKey = GlobalKey<FormState>();
     _productAddViewModel = ProductAddViewModel();
     _productid = widget.product?.productid ?? '';
-    log('category: ${widget.product?.category}');
     _category = widget.product?.category ?? CategoryType.stationary.index;
-    log("_category : ${_category}");
     _barcodeController = TextEditingController();
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
@@ -138,10 +136,8 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     if (_productAddFormKey.currentState.hasValue &&
         _productAddFormKey.currentState!.validate()) {
       _productAddFormKey.currentState!.save();
-      log('Adding a product is valid');
       return true;
     }
-    log('Adding a product is not valid');
     return false;
   }
 

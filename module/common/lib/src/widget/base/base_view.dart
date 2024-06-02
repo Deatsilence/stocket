@@ -70,7 +70,6 @@ class _BaseViewState<T> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    log('BaseView build');
     return PopScope(
       canPop: true,
       onPopInvoked: widget.onPopInvoked,

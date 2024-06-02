@@ -43,14 +43,14 @@ class _SideMenuState extends State<SideMenu> {
                 accountEmail: Text(state?.email ?? LocaleKeys.errors_occur_an_error.tr()),
               ),
               ListTile(
-                leading: Icon(Icons.logout_outlined),
-                title: Text(LocaleKeys.authentication_logout).tr(),
-                onTap: () => _logout(user: state!),
-              ),
-              ListTile(
                 leading: Icon(Icons.key_outlined),
                 title: Text(LocaleKeys.authentication_change_password).tr(),
                 onTap: () => _changePassword(context: context, email: state?.email),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout_outlined),
+                title: Text(LocaleKeys.authentication_logout).tr(),
+                onTap: () => _logout(user: state!),
               ),
             ],
           );
@@ -92,7 +92,8 @@ class _SideMenuState extends State<SideMenu> {
       await homeViewModel.logout(token: user.token!).then(
         (value) async {
           if (value.isSuccess) {
-            // homeViewModel.setThePageAsDefault();
+            await homeViewModel.clearCache();
+            homeViewModel.setThePageAsDefault();
             await context.router.replaceAll([AuthRootRoute()]);
           }
         },

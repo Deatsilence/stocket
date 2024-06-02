@@ -11,6 +11,7 @@ import 'package:stocket/feature/view/dashboard_root_view.dart';
 import 'package:stocket/feature/view/home_view.dart';
 import 'package:stocket/feature/view/password_reset_view.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
+import 'package:stocket/feature/view/splash_view.dart';
 import 'package:stocket/product/utility/constants/enums/after_otp_verify.dart';
 import 'package:stocket/product/utility/constants/enums/product_view_type.dart';
 
@@ -21,9 +22,9 @@ final class AppRouter extends _$AppRouter {
   static const _replaceInRouteName = 'View,Route';
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(page: SplashRoute.page, initial: true),
         AutoRoute(
           page: AuthRootRoute.page,
-          initial: true,
           children: [
             AutoRoute(
               page: LoginRoute.page,

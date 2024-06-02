@@ -28,7 +28,6 @@ class _SignUpViewState extends State<SignUpView>
     with AuthCommonViewMixin, SignUpViewMixin {
   @override
   Widget build(BuildContext context) {
-    log('SignUpView build');
     return BlocProvider<SignUpViewModel>(
       create: (context) => signupViewModel,
       child: Form(

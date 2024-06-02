@@ -120,7 +120,6 @@ class _ProductListState extends State<_ProductList> {
 
   @override
   Widget build(BuildContext context) {
-    log('PRODUCTBUILD');
     if (widget.state.isLoading) {
       return SliverToBoxAdapter(
         child: CircularProgressIndicator.adaptive(),
@@ -186,8 +185,6 @@ class _ProductListState extends State<_ProductList> {
     required Products products,
   }) async {
     final _product = products.productItems![index];
-    log('products: ${products}');
-    log('product: ${_product.productid}');
     if (!_product.productid.hasValue) {
       CustomSnackbar.show(
         context: context,

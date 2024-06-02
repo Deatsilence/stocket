@@ -7,7 +7,6 @@ import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/password_reset_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
-import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/constants/enums/response_type.dart';
 import 'package:stocket/product/utility/constants/enums/status_code.dart';
@@ -81,13 +80,11 @@ mixin PasswordResetViewMixin<T extends StatefulWidget> on State<T> {
       late ApiResponse<dynamic> result;
 
       if (isLogin) {
-        log('email: ${verifyOTP.email}');
         final changePassword = ChangePassword(
           email: verifyOTP.email,
           oldPassword: oldPasswordController.text,
           newPassword: confirmPasswordController.text,
         );
-        log('changePassword: $changePassword');
         result =
             await passwordResetViewModel.changePassword(changePassword: changePassword);
       } else {
@@ -97,7 +94,6 @@ mixin PasswordResetViewMixin<T extends StatefulWidget> on State<T> {
         );
         result = await passwordResetViewModel.resetPassword(resetPassword: resetPassword);
       }
-      log('onPressed: $result');
 
       if (result.isSuccess) {
         CustomSnackbar.show(

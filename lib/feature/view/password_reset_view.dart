@@ -11,10 +11,8 @@ import 'package:stocket/feature/mixin/password_reset_view_mixin.dart';
 import 'package:stocket/feature/view/widget/auth_label.dart';
 import 'package:stocket/feature/view/widget/index.dart';
 import 'package:stocket/feature/view_model/password_reset_view_model.dart';
-import 'package:stocket/feature/view_model/signup_view_model.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/state/password_reset_state.dart';
-import 'package:stocket/product/state/signup_state.dart';
 
 /// [PasswordResetView] is a [StatefulWidget] that displays the sign up view.
 @RoutePage()
@@ -37,7 +35,6 @@ class _PasswordResetState extends State<PasswordResetView>
     with AuthCommonViewMixin, PasswordResetViewMixin {
   @override
   Widget build(BuildContext context) {
-    log('PasswordResetView build');
     return BlocProvider<PasswordResetViewModel>(
       create: (context) => passwordResetViewModel,
       child: Form(
