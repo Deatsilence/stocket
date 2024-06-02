@@ -25,6 +25,9 @@ abstract class AppConfiguration {
   /// [patchUsersByIdDomain] is the domain for the patch users by id.
   String get getProductsByIdDomain;
 
+  /// [getSearchByBarcodeDomain] is the domain for the get search by barcode.
+  String get getSearchByBarcodeDomain;
+
   /// [postLogoutDomain] is the domain for the post logout.
   String get deleteProductsByIdDomain;
 

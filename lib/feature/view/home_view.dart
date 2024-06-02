@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gen/gen.dart';
+import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/home_view_mixin.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view/widget/product_card.dart';
@@ -37,7 +38,7 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
       create: (context) => homeViewModel,
       child: BaseView(
         controller: scrollController,
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         isSliverFillRemaining: false,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
@@ -51,12 +52,20 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         ),
         drawer: SideMenu(homeViewModel: homeViewModel),
         sliverAppBar: SliverAppBar(
-          title: Text(
-            LocaleKeys.home_title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-          ).tr(),
+          title: SizedBox(
+            height: 5.h,
+            child: CustomTextFormField(
+              controller: searchController,
+              borderColor: Theme.of(context).colorScheme.onPrimary,
+              activeBorderColor: Theme.of(context).colorScheme.onPrimary,
+              deActiveBorderColor: Theme.of(context).colorScheme.onPrimary,
+              hintText: LocaleKeys.home_home_search_placeholder.tr(),
+              prefixIcon: const Icon(Icons.search),
+              onChanged: (value) async =>
+                  await searchByBarcode(context: context, barcode: value),
+              onClear: () async => await getProducts(context: context),
+            ),
+          ),
           centerTitle: true,
           pinned: true,
           floating: false,
@@ -134,48 +143,63 @@ class _ProductListState extends State<_ProductList> {
       );
     } else {
       final _products = widget.state.products!;
+      final _length = _products.productItems!.length;
       return SliverList.builder(
-        itemCount: widget.state.isLoading
-            ? _products.productItems!.length + 1
-            : _products.productItems!.length,
-        itemBuilder: (context, index) => Slidable(
-          endActionPane: ActionPane(
-            motion: StretchMotion(),
-            children: [
-              SlidableAction(
-                icon: Icons.edit_outlined,
-                backgroundColor: ColorName.edit,
-                onPressed: (context) async {
-                  var result = await context.router.push<bool?>(
-                    ProductAddRoute(
-                      viewType: ProductViewType.edit,
-                      product: _products.productItems![index],
+        itemCount: _length >= 4 ? _length + 1 : _length,
+        itemBuilder: (context, index) {
+          if (index < _length) {
+            return Slidable(
+              endActionPane: ActionPane(
+                motion: StretchMotion(),
+                children: [
+                  SlidableAction(
+                    icon: Icons.edit_outlined,
+                    backgroundColor: ColorName.edit,
+                    onPressed: (context) async => await _onPressedEditProduct(
+                      context: context,
+                      index: index,
+                      products: _products,
                     ),
-                  );
-                  if (result.hasValue && result!) {
-                    await widget.getProducts(context: _parentContext);
-                  }
-                },
+                  ),
+                  SlidableAction(
+                    icon: Icons.delete_outlined,
+                    backgroundColor: ColorName.delete,
+                    onPressed: (context) async => await _onPressedDeleteProduct(
+                      context: context,
+                      index: index,
+                      products: _products,
+                    ),
+                  ),
+                ],
               ),
-              SlidableAction(
-                icon: Icons.delete_outlined,
-                backgroundColor: ColorName.delete,
-                onPressed: (context) async {
-                  await _onPressedDeleteProduct(
-                    context: context,
-                    index: index,
-                    products: _products,
-                  );
-                },
+              child: _ProductItemBuilder(
+                index: index,
+                products: _products,
               ),
-            ],
-          ),
-          child: _ProductItemBuilder(
-            index: index,
-            products: _products,
-          ),
-        ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          }
+        },
       );
+    }
+  }
+
+  Future<void> _onPressedEditProduct({
+    required BuildContext context,
+    required Products products,
+    required int index,
+  }) async {
+    var result = await context.router.push<bool?>(
+      ProductAddRoute(
+        viewType: ProductViewType.edit,
+        product: products.productItems![index],
+      ),
+    );
+    if (result.hasValue && result!) {
+      await widget.getProducts(context: _parentContext);
     }
   }
 

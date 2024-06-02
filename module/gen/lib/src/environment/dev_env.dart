@@ -34,6 +34,9 @@ final class DevEnv implements AppConfiguration {
   @EnviedField(varName: 'GET_PRODUCTS_BY_ID_DOMAIN')
   static final String _getProductsByIdDomain = _DevEnv._getProductsByIdDomain;
 
+  @EnviedField(varName: 'GET_PRODUCTS_SEARCH_BY_BARCODE')
+  static final String _getSearchByBarcodeDomain = _DevEnv._getSearchByBarcodeDomain;
+
   @EnviedField(varName: 'DELETE_PRODUCTS_BY_ID_DOMAIN')
   static final String _deleteProductsByIdDomain = _DevEnv._deleteProductsByIdDomain;
 
@@ -114,4 +117,7 @@ final class DevEnv implements AppConfiguration {
   @override
   String get postSendVerificationCodeToEmailDomain =>
       _postSendVerificationCodeToEmailDomain;
+
+  @override
+  String get getSearchByBarcodeDomain => _getSearchByBarcodeDomain;
 }

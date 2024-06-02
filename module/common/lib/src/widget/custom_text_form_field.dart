@@ -12,6 +12,7 @@ final class CustomTextFormField extends StatefulWidget {
     this.labelText,
     this.validator,
     this.onSaved,
+    this.onClear,
     this.prefixIcon,
     this.controller,
     this.inputFormatters,
@@ -24,11 +25,11 @@ final class CustomTextFormField extends StatefulWidget {
     this.focusNode,
     this.onFieldSubmitted,
     this.onChanged,
+    this.suffixIcon,
     this.autocorrect = false,
     this.obscureText = false,
     this.enabled = true,
     this.obscuringCharacter = '•',
-    this.suffixIcon,
   });
 
   final String? labelText;
@@ -37,6 +38,7 @@ final class CustomTextFormField extends StatefulWidget {
   final void Function(String? value)? onSaved;
   final void Function(String value)? onFieldSubmitted;
   final void Function(String value)? onChanged;
+  final VoidCallback? onClear;
   final Widget? prefixIcon;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -87,6 +89,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         widget.onChanged?.call(value);
       },
       decoration: CustomInputDecoration(
+        context: context,
         prefixIcon: widget.prefixIcon,
         suffixIcon: SizedBox(
           width: _isClearButtonVisible ? MediaQuery.sizeOf(context).width * 0.3 : 0,
@@ -103,6 +106,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     _isClearButtonVisible = false;
                   });
                   widget.controller?.clear();
+                  widget.onClear?.call();
                 },
                 isVisible: _isClearButtonVisible,
               ),

@@ -60,18 +60,16 @@ mixin SplashViewMixin on State<SplashView> {
         Logger().i('Login with cache success');
         await context.router.replace(const DashboardRootRoute());
       } else {
-        await context.router.replace(const AuthRootRoute()).whenComplete(
-          () {
-            if (mounted) {
-              CustomSnackbar.show(
-                context: context,
-                message: LocaleKeys.errors_occur_an_error_while_login_with_cache,
-                responseType: ResponseType.error,
-                second: DurationSeconds.medium,
-              );
-            }
-          },
-        );
+        Logger().e('Login with cache failed');
+        if (context.mounted) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_occur_an_error_while_login_with_cache,
+            responseType: ResponseType.error,
+            second: DurationSeconds.medium,
+          );
+          await context.router.replace(const AuthRootRoute());
+        }
       }
     }
   }

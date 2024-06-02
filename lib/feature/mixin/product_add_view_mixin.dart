@@ -148,8 +148,8 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   }) async {
     final product = Product(
       barcode: barcodeController.text,
-      name: "keyboard",
-      description: "keyboard description",
+      name: "Car",
+      description: "Car description",
       category: category,
       price: 999,
       stock: 230,

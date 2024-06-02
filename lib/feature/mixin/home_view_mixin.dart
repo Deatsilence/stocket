@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/view/home_view.dart';
@@ -21,17 +22,24 @@ mixin HomeViewMixin on State<HomeView> {
   /// [_scrollController] is the controller for the scroll view.
   late final ScrollController _scrollController;
 
+  /// [_searchController] is the controller for the search text field.
+  late final TextEditingController _searchController;
+
   /// [homeViewModel] is the view model for the login view.
   HomeViewModel get homeViewModel => _homeViewModel;
 
   /// [scrollController] is the controller for the scroll view.
   ScrollController get scrollController => _scrollController;
 
+  /// [searchController] is the controller for the search text field.
+  TextEditingController get searchController => _searchController;
+
   @override
   void initState() {
     super.initState();
     _homeViewModel = HomeViewModel();
     _scrollController = ScrollController();
+    _searchController = TextEditingController();
     getProducts(context: context);
     _scrollController.addListener(() => _onScroll(context: context));
   }
@@ -47,6 +55,7 @@ mixin HomeViewMixin on State<HomeView> {
   Future<void> _onScroll({required BuildContext context}) async {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent &&
         !_homeViewModel.state.isLoading) {
+      _homeViewModel.increasePage();
       await getProducts(context: context);
     }
   }
@@ -57,8 +66,52 @@ mixin HomeViewMixin on State<HomeView> {
 
     await _homeViewModel.getProducts(token: token).then(
       (value) {
+        final currentScrollPosition = _scrollController.position.pixels;
         if (value.isSuccess) {
-          _homeViewModel.setProducts(products: value.data as Products);
+          final newProducts = value.data as Products;
+          final currentProducts = _homeViewModel.state.products?.productItems ?? [];
+          final updatedProducts = List<Product>.from(currentProducts)
+            ..addAll(newProducts.productItems ?? []);
+          final products = Products(
+            productItems: updatedProducts,
+            totalCount: newProducts.totalCount,
+          );
+
+          _homeViewModel.setProducts(products: products);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollController.jumpTo(currentScrollPosition);
+          });
+        } else {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_occur_while_fetching_products.tr(),
+            responseType: ResponseType.error,
+            second: DurationSeconds.medium,
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> searchByBarcode({
+    required BuildContext context,
+    required String barcode,
+  }) async {
+    final token = context.read<RootViewModel>().state.currentUser?.token ?? '';
+
+    await _homeViewModel.searchByBarcode(barcode: barcode, token: token).then(
+      (value) {
+        if (value.isSuccess) {
+          final searchedProducts = value.data as Products;
+          log('searchedProducts: $searchedProducts');
+          _homeViewModel.setProducts(products: searchedProducts);
+        } else {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_occur_while_fetching_products.tr(),
+            responseType: ResponseType.error,
+            second: DurationSeconds.medium,
+          );
         }
       },
     );

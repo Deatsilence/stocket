@@ -23,8 +23,12 @@ final class HomeViewModel extends BaseCubit<HomeState> {
     emit(state.copyWith(products: updateProducts));
   }
 
-  void _increasePage() {
+  void increasePage() {
     emit(state.copyWith(page: state.page + 1));
+  }
+
+  void decreasePage() {
+    emit(state.copyWith(page: state.page - 1));
   }
 
   void setThePageAsDefault() {
@@ -55,17 +59,20 @@ final class HomeViewModel extends BaseCubit<HomeState> {
   Future<ApiResponse<dynamic>> getProducts({required String token}) async {
     _changeLoading();
     try {
-      const _recordPerPage = 10;
+      const _recordPerPage = 4;
       Products products = Products();
       CommonService.instance.token = token;
       var response = await CommonService.instance.getModel<Products>(
         domain: DevEnv().getProductsDomain,
         model: products,
         queryParameters: {
-          'page': 1,
+          'page': state.page,
           'recordPerPage': _recordPerPage,
         },
       );
+      if (!response.isSuccess) {
+        decreasePage();
+      }
 
       _changeLoading();
       return response;
@@ -85,6 +92,30 @@ final class HomeViewModel extends BaseCubit<HomeState> {
       var response = await CommonService.instance.delete(
         domain: DevEnv().deleteProductsByIdDomain,
         id: id,
+      );
+
+      _changeLoading();
+
+      return response;
+    } catch (e) {
+      Logger().e(e.toString());
+      throw e;
+    }
+  }
+
+  Future<ApiResponse<dynamic>> searchByBarcode({
+    required String barcode,
+    required String token,
+  }) async {
+    _changeLoading();
+    try {
+      CommonService.instance.token = token;
+      var response = await CommonService.instance.getModel<Products>(
+        domain: DevEnv().getProductsDomain,
+        model: Products(),
+        queryParameters: {
+          'prefix': barcode,
+        },
       );
 
       _changeLoading();
