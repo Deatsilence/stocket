@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:gen/gen.dart';
 import 'package:logger/logger.dart';
 import 'package:stocket/product/init/cache/cache_manager.dart';
@@ -23,7 +22,11 @@ final class HomeViewModel extends BaseCubit<HomeState> {
     emit(state.copyWith(products: updateProducts));
   }
 
-  void _increasePage() {
+  void setThePage({required int page}) {
+    emit(state.copyWith(page: page));
+  }
+
+  void increasePage() {
     emit(state.copyWith(page: state.page + 1));
   }
 
@@ -89,6 +92,28 @@ final class HomeViewModel extends BaseCubit<HomeState> {
 
       _changeLoading();
 
+      return response;
+    } catch (e) {
+      Logger().e(e.toString());
+      throw e;
+    }
+  }
+
+  Future<ApiResponse<dynamic>> searchByBarcode({
+    required String barcode,
+    required String token,
+  }) async {
+    _changeLoading();
+    try {
+      Products products = Products();
+      CommonService.instance.token = token;
+      var response = await CommonService.instance.getModel<Products>(
+        domain: DevEnv().getSearchByBarcodeDomain,
+        model: products,
+        prefix: barcode,
+      );
+
+      _changeLoading();
       return response;
     } catch (e) {
       Logger().e(e.toString());

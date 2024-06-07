@@ -120,6 +120,7 @@ class _ProductAddViewState extends State<ProductAddView> with ProductAddViewMixi
                       labelText: LocaleKeys.product_add_price.tr(),
                       hintText: LocaleKeys.product_add_price_placeholder.tr(),
                       keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       textInputAction: TextInputAction.next,
                       validator: priceValidator,
                     ),

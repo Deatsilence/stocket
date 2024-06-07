@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gen/gen.dart';
 import 'package:stocket/feature/mixin/home_view_mixin.dart';
+import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view/widget/product_card.dart';
 import 'package:stocket/feature/view/widget/side_menu.dart';
@@ -51,12 +51,15 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         ),
         drawer: SideMenu(homeViewModel: homeViewModel),
         sliverAppBar: SliverAppBar(
-          title: Text(
-            LocaleKeys.home_title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-          ).tr(),
+          title: CustomTextFormField(
+            controller: searchController,
+            prefixIcon: const Icon(Icons.search_outlined),
+            hintText: LocaleKeys.home_home_search_placeholder.tr(),
+            onChanged: (value) => searchByBarcode(
+              context: context,
+              barcode: value,
+            ),
+          ),
           centerTitle: true,
           pinned: true,
           floating: false,
@@ -134,47 +137,45 @@ class _ProductListState extends State<_ProductList> {
       );
     } else {
       final _products = widget.state.products!;
+      final _length = _products.productItems!.length;
       return SliverList.builder(
-        itemCount: widget.state.isLoading
-            ? _products.productItems!.length + 1
-            : _products.productItems!.length,
-        itemBuilder: (context, index) => Slidable(
-          endActionPane: ActionPane(
-            motion: StretchMotion(),
-            children: [
-              SlidableAction(
-                icon: Icons.edit_outlined,
-                backgroundColor: ColorName.edit,
-                onPressed: (context) async {
-                  var result = await context.router.push<bool?>(
-                    ProductAddRoute(
-                      viewType: ProductViewType.edit,
-                      product: _products.productItems![index],
+        itemCount: _length % 4 == 0 ? _length + 1 : _length,
+        itemBuilder: (context, index) {
+          if (index < _length) {
+            return Slidable(
+              endActionPane: ActionPane(
+                motion: StretchMotion(),
+                children: [
+                  SlidableAction(
+                    icon: Icons.edit_outlined,
+                    backgroundColor: ColorName.edit,
+                    onPressed: (context) async => await _onPressedEditProduct(
+                      context: context,
+                      index: index,
+                      products: _products,
                     ),
-                  );
-                  if (result.hasValue && result!) {
-                    await widget.getProducts(context: _parentContext);
-                  }
-                },
+                  ),
+                  SlidableAction(
+                    icon: Icons.delete_outlined,
+                    backgroundColor: ColorName.delete,
+                    onPressed: (context) async {
+                      await _onPressedDeleteProduct(
+                        context: context,
+                        index: index,
+                        products: _products,
+                      );
+                    },
+                  ),
+                ],
               ),
-              SlidableAction(
-                icon: Icons.delete_outlined,
-                backgroundColor: ColorName.delete,
-                onPressed: (context) async {
-                  await _onPressedDeleteProduct(
-                    context: context,
-                    index: index,
-                    products: _products,
-                  );
-                },
+              child: _ProductItemBuilder(
+                index: index,
+                products: _products,
               ),
-            ],
-          ),
-          child: _ProductItemBuilder(
-            index: index,
-            products: _products,
-          ),
-        ),
+            );
+          }
+          return null;
+        },
       );
     }
   }
@@ -194,5 +195,25 @@ class _ProductListState extends State<_ProductList> {
       );
     }
     await widget.deleteProduct(context: context, index: index, id: _product.productid!);
+  }
+
+  Future<void> _onPressedEditProduct({
+    required BuildContext context,
+    required int index,
+    required Products products,
+  }) async {
+    final _product = products.productItems![index];
+    if (!_product.productid.hasValue) {
+      CustomSnackbar.show(
+        context: context,
+        message: LocaleKeys.product_update_product_update_fail.tr(),
+        second: DurationSeconds.short,
+        responseType: ResponseType.error,
+      );
+    }
+    await context.router.push<bool?>(ProductAddRoute(
+      product: _product,
+      viewType: ProductViewType.edit,
+    ));
   }
 }

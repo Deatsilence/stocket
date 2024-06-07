@@ -106,6 +106,8 @@
     "occur_an_error_while_login": "Giriş işlemi sırasında bir hata oluştu",
     "occur_an_error_while_change_password": "Şifre değiştirme işlemi sırasında bir hata oluştu",
     "email_already_exists": "Bu e-posta adresi zaten kullanılmakta",
-    "occur_an_error_while_login_with_cache": "Önbellek ile giriş yapılırken bir hata oluştu"
+    "occur_an_error_while_login_with_cache": "Önbellek ile giriş yapılırken bir hata oluştu",
+    "occur_while_fetching_products": "Ürünler getirilirken bir hata oluştu",
+    "expired_the_session": "Oturumunuzun süresi doldu"
   }
 }

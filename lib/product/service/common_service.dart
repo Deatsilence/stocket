@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:gen/gen.dart';
@@ -57,11 +55,12 @@ final class CommonService with CommonServiceMixin {
   Future<ApiResponse<dynamic>> getModel<T extends BaseModel<T>>({
     required String domain,
     required T model,
+    String? prefix,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
       final response = await _dio.get<dynamic>(
-        '$_baseUrl$domain',
+        '$_baseUrl$domain/$prefix',
         queryParameters: queryParameters,
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 enum HttpResult {
   /// Success status code [200, 299]

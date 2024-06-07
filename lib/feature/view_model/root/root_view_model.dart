@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:gen/gen.dart';
 import 'package:stocket/product/init/cache/cache_manager.dart';

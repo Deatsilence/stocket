@@ -82,7 +82,13 @@ class _LoginViewState extends State<LoginView> with LoginViewMixin, AuthCommonVi
                       padding:
                           PaddingManager.paddingManagerNormalPaddingSymmetricVertical,
                       child: CustomElevatedButton(
-                        onPressed: () => loginOnPressed(context: context),
+                        onPressed: () async {
+                          final user = User(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                          await loginOnPressed(context: context, user: user);
+                        },
                         child: const Text(LocaleKeys.authentication_login).tr(),
                       ),
                     ),

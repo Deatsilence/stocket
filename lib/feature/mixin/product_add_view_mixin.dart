@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +8,7 @@ import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view_model/product_add_view_model.dart';
 import 'package:stocket/feature/view_model/root/root_view_model.dart';
+import 'package:stocket/product/init/cache/cache_manager.dart';
 import 'package:stocket/product/init/language/locale_keys.g.dart';
 import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
@@ -148,11 +147,11 @@ mixin ProductAddViewMixin on State<ProductAddView> {
   }) async {
     final product = Product(
       barcode: barcodeController.text,
-      name: "keyboard",
-      description: "keyboard description",
+      name: nameController.text,
+      description: descriptionController.text,
       category: category,
-      price: 999,
-      stock: 230,
+      price: double.tryParse(priceController.text) ?? 0.0,
+      stock: int.tryParse(stockController.text) ?? 0,
     );
     if (!token.hasValue) {
       CustomSnackbar.show(
@@ -173,6 +172,15 @@ mixin ProductAddViewMixin on State<ProductAddView> {
           responseType: ResponseType.success,
         );
         await context.router.maybePop<bool?>(true);
+      } else if (value.result == HttpResult.unauthorized) {
+        CustomSnackbar.show(
+          context: context,
+          message: LocaleKeys.errors_expired_the_session.tr(),
+          responseType: ResponseType.error,
+          second: DurationSeconds.medium,
+        );
+        await CacheManager.instance.clearSP();
+        await context.router.replace(const AuthRootRoute());
       } else if (value.result == HttpResult.conflict) {
         CustomSnackbar.show(
           context: context,
@@ -215,7 +223,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
     }
 
     await productAddViewModel.editProduct(product: product, token: token).then(
-      (value) {
+      (value) async {
         if (value.isSuccess) {
           CustomSnackbar.show(
             context: context,
@@ -223,6 +231,15 @@ mixin ProductAddViewMixin on State<ProductAddView> {
             second: DurationSeconds.short,
             responseType: ResponseType.success,
           );
+        } else if (value.result == HttpResult.unauthorized) {
+          CustomSnackbar.show(
+            context: context,
+            message: LocaleKeys.errors_expired_the_session.tr(),
+            responseType: ResponseType.error,
+            second: DurationSeconds.medium,
+          );
+          await CacheManager.instance.clearSP();
+          await context.router.replace(const AuthRootRoute());
         } else {
           CustomSnackbar.show(
             context: context,
@@ -237,7 +254,7 @@ mixin ProductAddViewMixin on State<ProductAddView> {
 
   Future<void> onPressedCreate(
       {required BuildContext context, required int? category}) async {
-    if (!isAddingProductValid()) {
+    if (isAddingProductValid()) {
       final token = context.read<RootViewModel>().state.currentUser?.token;
       await onPressedCreateProduct(
         context: context,
