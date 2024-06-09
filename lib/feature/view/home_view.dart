@@ -7,7 +7,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gen/gen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/home_view_mixin.dart';
-import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
 import 'package:stocket/feature/view/widget/product_card.dart';
 import 'package:stocket/feature/view/widget/side_menu.dart';

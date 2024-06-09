@@ -15,7 +15,6 @@ import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/constants/enums/response_type.dart';
 import 'package:stocket/product/utility/constants/enums/status_code.dart';
-import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [HomeViewMixin] is a [State] mixin that contains the home view logic.
 mixin HomeViewMixin on State<HomeView> {

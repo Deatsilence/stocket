@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:gen/gen.dart';
@@ -16,8 +14,6 @@ import 'package:stocket/product/utility/response/api_response.dart';
 final class CommonService with CommonServiceMixin {
   CommonService._() {
     _baseUrl = DevEnv().baseUrl;
-
-    log('Base URL: $_baseUrl');
 
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,
