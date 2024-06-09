@@ -1,8 +1,7 @@
 ## About the app
 
 <i>
-Our primary solution is to reduce the number of food and beverage waste in the world and to deliver these meals and beverages to those in need free of charge.
-After becoming a member of Shation, the user can share the food or extra food he has, if he needs food or drink, by contacting the relevant advertisers via messaging. You can go to the location of the ad and receive the food from the ad owner. Google maps has not been added yet. When added, it can be used by the world regardless of country. In this way, it will be able to serve in a larger area.
+Purpose of this project (stocket) is keeping the stock information of some products. This project presentations a generic solution. If we improve, adding some modules, we can do these in the future but currently this project enough for my targets. 
 
 ## How to run the app?
 
@@ -22,7 +21,7 @@ git clone https://github.com/Deatsilence/stocket.git
 flutter doctor
 ```
 
-##to check for all requirements to run the application
+## to check for all requirements to run the application
 
 ```
 flutter run
@@ -33,6 +32,11 @@ flutter run
 # Screenshots
 
 <pre>
-<img src="https://user-images.githubusercontent.com/78795973/229185489-9efab606-5dc1-4728-b34f-f4cdc8e7c2ce.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185492-cd5ec8b5-f93c-4cbd-9b27-3a2e8ceb450b.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185458-5ab98a22-d79f-4387-b3c0-bf0e44bc35ec.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185466-f0b69e8d-5a35-4f68-9a96-8a325d37222c.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185468-f26c0cf0-80f2-4967-ad26-5a8d2a624144.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185471-43214c93-d09d-49ac-879d-b1eaec53d35f.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185472-f2364463-544e-4ee8-a20d-d99e3bbe67bf.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185477-d952579a-5143-41e5-9899-a2f309ba6d4c.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185479-15601342-d6a8-4c7b-8635-f0f9967d4f9f.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185483-acbb9aad-f7e5-4685-9698-58c353685991.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/229185485-50367bee-842f-4622-8c66-3f9c89380b12.png" width="250">
+<img src="https://github.com/Deatsilence/stocket/assets/78795973/a3edd64c-955b-4236-bd6f-7c42facb6c78" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/3bad3492-c241-497e-ac69-e14cb8bbfff5" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/33e0c941-bcfe-40a8-855e-1ed70546720f" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/d43cffee-351c-4c98-b6a9-da1b219b44d0" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/19735c0d-6e3c-4464-aec6-049209bf944b" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/75d7f758-ffbe-46b2-9a2a-5a118a50eb81" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/77c09be8-64a7-4afa-9ba0-b0eba329a200" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/823ca744-12a5-4f14-af80-a74e7d102d8c" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/f8bbf6ba-ff5d-4b32-b575-a76ac3759461" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/4a4e34bb-acfe-4713-aeb6-10ac1e3070a9" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/7e2070ef-d9ca-4920-b1da-d3bc61f0e98d" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/9105b1df-34c9-4af4-9b31-991eeb2582c8" width="250"> <img src="https://github.com/Deatsilence/stocket/assets/78795973/2956dc4d-1176-4fe4-a19b-a34a7f14b6df" width="250">
+
+
+# Technichal Structure
+
+<img src="https://github.com/Deatsilence/stocket/assets/78795973/aa2aba4e-feac-4e3c-af4e-01453e0f2761" height="500" width="800">
 
 
