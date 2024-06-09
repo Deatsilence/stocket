@@ -29,6 +29,7 @@ final class CustomTextFormField extends StatefulWidget {
     this.enabled = true,
     this.obscuringCharacter = '•',
     this.suffixIcon,
+    this.onClear,
   });
 
   final String? labelText;
@@ -37,6 +38,7 @@ final class CustomTextFormField extends StatefulWidget {
   final void Function(String? value)? onSaved;
   final void Function(String value)? onFieldSubmitted;
   final void Function(String value)? onChanged;
+  final void Function()? onClear;
   final Widget? prefixIcon;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -73,20 +75,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: (value) {
-        if (value.length == 1) {
-          setState(() {
-            _isClearButtonVisible = true;
-          });
-        } else if (value.isEmpty) {
-          setState(() {
-            _isClearButtonVisible = false;
-          });
-        }
-
-        widget.onChanged?.call(value);
-      },
+      onChanged: onChanged,
       decoration: CustomInputDecoration(
+        filled: true,
+        fillColor: Theme.of(context).colorScheme.onPrimary,
         prefixIcon: widget.prefixIcon,
         suffixIcon: SizedBox(
           width: _isClearButtonVisible ? MediaQuery.sizeOf(context).width * 0.3 : 0,
@@ -103,6 +95,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     _isClearButtonVisible = false;
                   });
                   widget.controller?.clear();
+                  widget.onClear?.call();
                 },
                 isVisible: _isClearButtonVisible,
               ),
@@ -131,6 +124,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       onFieldSubmitted: widget.onFieldSubmitted,
       enabled: widget.enabled,
     );
+  }
+
+  void onChanged(value) {
+    if (value.length == 1) {
+      setState(() {
+        _isClearButtonVisible = true;
+      });
+    } else if (value.isEmpty) {
+      setState(() {
+        _isClearButtonVisible = false;
+      });
+    }
+    widget.onChanged?.call(value);
   }
 }
 

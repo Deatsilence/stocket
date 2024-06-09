@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:gen/gen.dart';
@@ -14,6 +16,8 @@ import 'package:stocket/product/utility/response/api_response.dart';
 final class CommonService with CommonServiceMixin {
   CommonService._() {
     _baseUrl = DevEnv().baseUrl;
+
+    log('Base URL: $_baseUrl');
 
     final baseOptions = BaseOptions(
       baseUrl: _baseUrl,
@@ -55,12 +59,11 @@ final class CommonService with CommonServiceMixin {
   Future<ApiResponse<dynamic>> getModel<T extends BaseModel<T>>({
     required String domain,
     required T model,
-    String? prefix,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
       final response = await _dio.get<dynamic>(
-        '$_baseUrl$domain/$prefix',
+        '$_baseUrl$domain',
         queryParameters: queryParameters,
       );
       final responseCode = HttpResult.fromStatusCode(response.statusCode ?? -1);

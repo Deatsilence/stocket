@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,8 @@ mixin PasswordResetViewMixin<T extends StatefulWidget> on State<T> {
             await passwordResetViewModel.changePassword(changePassword: changePassword);
       } else {
         final resetPassword = ResetPassword(
-          verifyOTP: verifyOTP,
+          email: verifyOTP.email,
+          code: verifyOTP.code,
           newPassword: confirmPasswordController.text,
         );
         result = await passwordResetViewModel.resetPassword(resetPassword: resetPassword);

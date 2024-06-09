@@ -55,17 +55,19 @@ final class HomeViewModel extends BaseCubit<HomeState> {
     }
   }
 
-  Future<ApiResponse<dynamic>> getProducts({required String token}) async {
+  Future<ApiResponse<dynamic>> getProducts(
+      {required String token, String? prefixOfBarcode}) async {
     _changeLoading();
     try {
-      const _recordPerPage = 10;
+      const _recordPerPage = 4;
       Products products = Products();
       CommonService.instance.token = token;
       var response = await CommonService.instance.getModel<Products>(
         domain: DevEnv().getProductsDomain,
         model: products,
         queryParameters: {
-          'page': 1,
+          'prefix': prefixOfBarcode,
+          'page': state.page,
           'recordPerPage': _recordPerPage,
         },
       );
@@ -99,25 +101,27 @@ final class HomeViewModel extends BaseCubit<HomeState> {
     }
   }
 
-  Future<ApiResponse<dynamic>> searchByBarcode({
-    required String barcode,
-    required String token,
-  }) async {
-    _changeLoading();
-    try {
-      Products products = Products();
-      CommonService.instance.token = token;
-      var response = await CommonService.instance.getModel<Products>(
-        domain: DevEnv().getSearchByBarcodeDomain,
-        model: products,
-        prefix: barcode,
-      );
+  // Future<ApiResponse<dynamic>> searchByBarcode({
+  //   required String barcode,
+  //   required String token,
+  // }) async {
+  //   _changeLoading();
+  //   try {
+  //     Products products = Products();
+  //     CommonService.instance.token = token;
+  //     var response = await CommonService.instance.getModel<Products>(
+  //       domain: "${DevEnv().getSearchByBarcodeDomain}",
+  //       model: products,
+  //       queryParameters: {
+  //         'barcode': barcode,
+  //       },
+  //     );
 
-      _changeLoading();
-      return response;
-    } catch (e) {
-      Logger().e(e.toString());
-      throw e;
-    }
-  }
+  //     _changeLoading();
+  //     return response;
+  //   } catch (e) {
+  //     Logger().e(e.toString());
+  //     throw e;
+  //   }
+  // }
 }

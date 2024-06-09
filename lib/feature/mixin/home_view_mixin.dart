@@ -15,6 +15,7 @@ import 'package:stocket/product/navigation/app_router.dart';
 import 'package:stocket/product/utility/constants/enums/duration.dart';
 import 'package:stocket/product/utility/constants/enums/response_type.dart';
 import 'package:stocket/product/utility/constants/enums/status_code.dart';
+import 'package:stocket/product/utility/extension/has_value_extension.dart';
 
 /// [HomeViewMixin] is a [State] mixin that contains the home view logic.
 mixin HomeViewMixin on State<HomeView> {
@@ -75,15 +76,25 @@ mixin HomeViewMixin on State<HomeView> {
         final currentScrollPosition = _scrollController.position.pixels;
         if (value.isSuccess) {
           final newProducts = value.data as Products;
-          final currentProducts = _homeViewModel.state.products?.productItems ?? [];
-          final updatedProducts = List<Product>.from(currentProducts)
-            ..addAll(newProducts.productItems ?? []);
-          final products = Products(
-            productItems: updatedProducts,
-            totalCount: newProducts.totalCount,
-            totalPages: newProducts.totalPages,
-            currentPage: newProducts.currentPage,
-          );
+          late final Products products;
+          if (_homeViewModel.state.page == 1) {
+            products = Products(
+              productItems: newProducts.productItems,
+              totalCount: newProducts.totalCount,
+              totalPages: newProducts.totalPages,
+              currentPage: newProducts.currentPage,
+            );
+          } else {
+            final currentProducts = _homeViewModel.state.products?.productItems ?? [];
+            final updatedProducts = List<Product>.from(currentProducts)
+              ..addAll(newProducts.productItems ?? []);
+            products = Products(
+              productItems: updatedProducts,
+              totalCount: newProducts.totalCount,
+              totalPages: newProducts.totalPages,
+              currentPage: newProducts.currentPage,
+            );
+          }
 
           _homeViewModel.setProducts(products: products);
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -116,7 +127,7 @@ mixin HomeViewMixin on State<HomeView> {
   }) async {
     final token = context.read<RootViewModel>().state.currentUser?.token ?? '';
 
-    await _homeViewModel.searchByBarcode(barcode: barcode, token: token).then(
+    await _homeViewModel.getProducts(token: token, prefixOfBarcode: barcode).then(
       (value) {
         if (value.isSuccess) {
           final searchedProducts = value.data as Products;

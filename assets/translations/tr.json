@@ -35,7 +35,7 @@
     "password_confirmed": "Şifreler eşleşmiyor",
     "name_required": "Ad gereklidir",
     "surname_required": "Soyad gereklidir",
-    "password_reset_link_sent": "Şifre sıfırlama linki e-posta adresinize gönderildi",
+    "password_reset_link_sent": "Şifre sıfırlama kodu e-posta adresinize gönderildi",
     "enter_your_email_to_reset_password": "Şifrenizi sıfırlamak için lütfen e-posta adresinizi giriniz",
     "dont_have_account": "Hesabınız yok mu?",
     "verify": "Onaylama",
@@ -49,7 +49,8 @@
   },
   "home": {
     "title": "Ana Sayfa",
-    "add_a_new_product": "Yeni Ürün Ekle"
+    "add_a_new_product": "Yeni Ürün Ekle",
+    "search_placeholder": "Barkod ile ürün ara"
   },
   "product_add": {
     "save_product": "Yeni Bir Ürün Kaydet",

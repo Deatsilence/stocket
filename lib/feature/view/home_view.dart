@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gen/gen.dart';
+import 'package:sizer/sizer.dart';
 import 'package:stocket/feature/mixin/home_view_mixin.dart';
 import 'package:stocket/feature/view/product_add_view.dart';
 import 'package:stocket/feature/view/widget/custom_snackbar.dart';
@@ -43,6 +44,7 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
           onPressed: () async {
             var result = await context.router.push<bool?>(ProductAddRoute());
             if (result.hasValue && result!) {
+              homeViewModel.setThePageAsDefault();
               await getProducts(context: context);
             }
           },
@@ -51,13 +53,20 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
         ),
         drawer: SideMenu(homeViewModel: homeViewModel),
         sliverAppBar: SliverAppBar(
-          title: CustomTextFormField(
-            controller: searchController,
-            prefixIcon: const Icon(Icons.search_outlined),
-            hintText: LocaleKeys.home_home_search_placeholder.tr(),
-            onChanged: (value) => searchByBarcode(
-              context: context,
-              barcode: value,
+          title: SizedBox(
+            height: 5.h,
+            child: CustomTextFormField(
+              controller: searchController,
+              prefixIcon: const Icon(Icons.search_outlined),
+              hintText: LocaleKeys.home_search_placeholder.tr(),
+              onChanged: (value) => searchByBarcode(
+                context: context,
+                barcode: value,
+              ),
+              onClear: () => searchByBarcode(
+                context: context,
+                barcode: '',
+              ),
             ),
           ),
           centerTitle: true,
@@ -139,7 +148,9 @@ class _ProductListState extends State<_ProductList> {
       final _products = widget.state.products!;
       final _length = _products.productItems!.length;
       return SliverList.builder(
-        itemCount: _length % 4 == 0 ? _length + 1 : _length,
+        itemCount: (_length % 4 == 0 && (_products.currentPage! < _products.totalPages!))
+            ? _length + 1
+            : _length,
         itemBuilder: (context, index) {
           if (index < _length) {
             return Slidable(
@@ -150,7 +161,7 @@ class _ProductListState extends State<_ProductList> {
                     icon: Icons.edit_outlined,
                     backgroundColor: ColorName.edit,
                     onPressed: (context) async => await _onPressedEditProduct(
-                      context: context,
+                      context: _parentContext,
                       index: index,
                       products: _products,
                     ),
@@ -160,7 +171,7 @@ class _ProductListState extends State<_ProductList> {
                     backgroundColor: ColorName.delete,
                     onPressed: (context) async {
                       await _onPressedDeleteProduct(
-                        context: context,
+                        context: _parentContext,
                         index: index,
                         products: _products,
                       );
@@ -174,7 +185,9 @@ class _ProductListState extends State<_ProductList> {
               ),
             );
           }
-          return null;
+          return Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
         },
       );
     }
@@ -211,9 +224,14 @@ class _ProductListState extends State<_ProductList> {
         responseType: ResponseType.error,
       );
     }
-    await context.router.push<bool?>(ProductAddRoute(
-      product: _product,
-      viewType: ProductViewType.edit,
-    ));
+    final result = await context.router.push<bool?>(
+      ProductAddRoute(
+        product: _product,
+        viewType: ProductViewType.edit,
+      ),
+    );
+    if (result.hasValue && result!) {
+      await widget.getProducts(context: context);
+    }
   }
 }

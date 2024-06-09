@@ -72,7 +72,10 @@ class _VerifyOTPViewState extends State<VerifyOTPView> with VerifyOTPViewMixin {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => onPressed(
+                          context: context,
+                          emailAddress: widget.email,
+                        ),
                         child: AuthLabel(
                           text: LocaleKeys.authentication_resend_verification_code,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
