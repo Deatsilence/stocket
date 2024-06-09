@@ -39,11 +39,7 @@ mixin LoginViewMixin<T extends StatefulWidget> on State<T> {
     super.dispose();
   }
 
-  Future<void> loginOnPressed({required BuildContext context}) async {
-    final user = User(
-      email: 'mert_im2000@hotmail.com',
-      password: 'Bergendal3120.',
-    );
+  Future<void> loginOnPressed({required BuildContext context, required User user}) async {
     await loginViewModel.login(user: user).then(
       (value) async {
         if (value.isSuccess) {

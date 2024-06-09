@@ -9,8 +9,12 @@ part 'products.g.dart';
 final class Products extends BaseModel<Products> with EquatableMixin {
   final List<Product>? productItems;
   final int? totalCount;
+  final int? currentPage;
+  final int? totalPages;
 
   Products({
+    this.currentPage,
+    this.totalPages,
     this.productItems,
     this.totalCount,
   });
@@ -22,15 +26,19 @@ final class Products extends BaseModel<Products> with EquatableMixin {
   Map<String, dynamic> toJson() => _$ProductsToJson(this);
 
   @override
-  List<Object?> get props => [productItems, totalCount];
+  List<Object?> get props => [productItems, totalCount, currentPage, totalPages];
 
   Products copyWith({
     List<Product>? productItems,
     int? totalCount,
+    int? currentPage,
+    int? totalPages,
   }) {
     return Products(
       productItems: productItems ?? this.productItems,
       totalCount: totalCount ?? this.totalCount,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
     );
   }
 

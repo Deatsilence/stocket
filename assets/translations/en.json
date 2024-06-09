@@ -35,7 +35,7 @@
     "password_confirmed": "Passwords do not match",
     "name_required": "Name is required",
     "surname_required": "Surname is required",
-    "password_reset_link_sent": "Password reset link sent to your e-mail address",
+    "password_reset_link_sent": "Password reset code sent to your e-mail address",
     "enter_your_email_to_reset_password": "Please enter your e-mail address to reset your password",
     "dont_have_account": "Don't have an account?",
     "verify": "Verify",
@@ -49,7 +49,8 @@
   },
   "home": {
     "title": "Home",
-    "add_a_new_product": "Add a new product"
+    "add_a_new_product": "Add a new product",
+    "search_placeholder": "Search for a product"
   },
   "product_add": {
     "save_product": "Save New a Product",
@@ -104,6 +105,8 @@
     "occur_an_error_while_login": "An error occurred while registering",
     "occur_an_error_while_change_password": "An error occurred while changing the password",
     "email_already_exists": "E-mail already exists",
-    "occur_an_error_while_login_with_cache": "An error occurred while logging in with cache"
+    "occur_an_error_while_login_with_cache": "An error occurred while logging in with cache",
+    "occur_while_fetching_products": "An error occurred while fetching products",
+    "expired_the_session": "Your session has expired"
   }
 }

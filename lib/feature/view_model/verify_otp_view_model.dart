@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:gen/gen.dart';
 import 'package:logger/logger.dart';
 import 'package:stocket/product/service/common_service.dart';

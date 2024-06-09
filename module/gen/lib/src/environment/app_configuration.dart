@@ -16,6 +16,9 @@ abstract class AppConfiguration {
   /// [getUsersByIdDomain] is the domain for the get users by id.
   String get getUsersByIdDomain;
 
+  /// [getSearchByBarcodeDomain] is the domain for the get users by id.
+  String get getSearchByBarcodeDomain;
+
   /// [deleteUsersByIdDomain] is the domain for the delete users by id.
   String get postProductsAddDomain;
 

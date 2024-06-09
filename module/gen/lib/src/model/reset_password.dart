@@ -9,11 +9,13 @@ part 'reset_password.g.dart';
 @immutable
 final class ResetPassword extends BaseModel<ResetPassword> with EquatableMixin {
   final String? newPassword;
-  final VerifyOTP? verifyOTP;
+  final String? email;
+  final String? code;
 
   ResetPassword({
     this.newPassword,
-    this.verifyOTP,
+    this.email,
+    this.code,
   });
 
   @override
@@ -23,7 +25,7 @@ final class ResetPassword extends BaseModel<ResetPassword> with EquatableMixin {
   Map<String, dynamic> toJson() => _$ResetPasswordToJson(this);
 
   @override
-  List<Object?> get props => [newPassword, verifyOTP];
+  List<Object?> get props => [newPassword, email, code];
 
   ResetPassword copyWith({
     String? newPassword,
@@ -31,7 +33,8 @@ final class ResetPassword extends BaseModel<ResetPassword> with EquatableMixin {
   }) {
     return ResetPassword(
       newPassword: newPassword ?? this.newPassword,
-      verifyOTP: verifyOTP ?? this.verifyOTP,
+      email: email ?? this.email,
+      code: code ?? this.code,
     );
   }
 }

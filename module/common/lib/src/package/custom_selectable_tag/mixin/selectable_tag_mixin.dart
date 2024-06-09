@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:common/src/package/custom_selectable_tag/selectable_tag.dart';
 import 'package:flutter/material.dart';
